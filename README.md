@@ -2,16 +2,16 @@
 
 This is the working area for the individual Internet-Draft, "Post-quantum use case".
 
-* [Editor's Copy](https://vairanto.github.io/pq-ietf-usecase/#go.draft-vaira-lamps-pq-use-cases.html)
+* [Editor's Copy](https://avaira77.github.io/pq-ietf-usecase/#go.draft-vaira-lamps-pq-use-cases.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-vaira-lamps-pq-use-cases)
 * [Individual Draft](https://datatracker.ietf.org/doc/html/draft-vaira-lamps-pq-use-cases)
-* [Compare Editor's Copy to Individual Draft](https://vairanto.github.io/pq-ietf-usecase/#go.draft-vaira-lamps-pq-use-cases.diff)
+* [Compare Editor's Copy to Individual Draft](https://avaira77.github.io/pq-ietf-usecase/#go.draft-vaira-lamps-pq-use-cases.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/vairanto/pq-ietf-usecase/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/avaira77/pq-ietf-usecase/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
