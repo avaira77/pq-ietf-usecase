@@ -10,8 +10,8 @@ venue:
   type: "Working Group"
   mail: "spasm@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/spasm/"
-  github: "vairanto/pq-ietf-usecase"
-  latest: "https://vairanto.github.io/pq-ietf-usecase/draft-vaira-lamps-pq-use-cases.html"
+  github: "avaira77/pq-ietf-usecase"
+  latest: "https://avaira77.github.io/pq-ietf-usecase/draft-vaira-lamps-pq-use-cases.html"
 
 docname: draft-vaira-lamps-pq-use-cases-latest
 
