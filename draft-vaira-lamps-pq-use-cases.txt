@@ -5,10 +5,10 @@
 Limited Additional Mechanisms for PKIX and SMIME           A. Vaira, Ed.
 Internet-Draft                                              H. Brockhaus
 Intended status: Informational                                Siemens AG
-Expires: 18 April 2024                                      M. Ounsworth
+Expires: 19 April 2024                                      M. Ounsworth
                                                                  J. Gray
                                                          Entrust Limited
-                                                         16 October 2023
+                                                         17 October 2023
 
 
                          Post-quantum use case
@@ -31,7 +31,7 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://vairanto.github.io/pq-ietf-usecase/draft-vaira-lamps-pq-use-
+   https://avaira77.github.io/pq-ietf-usecase/draft-vaira-lamps-pq-use-
    cases.html.  Status information for this document may be found at
    https://datatracker.ietf.org/doc/draft-vaira-lamps-pq-use-cases/.
 
@@ -42,7 +42,7 @@ About This Document
    https://www.ietf.org/mailman/listinfo/spasm/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/vairanto/pq-ietf-usecase.
+   https://github.com/avaira77/pq-ietf-usecase.
 
 Status of This Memo
 
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 April 2024.
+   This Internet-Draft will expire on 19 April 2024.
 
 Copyright Notice
 
