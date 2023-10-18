@@ -22,9 +22,7 @@ kw:
   - post-quantum cryptography
   - post-quantum use cases
 author:
-- role: editor
-  ins: A. Vaira
-  name: Antonio Vaira
+- name: Antonio Vaira
   org: Siemens AG
   street: Otto Hahn Ring 6
   city: Munich
@@ -64,7 +62,7 @@ informative:
 
 --- abstract
 
-This document provides a comprehensive overview of the various use cases for post-quantum cryptography. With the increasing reliance on these algorithms in securing digital systems such as security protocols, digital signatures, and X.509 certificates, the document serves as a valuable resource for organizations looking to develop post-quantum adoption strategies. The document identifies and analyzes the most critical applications and provides insights into how post-quantum cryptography can be effectively integrated into various systems.
+This document offers a comprehensive overview of various use cases for post-quantum cryptography. As the reliance on these algorithms continues to grow in the realm of securing digital systems, including security protocols, digital signatures, and X.509 certificates, it serves as a valuable resource for organizations aiming to formulate strategies for post-quantum adoption. The document systematically identifies and assesses critical applications, providing valuable insights into how post-quantum cryptography can be seamlessly integrated into these systems. Furthermore, it explores the concept of hybrid cryptography and its applicability within each identified use case, with a specific focus on identifying the most suitable hybrid mechanism where applicable.
 
 --- middle
 
@@ -123,21 +121,14 @@ This document assumes that the reader is familiar with post-quantum cryptography
 
 - Non-agile / flag day: no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
 
-# Post-quantum migration properties
+# Hybrid Cryptography
+EDNOTE1: The terminology should be aligned with draft-ounsworth-pq-composite-sigs-09 and draft-ietf-pquip-pqt-hybrid-terminology-00
 
-EDNOTE1: The properties are already listed in the terminology, in this section additional details may be added. AV: @Mike I think I read some time ago a draft, that you have authored,  defining the problem space certificates/protocols vs. post-quantum. I cannot find it anymore but maybe some of the text could be merged here. What do you think?
-
-The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in the following section in a consistent way. The goal is to make the document useful also to classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in the draft with the same properties / classification.
-
-## Active Negotiation
+##Hybrid Composite Mechanisms
 
 TBD
 
-## Passive Negotiation
-
-TBD
-
-## Non Agile
+##Hybrid Non-Composite Mechanisms
 
 TBD
 
@@ -146,6 +137,42 @@ TBD
 In this section we detail all the use cases where post-quantum is expected to be of high relevance. For each use case, one or more variation of the original use case is included. Each variation is considered to be a plausible option is a real-life deployment scenario.
 
 EDNOTE10: for each use case we need to add the category, but how to do it in a easy to read way? Maybe for the time being it would be fine to add a sentence at the end of each use case to assign a category and briefly motivate it. See example below from Secure firmware update use case.
+
+## Industrial communication protocols (that rely on IETF RFCs)
+EDNOTE11: the title is an attempt at generalizing what BACnet is and why it should be interesting to take it into account at IETF
+
+Several industrial communication protocols, traditionally orthogonal to IP network infrastructure, are progressively being updated to make use of standard IP network infrastructure hence rely standard security mechanisms, like for example TLS 1.3.
+
+An example of such protocol is BACnet/SC. BACnet is a data communication protocol for Building Automation and Control Networks. BACnet was defined before 1995, when the TCP/IP protocol suite was expensive and not available for smaller devices common in building automation. BACnet Secure Connect, known as BACnet/SC and defined in the addendum ANSI/ASHRAE Standard 135-2016, proposes a new datalink layer option that makes full use of TLS secured WebSocket connections. This new BACnet Secure Connect datalink layer option uses a virtual hub-and-spoke topology where the spokes are WebSocket connections from the nodes to the hub.
+
+The main features of BACnet/SC are:
+
+- it makes use of WebSockets secured via TLS1.3,
+
+- it relies on X.509 certificates to authenticate the nodes in the network,
+
+- DNS host name resolution and DHCP are supported,
+
+- it is agnostic to IP versions (IPv4 or IPv6),
+
+- it can be NATted.
+
+BACnet/SC's implementation adheres to established industry standards defined in IETF RFCs.
+
+### PQC relevant security aspects
+The security of the BACnet/SC protocol, as well as of similar industrial protocols, completely rely on TLS 1.3 therefore implications of post-quantum cryptography have to be considered in both the TLS handshake and in the X.509 certificates used for the authentication.
+
+Furthermore, the geographical locations of the BACnet/SC-enabled devices in operation may necessitate the inclusion of extra considerations related to post-quantum cryptography, like for example the use of hybrid cryptography.
+
+### Category
+
+This use case can be categorized as:
+
+- "active negotiation", BACnet/SC hubs and spokes authenticate against each other frequently, for example on a daily basis.
+
+- "Long-term migration strategies": The devices are rarely upgraded because they are typically operated in environments with limited access. Additionally, the BACnet/SC standards heavily rely on IETF RFC. To comply with regional requirements for supporting hybrid cryptography, they are prime candidates for implementing composite-hybrid mechanisms.
+
+EDNOTE12: a limited number of categories has to be defined. We might introduce a category "hybrid support required" to tag the use cases for which an approach like hybrid-composite will be helpful.
 
 ## Secure firmware update
 
@@ -204,6 +231,7 @@ An additional aspect to consider is how can the device "trust" the Trust Anchor.
 This use case can be categorized as:
 
 - "passive negotiation", if the entity that validates the firmware signature has a mechanism to update the Trust Anchor relied upon during signature validation. This is due to the fact that the SW package may be delivered with multiple signatures that use either traditional and/or post-quantum cryptography;
+
 - "non agile", if the entity that validates the signature cannot update the Trust Anchor.
 
 ## Trust Anchor deployment
