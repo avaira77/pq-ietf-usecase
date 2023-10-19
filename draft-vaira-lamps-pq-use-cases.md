@@ -132,7 +132,7 @@ This document assumes that the reader is familiar with post-quantum cryptography
 
 EDNOTE1: The properties are already listed in the terminology, in this section additional details may be added. AV: @Mike I think I read some time ago a draft, that you have authored,  defining the problem space certificates/protocols vs. post-quantum. I cannot find it anymore but maybe some of the text could be merged here. What do you think?
 
-The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{#sec-usecases}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
+The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{#}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
 
 ## Active Negotiation
 
@@ -148,7 +148,7 @@ TBD
 
 # Post-quantum migration mechanisms
 
-The purpose of this section is to define a set of migration mechanisms that can be used by each of the use-cases in {{#sec-usecases}} in a consistent way.   
+The purpose of this section is to define a set of migration mechanisms that can be used by each of the use-cases in {{#}} in a consistent way.
 
 ## Composite Signatures
 TBD
@@ -159,7 +159,7 @@ TBD
 ## Protocol Revision (Cryptographic Agility)
 This mechanism may require a minimal update to an existing protocol.  In some cases the protocol may already contain built in mechanisms that may be used to perform the migration.
 
-# Use cases collection
+# Use cases collection {#}
 
 In this section we detail all the use cases where post-quantum is expected to be of high relevance. For each use case, one or more variation of the original use case is included. Each variation is considered to be a plausible option is a real-life deployment scenario.
 
