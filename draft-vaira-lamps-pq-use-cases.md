@@ -47,8 +47,13 @@ normative:
   RFC5234:
 
 informative:
-  RFC6421:
   RFC4949:
+  RFC4998:
+  RFC5652:
+  RFC6421:
+  RFC7468:
+  RFC8446:
+  RFC9019:
   ASN.1:
     title: >
       Information Technology — ASN.1 encoding rules:
@@ -159,7 +164,7 @@ In this section we detail all the use cases where post-quantum is expected to be
 EDNOTE10: for each use case we need to add the category, but how to do it in a easy to read way? Maybe for the time being it would be fine to add a sentence at the end of each use case to assign a category and briefly motivate it. See example below from Secure firmware update use case.
 
 ## Industrial communication protocols (that rely on IETF RFCs)
-EDNOTE11: the title is an attempt at generalizing what BACnet is and why it should be interesting to take it into account at IETF
+EDNOTE11: the title is an attempt at generalizing what BACnet is and why it should be interesting to take it into account while discussing pqc migration approaches within the IETF.
 
 Several industrial communication protocols, traditionally orthogonal to IP network infrastructure, are progressively being updated to make use of standard IP network infrastructure hence rely standard security mechanisms, like for example TLS 1.3.
 
@@ -177,10 +182,10 @@ The main features of BACnet/SC are:
 
 - it can be NATted.
 
-BACnet/SC's implementation adheres to established industry standards defined in IETF RFCs.
+BACnet/SC's implementation adheres to established industry standards defined in IETF RFCs. Specifically the Addendum bj to ANSI/ASHRAE Standard 135-2016 references RFC 7468, when defining the format in which operational certificates and signing CA should be installed onto the target device at configuration time.
 
 ### PQC relevant security aspects
-The security of the BACnet/SC protocol, as well as of similar industrial protocols, completely rely on TLS 1.3 therefore implications of post-quantum cryptography have to be considered in both the TLS handshake and in the X.509 certificates used for the authentication.
+The security of the BACnet/SC protocol, as well as of similar industrial protocols, relies on TLS 1.3 (RFC 8446), therefore implications of post-quantum cryptography have to be considered in both the TLS handshake and in the X.509 certificates used for the authentication.
 
 Furthermore, the geographical locations of the BACnet/SC-enabled devices in operation may necessitate the inclusion of extra considerations related to post-quantum cryptography, like for example the use of hybrid cryptography.
 
@@ -301,7 +306,7 @@ AV: as discussed in our call the plan, for the time being, is to defer these dis
 
 EDNOTE9: TO-DOs:
 
-- add additional post-quantum relevant use cases which cover aspects not covered so far,
+- add additional post-quantum relevant use cases which cover aspects not covered so far, also use cases that are not common in our line of work (e.g., FAA airworthiness certifications, medical records, etc.),
 - identify additional parties that would like to join this effort,
 - any party that would be interested in contributing in this work may add additional post-quantum relevant use cases that are closer to her experience/field,
 - the goal is to cover as much ground as possible in terms of use cases and to be able to define categories of use cases. A possible follow-up document could come up with proposals about which set of post-quantum algorithms, certificate-type, PKI/Signature Service component, etc. is the best fit for the give use case,
