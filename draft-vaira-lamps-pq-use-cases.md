@@ -73,6 +73,8 @@ This document offers a comprehensive overview of various use cases for post-quan
 
 # Introduction
 
+EDNOTE14: reduce the amount of text, keep it short and to the point. What we expect from the reader?
+
 The most important limitations of post-quantum algorithms, in comparison to traditional RSA or ECC, are that a post-quantum algorithm can either be used to digitally sign or encrypt data and, that the size of key pairs, signatures and ciphertexts can differ several orders of magnitude from one algorithm to the other. It follows that post-quantum algorithms cannot be simply dropped in existing solutions but they rather need to be carefully chosen depending on the use case they will support. In this document, we want to provide a collection of use cases, and sort them into categories on the basis of the key features they have in common. Ultimately, this document aims at providing the foundation to later on define solution blueprints, i.e. which cryptographic algorithms and how to deploy, manage and use them in the context of a post-quantum PKI, post-quantum Signing Service and any other relevant contexts.
 
 ## Requirements Language
