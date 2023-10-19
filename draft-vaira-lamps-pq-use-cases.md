@@ -121,16 +121,36 @@ This document assumes that the reader is familiar with post-quantum cryptography
 
 - Non-agile / flag day: no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
 
-# Hybrid Cryptography
-EDNOTE1: The terminology should be aligned with draft-ounsworth-pq-composite-sigs-09 and draft-ietf-pquip-pqt-hybrid-terminology-00
+# Post-quantum migration properties
 
-##Hybrid Composite Mechanisms
+EDNOTE1: The properties are already listed in the terminology, in this section additional details may be added. AV: @Mike I think I read some time ago a draft, that you have authored,  defining the problem space certificates/protocols vs. post-quantum. I cannot find it anymore but maybe some of the text could be merged here. What do you think?
+
+The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{#sec-usecases}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
+
+## Active Negotiation
 
 TBD
 
-##Hybrid Non-Composite Mechanisms
+## Passive Negotiation
 
 TBD
+
+## Non Agile
+
+TBD
+
+# Post-quantum migration mechanisms
+
+The purpose of this section is to define a set of migration mechanisms that can be used by each of the use-cases in {{#sec-usecases}} in a consistent way.   
+
+## Composite Signatures
+TBD
+
+## Composite KEM
+TBD
+
+## Protocol Revision (Cryptographic Agility)
+This mechanism may require a minimal update to an existing protocol.  In some cases the protocol may already contain built in mechanisms that may be used to perform the migration.
 
 # Use cases collection
 
@@ -175,6 +195,8 @@ This use case can be categorized as:
 EDNOTE12: a limited number of categories has to be defined. We might introduce a category "hybrid support required" to tag the use cases for which an approach like hybrid-composite will be helpful.
 
 ## Secure firmware update
+
+EDNOTE13: Use terminology from SUIT for the firmware update use case (RFC 9019). Many people in the IETF are already familiar with it.
 
 Firmware, as defined in the {{RFC4949}}, is: computer programs and data stored in hardware -- typically in read-only memory (ROM) or programmable read-only memory (PROM) -- such that the programs and data cannot be dynamically written or modified during execution of the programs. It provides low-level access and control on the hardware.
 
