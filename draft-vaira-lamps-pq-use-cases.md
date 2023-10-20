@@ -4,7 +4,7 @@ ipr: trust200902
 cat: info
 submissiontype: IETF
 area: "Security"
-workgroup: "Limited Additional Mechanisms for PKIX and SMIME"
+workgroup: "Post-Quantum Use In Protocols (pquip)"
 venue:
   group: "Limited Additional Mechanisms for PKIX and SMIME"
   type: "Working Group"
@@ -13,14 +13,14 @@ venue:
   github: "avaira77/pq-ietf-usecase"
   latest: "https://avaira77.github.io/pq-ietf-usecase/draft-vaira-lamps-pq-use-cases.html"
 
-docname: draft-vaira-lamps-pq-use-cases-latest
+docname: draft-vaira-lamps-pq-use-cases-00
 
-title: Post-quantum use case
-abbrev: PQ use cases
+title: Post-quantum cryptography use case
+abbrev: PQC use cases
 lang: en
 kw:
   - post-quantum cryptography
-  - post-quantum use cases
+  - PQC use cases
 author:
 - name: Antonio Vaira
   org: Siemens AG
