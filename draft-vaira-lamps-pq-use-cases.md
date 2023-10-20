@@ -123,9 +123,7 @@ The scope of this document is to compile a list of real-life use cases character
 
 ## Terminology
 
-TODO: write a sentence that we use terminology from pqc drafts 5280, SUIT, 4949, IEEE 802.1AR
-
-This document makes the assumption that the reader is familiar with post-quantum cryptography terminology and with draft-ietf-pquip-pqt-hybrid-terminology. The subsequent section provides clarifications on terminology to facilitate a smoother reading experience.
+This document makes use of the terminology defined in {{RFC4949}}, {{RFC5280}}, {{RFC9019}},  {{I-D.ietf-pquip-pqc-engineers}}, {{I-D.ietf-pquip-pqt-hybrid-terminology}} and TODO: add ref to composite signature drafts.
 
 # Post-quantum Migration Mechanisms for Signing
 
