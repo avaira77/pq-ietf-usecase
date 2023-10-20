@@ -73,6 +73,15 @@ informative:
   RFC7468:
   RFC8446:
   RFC9019:
+  I-D.ietf-pquip-pqc-engineers:
+  NIST.SP.800-208:
+  NIST.FIPS.186-5:
+  RFC8391:
+  RFC8554:
+  RFC6071:
+  RFC8446:
+  RFC8551:
+  RFC5652:
   ASN.1:
     title: >
       Information Technology — ASN.1 encoding rules:
@@ -122,26 +131,21 @@ TODO: write a sentence that we use terminology from pqc drafts 5280, SUIT, 4949,
 
 This document makes the assumption that the reader is familiar with post-quantum cryptography terminology and with draft-ietf-pquip-pqt-hybrid-terminology. The subsequent section provides clarifications on terminology to facilitate a smoother reading experience.
 
-# Post-quantum migration mechanisms
+# Post-quantum Migration Mechanisms for Signing
 
-EDNOTE: it should be very short, it could be as simple as bullet list, ref other documents, e.g. sHBS -> NIST docs, RFC, multiple sig, point to other work, *composite hybrid point to drafts
+People are considering which technological concepts are suitable to solve the problem of a secure migration from classical cryptography to quantum computer safe cryptographic algorithms. A variety of approaches are being discussed. In the following, we would like to briefly introduce the approaches under discussion and refer to the respective relevant documents for further details.
+For a general introduction, we also refer to {{I-D.ietf-pquip-pqc-engineers}}.
 
-The purpose of this section is to define a set of migration mechanisms that can be used by each of the use-cases in {{#}} in a consistent way.
+## Stateful Hash-based Signatures Schemes
 
-## Composite Signatures
-TBD
-
-## Composite KEM
-
-EDNOTE16: I would suggest to keep KEM out of the picture for the time being and focus on signatures only.
-
-TBD
+The only algorithms that are considered safe against attacks with quantum computers are the stateful hash-bases signature (HBS) schemes {{NIST.SP.800-208}} {{NIST.FIPS.186-5}} XMSS {{RFC8391}} and LMS {{RFC8554}}.
+According to NIST, these stateful HBS algorithms offer better performance than stateless HBS algorithms, and the underlying technology is considered well understood. More stateful HBS algorithms are considered safe against attacks by quantum computers but cannot be widely used due to the state management that is very important for the security of stateful HBS. Especially for the secure signing of data that can be signed repeatedly over a very long period of time and whose signatures must be able to be securely validated with the same public key, stateful HBS do not appear to be suitable. This is because there are currently insufficient solutions for the replacement of the hardware security modules used and for disaster recovery cases.
 
 ## Protocol Revision (Cryptographic Agility)
 
-EDNOTE17: same as above. Additionally crypto agility is a concept quite difficult to grasp given the large amount of definitions available online. These definition that to focus on different aspects.
+Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) {{RFC6071}}, Transport Layer Security (TLS){{RFC8446}}, Secure/Multipurpose Internet Mail Extensions (S/MIME){{RFC8551}}, is usually understood as the dynamic referencing of the algorithms to be used. A concrete migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period is usually not described in the respective standards.
 
-This mechanism may require a minimal update to an existing protocol.  In some cases the protocol may already contain built in mechanisms that may be used to perform the migration.
+An extension of the existing standards would be needed to integrate the required agility into the existing protocols and formats. This is a lot of effort for standardization and implementations if a basic functionality, such as multiple signatures, e.g., in Cryptographic Message Syntax (CMS) {{RFC5652}}, is not already available. But even in the case of S/MIME and CMS, a corresponding profiling is still necessary to describe how the multiple signatures are to be used specifically for the migration.
 
 ## Multiple Signatures
 
@@ -149,11 +153,8 @@ TBD
 
 EDNOTE18: In this section we could cover multiple certificates, the isara and the camelion approach.
 
-## Stateful hash-based signatures
-
+## Composite Signatures
 TBD
-
-EDNOTE19: despite not being a mechanism per se sHBS are relevant in use cases like FW and SW update due to CNSA2.0 and in my understanding if sHBS is used then typically there is no need for hybrid (this should be the position of BSI at least, REF needed!)
 
 # Use cases collection {#}
 
