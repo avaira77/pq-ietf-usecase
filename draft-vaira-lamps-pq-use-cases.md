@@ -103,21 +103,17 @@ The main aspects of the problem space are:
 
 ## Scope
 
-The scope of this document is to collect post-quantum use cases to help categorize them in terms of their most distincive features and deployment complexity. Deployment complexity has to be intended mostly as the complexity arising from operational aspects, like for example making use of stateful hash based signature scheme whose complexity is higher than stateless signature schemes.
-Defining deployment strategies as well as analysing whether a use case will present particular challenges to adoption of post-quantum, is left out of scope of this document and deferred to follow-up documents.
-Public Key Infrastructure and Signing Service, despite playing a central role in the context of post-quantum, are left out of scope of this document as well because several working groups are already focusing on these aspects at the time of this writing.
+The scope of this document is to compile a list of real-life use cases characterized by long-term security requirements, which are typically challenging to update, for example no over the air update mechanisms are available. These scenarios necessitate an early implementation of post-quantum cryptography migration strategies. Consequently, mitigation mechanisms must be introduced, given the limited experience with post-quantum cryptography to date. Furthermore, it is essential to consider regional regulations that may mandate the use of hybrid cryptography in specific instances.
 
 ## Terminology
+
+EDNOTE15: some of the terminology may be removed.
 
 This document assumes that the reader is familiar with post-quantum cryptography related terms, including those defined in draft-driscoll-pqt-hybrid-terminology. The following terms are defined herein for sake of clarity:
 
 - Cryptographic agility: also referred to as "crypto-agility", despite no precise definition is available at the time of writing, some intuitive working definitions have been proposed. In {{RFC6421}}, "crypto-agility is the ability of a protocol to adapt to evolving cryptography and security requirements. This may include the provision of a modular mechanism to allow cryptographic algorithms to be updated without substantial disruption to fielded implementations. It may provide for the dynamic negotiation and installation of cryptographic algorithms within protocol implementations (think of Dynamic-Link Libraries (DLL))". A more generic definition may be found in "NIST Cryptographic Agility and Interoperability: Proceedings of a Workshop", i.e.: crypto-agility includes (1) the ability for machines to select their security algorithms in real time and based on their combined security functions; (2) the ability to add new cryptographic features or algorithms to existing hardware or software, resulting in new, stronger security features; and (3) the ability to gracefully retire cryptographic systems that have become either vulnerable or obsolete.
 
 - Manufacturer issued certificate : also referred to as "IDevID" are X.509 certificates used for authentication purposes and typically issued to a physical device, by the OEM, during the manufacturing phase. These certificate may be used to prove authenticity of the device, as an original part, and to bootstrap the device within an operational context, see draft-ietf-anima-bootstrapping-keyinfra-45.
-
-- Public Key Infrastructure (PKI): is a security framework using public key cryptography to protect the transmission of data by governing the issuance of digital certificates to protect sensitive information and to provide unique digital identities for users, devices and applications. It is widely used for applications where trust in the identity of a communication partner is required. PKIs ensure this trust by issuing, distributing, verifying and revoking digital certificates and provide services with which the affiliation of public keys and the authenticity of certificates can be reliably verified. In addition, the public key infrastructure provides directories for storing certificates and certificate revocation lists.
-
-- Signing Service (SS): as defined in the "Baseline Requirements for the Issuance and Management of Publicly-Trusted Code Signing Certificates" is an organization that signs Code on behalf of a Subscriber using a Private Key associated with a Code Signing Certificate. By extensions, we can define a Generic Signing Service (GSS) that signs Artifacts in the same way a SS signs Code. The GSS is expected to provide strong authentication means as well as secure audit trails capabilities.
 
 - Trust Anchor (TA): as defined in {{RFC4949}} a TA is an established point of trust (usually based on the authority of some person, office, or organization) from which a certificate user begins the validation of a certification path. A trust anchor may be defined as being based on a public key, a CA, a public-key certificate, or some combination or variation of those. Additionally, TAs may be imprinted within a device at manufacturing time as it is done for IDevID certificates.
 
@@ -132,8 +128,6 @@ This document assumes that the reader is familiar with post-quantum cryptography
 - Non-agile / flag day: no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
 
 # Post-quantum migration properties
-
-EDNOTE1: The properties are already listed in the terminology, in this section additional details may be added. AV: @Mike I think I read some time ago a draft, that you have authored,  defining the problem space certificates/protocols vs. post-quantum. I cannot find it anymore but maybe some of the text could be merged here. What do you think?
 
 The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{#}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
 
@@ -157,16 +151,32 @@ The purpose of this section is to define a set of migration mechanisms that can 
 TBD
 
 ## Composite KEM
+
+EDNOTE16: I would suggest to keep KEM out of the picture for the time being and focus on signatures only.
+
 TBD
 
 ## Protocol Revision (Cryptographic Agility)
+
+EDNOTE17: same as above. Additionally crypto agility is a concept quite difficult to grasp given the large amount of definitions available online. These definition that to focus on different aspects.
+
 This mechanism may require a minimal update to an existing protocol.  In some cases the protocol may already contain built in mechanisms that may be used to perform the migration.
+
+## Multiple Signatures
+
+TBD
+
+EDNOTE18: In this section we could cover multiple certificates, the isara and the camelion approach.
+
+## Stateful hash-based signatures
+
+TBD
+
+EDNOTE19: despite not being a mechanism per se sHBS are relevant in use cases like FW and SW update due to CNSA2.0 and in my understanding if sHBS is used then typically there is no need for hybrid (this should be the position of BSI at least, REF needed!)
 
 # Use cases collection {#}
 
-In this section we detail all the use cases where post-quantum is expected to be of high relevance. For each use case, one or more variation of the original use case is included. Each variation is considered to be a plausible option is a real-life deployment scenario.
-
-EDNOTE10: for each use case we need to add the category, but how to do it in a easy to read way? Maybe for the time being it would be fine to add a sentence at the end of each use case to assign a category and briefly motivate it. See example below from Secure firmware update use case.
+This section is the core this document. For each use case, we present a concise overview of the use case, the relevant categories it aligns with, and a list of potential migration methods. For each migration method, we highlight the advantages and disadvantages that stem from considering real-world deployment scenarios.
 
 ## Industrial communication protocols (that rely on IETF RFCs)
 EDNOTE11: the title is an attempt at generalizing what BACnet is and why it should be interesting to take it into account while discussing pqc migration approaches within the IETF.
@@ -189,7 +199,6 @@ The main features of BACnet/SC are:
 
 BACnet/SC's implementation adheres to established industry standards defined in IETF RFCs. Specifically the Addendum bj to ANSI/ASHRAE Standard 135-2016 references RFC 7468, when defining the format in which operational certificates and signing CA should be installed onto the target device at configuration time.
 
-### PQC relevant security aspects
 The security of the BACnet/SC protocol, as well as of similar industrial protocols, relies on TLS 1.3 (RFC 8446), therefore implications of post-quantum cryptography have to be considered in both the TLS handshake and in the X.509 certificates used for the authentication.
 
 Furthermore, the geographical locations of the BACnet/SC-enabled devices in operation may necessitate the inclusion of extra considerations related to post-quantum cryptography, like for example the use of hybrid cryptography.
@@ -204,9 +213,21 @@ This use case can be categorized as:
 
 EDNOTE12: a limited number of categories has to be defined. We might introduce a category "hybrid support required" to tag the use cases for which an approach like hybrid-composite will be helpful.
 
-## Secure firmware update
+### Suitable migration mechanisms
+TBD
 
-EDNOTE13: Use terminology from SUIT for the firmware update use case (RFC 9019). Many people in the IETF are already familiar with it.
+## Software update
+TBD
+
+### Category
+TBD
+
+### Suitable migration mechanisms
+TBD
+
+## Firmware update
+
+EDNOTE13: Use terminology from SUIT for the firmware update use case (RFC 9019). Many people in the IETF are already familiar with it. Shorten!
 
 Firmware, as defined in the {{RFC4949}}, is: computer programs and data stored in hardware -- typically in read-only memory (ROM) or programmable read-only memory (PROM) -- such that the programs and data cannot be dynamically written or modified during execution of the programs. It provides low-level access and control on the hardware.
 
@@ -218,8 +239,6 @@ The following tasks may be carried out as part of a firmware update:
 - cryptographic algorithms capabilities can be updated with a firmware update.
 
 It will not be generally possible to upgrade the security capabilities of each device because, different devices exhibit different constrains in terms of resources, deployment environment (physically accessible or not) and costs. In some cases it might be a deliberate business decision to keep a device "simple" and to not support any security update via firmware updates altogether.
-
-### Signature creation
 
 Firmware updates are typically signed by the OEM and the signature workflow can be carried by using a Public Key Infrastructure and Signing Service. These services may be owned and operated directly by the OEM or by a third party.
 
@@ -253,8 +272,6 @@ Typically the Signing Service hosts the signing private key in a highly secure e
 In the previous figure all the signing entities, hence the entire signing process, are controlled by the Manufacturer but similar constrains and considerations applies if the Signing Service is provided by a third party. Further security considerations have to be made on the communication channels involved in the exchanges that are required to implement the signature workflow.
 Additionally, the signing process described is very generic and not restricted to signing of firmware updates but could be easily extended to other use cases.
 
-### Signature validation
-
 To install a firmware update the target device will have to successfully validate the firmware signature first. The validation of the firmware signature, and its associated trust chain if applicable, will be performed against a Trust Anchor. The TA can be a X.509 certificate (or a proprietary format certificate), a plain public key or a hash of a combination of both. In general the Trust Anchor format is highly dependent on the security measures implementation by the OEM.
 An additional aspect to consider is how can the device "trust" the Trust Anchor. Typically, for hardware devices, this is done by injecting the Trust Anchor during manufacturing time and "burning" it into the hardware. Usually this also means that there is no simple mechanism that would allow to replace the Trust Anchor, e.g. in case the underlaying cryptography is no longer considered secure. Alternatively the Trust Anchor may be deployed via a firmware/software update, and to validate the signature an already trusted Trust Anchor must be present. If this approach is not viable then the initial trust must be established by using ad-hoc processes, e.g. a trusted operator may manually install the update in a trusted environment.
 
@@ -266,9 +283,12 @@ This use case can be categorized as:
 
 - "non agile", if the entity that validates the signature cannot update the Trust Anchor.
 
+### Suitable migration mechanisms
+TBD
+
 ## Trust Anchor deployment
 
-EDNOTE2: Is the content of this section OK, additional review is required.
+EDNOTE2: The content should be shortned and subsection removed.
 
 Trust Anchors, like X.509 Root CA certificates, raw public keys, etc., have to be made available before they can be used to validate a signature. In the case of remote firmware update, for example, a Trust Anchor X.509 certificate has to be deployed onto a target device before it can be used to validate a certificate chain. For "corporate IT" and "public web" type of use cases, the deployment might be somehow easier but it might take a long time before a new Trust Anchor X.509 certificate is deployed across the entire ecosystem. For post-quantum Trust Anchor there might be the additional complication that the desired underlying cryptography might not yet be supported by the target device/software/etc.
 In the following sections we attempt a description of few variation of this use case.
@@ -285,16 +305,22 @@ In the industrial context a Trust Anchor is typically deployed onto a target dev
 
 For devices where the Trust Anchor is not "burned" into a ROM, typically these are also less constrained devices, and IT equipment, it may be possible to inject post-quantum Trust Anchor via either software of firmware update mechanisms. The deployment of the post-quantum Trust Anchors may rely on existing update mechanisms and traditional cryptography, to minimize the effort. Relying on traditional cryptography to deploy post-quantum Trust Anchors implies that the new Trust Anchors have to be distributed long before there is a suspicion that traditional cryptography is vulnerable. Factoring in the lead time required to distribute the Trust Anchors widely enough to make them useful, the time window where this mechanism is suitable is further reduced.
 
-## EnvelopedData
+### Category
+TBD
 
-EDNOTE3: The general use-case covering bulk data encrypted with a public key - symmetric key hybrid. The bulk data itself remains secure through the post-quantum transition, but there is a need to find the envelopes and update the asymmetric key wrap to use a post-quantum primitive.
-
-EDNOTE4: bulk data encryption in transit and rest 1) via negotiated sessions (Ex.: TLS / IKE) and 2) via non-negotiated public key encryption (Ex.: CMS, JOSE / COSE)
+### Suitable migration mechanisms
+TBD
 
 ## Timestamping
 
 EDNOTE5: RFC 4998 - we could study this to understand how to re-sign old timestamp messages. Question: does re-signing give protection against a full break of the original algorithm.
 AV: an example is provided by "ETSI EN 319 142-1" (and "ETSI EN 319 142-2"), the standards define PDF advanced electronic signatures which have legal value EU. I assume that this concept may be extended to similar use cases, i.e., wherever long term validation is required new time-stamps may be added using post-quantum cryptography
+
+### Category
+TBD
+
+### Suitable migration mechanisms
+TBD
 
 ## CMS (S/MIME)
 
@@ -302,7 +328,11 @@ EDNOTE6: You can do infinite nesting in CMS.
 
 EDNOTE7: The difficulty here will be non-uniform adoption: there are many many many email clients in the world at varying levels of maturity and maintenance. It is expected that some email clients will support PQ algorithms quickly while others may take more time or never adopt them fully. Suggestion to IETF: Study be put into RFC5652 the Cryptographic Message Syntax into signing messages with multiple signatures in a way that un-supported signatures will be ignored (likely this already "just works"). Email encryption probably requires either a flag day (you simply cannot encrypt a message for a recipient if you do not understand their PQ certificate)
 
+### Category
+TBD
 
+### Suitable migration mechanisms
+TBD
 
 ## Additional use cases
 
