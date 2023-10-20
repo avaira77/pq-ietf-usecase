@@ -74,6 +74,7 @@ informative:
   RFC8446:
   RFC9019:
   I-D.ietf-pquip-pqc-engineers:
+  I-D.ietf-pquip-pqt-hybrid-terminology:
   NIST.SP.800-208:
   NIST.FIPS.186-5:
   RFC8391:
