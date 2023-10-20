@@ -83,23 +83,13 @@ The document is structured into the following sections: "Post-quantum migration 
 
 ## Problem Statement
 
-EDNOTE14: I think this section is now obsolete
+Post-quantum cryptography comes with two main challenges:
 
-Post-quantum cryptography introduces two main types of challenges:
+- technical challenges: related to the difficulties of adopting and implementing the new post-quantum cryptographic algorithms. This includes understanding how these algorithms work and integrating them into existing systems securely.
 
-- technical challenges, related to the usage of the new post-quantum cryptographic algorithms, and
+- "sorting/clustering" challenges: that arise from the limitations of post-quantum cryptographic algorithms. Organizations face the complexity of selecting the most suitable algorithm for a given use case. With numerous algorithms available and diverse use case requirements, it becomes challenging to identify the best-fit solution.
 
-- "sorting/clustering" challenges related to the broad applicability of these algorithms and the uncertainty of which approach is a best fit within the boundaries of a selected use case. The large number of algorithms that can be used, and the diversity of requirements that come from post-quantum relevant use cases makes it difficult for organizations and businesses to deliver post-quantum secure solutions.
-
-The main aspects of the problem space are:
-
-- Cryptographically relevant quantum computers pose a treat to asymmetric cryptography, i.e., for all practical purposes it must be considered broken, and the security of symmetric cryptography must be considered degraded.
-
-- No multi-purpose post-quantum cryptographic algorithm will be standardized in the forseeable future, rather a number of single-purpose post-quantum algorithms will be standardized at the same time. Three digital signature algorithms and one key encampsulation algorithm have been defined at the end of round 3 of NIST standardization. All post-quantum algorithms defined so far exhibit diverse features making them unfit for a simple drop-in replacement of existing traditional algorithms.
-
-- Public Key Infrastructures and digital Signing Services will have to be upgraded with post-quantum capabilities long before they will be required.
-
-- To the authors' knowledge, very limited discussions are taking place in public working groups, to discuss about post-quantum relevant use cases. This list may be of help in defining recommendations for businesses or organization in defining their post-quantum deployment strategies.
+This document aims at providing means to overcome the "sorting/clustering" challenges and identify best-fit migration solutions.
 
 ## Scope
 
@@ -109,7 +99,7 @@ The scope of this document is to compile a list of real-life use cases character
 
 EDNOTE15: some of the terminology may be removed.
 
-This document assumes that the reader is familiar with post-quantum cryptography related terms, including those defined in draft-driscoll-pqt-hybrid-terminology. The following terms are defined herein for sake of clarity:
+This document assumes that the reader is familiar with post-quantum cryptography related terms, including those defined in draft-driscoll-pqt-hybrid-terminology.
 
 - Cryptographic agility: also referred to as "crypto-agility", despite no precise definition is available at the time of writing, some intuitive working definitions have been proposed. In {{RFC6421}}, "crypto-agility is the ability of a protocol to adapt to evolving cryptography and security requirements. This may include the provision of a modular mechanism to allow cryptographic algorithms to be updated without substantial disruption to fielded implementations. It may provide for the dynamic negotiation and installation of cryptographic algorithms within protocol implementations (think of Dynamic-Link Libraries (DLL))". A more generic definition may be found in "NIST Cryptographic Agility and Interoperability: Proceedings of a Workshop", i.e.: crypto-agility includes (1) the ability for machines to select their security algorithms in real time and based on their combined security functions; (2) the ability to add new cryptographic features or algorithms to existing hardware or software, resulting in new, stronger security features; and (3) the ability to gracefully retire cryptographic systems that have become either vulnerable or obsolete.
 
