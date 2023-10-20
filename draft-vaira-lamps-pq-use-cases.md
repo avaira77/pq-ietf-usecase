@@ -111,15 +111,10 @@ The document is structured into the following sections: "Post-quantum migration 
 
 ## Problem Statement
 
-TODO:
-
-- we need solutions to migrate long lived assertions
-- regulatory bodies and standardization bodies make use introduce pqc (add links if possible)
-- we have a list of finalist
-- we are not sufficiently confident about long term security on a 5-10 years timescale
-- we are not sure about CRQC will break traditional crypto, sHBS are the only one we know for a fact to be secure
-- what is the best solution for any use case
-- explain different proposals and ref to other documents -> ref to pqc for engineers
+Ensuring security of long lived digital signatures is a key aspect.
+Post-quantum cryptographic signature algorithm NIST round 3 finalists have been defined. Concerns regarding the long-term security, e.g., 10+ years, still remain. To date, only stateful Hash-Based Signature schemes are considered secure.
+Regulatory bodies mandate the inclusion of post-quantum cryptographic, and in some case of hybrid cryptography (TODO: add references), to prepare for the quantum threat.
+To date, the optimal migration mechanisms, to ensure the security of long-lived digital signatures across diverse use cases, has still to be identified.
 
 ## Scope
 
