@@ -67,21 +67,24 @@ informative:
 
 --- abstract
 
-This document offers a comprehensive overview of various use cases for post-quantum cryptography. As the reliance on these algorithms continues to grow in the realm of securing digital systems, including security protocols, digital signatures, and X.509 certificates, it serves as a valuable resource for organizations aiming to formulate strategies for post-quantum adoption. The document systematically identifies and assesses critical applications, providing valuable insights into how post-quantum cryptography can be seamlessly integrated into these systems. Furthermore, it explores the concept of hybrid cryptography and its applicability within each identified use case, with a specific focus on identifying the most suitable hybrid mechanism where applicable.
+This document focuses on the critical challenge of migrating long-term security assertions with security requirements spanning over a decade, encompassing X.509 certificates, including those that serve as IDevID credentials, signed firmware/software, and other electronic artifacts. We investigate a range of migration mechanisms, specifically hybrid cryptography and the feasibility of stateful Hash-Based Signatures (HBS) schemes, including its pros and cons. To offer a comprehensive context, we present a list of use cases centered around long-lived security assertions, categorize them, and evaluate them against the various migration approaches identified. We also aim at listing pros and cons associated with each method.
 
 --- middle
 
 # Introduction
 
-EDNOTE14: reduce the amount of text, keep it short and to the point. What we expect from the reader?
+The purpose of this document is to compile a list of real-world use cases, focusing on long-term security assertions, and categorize them according to their post-quantum migration properties. This document additionally aims at evaluating, for each use case category, a set of migration mechanisms, like hybrid cryptography, including multiple and composite signatures, and the feasibility of using stateful Hash-Based Signatures (HBS) schemes,  evaluating the pros and cons of each approach.
 
-The most important limitations of post-quantum algorithms, in comparison to traditional RSA or ECC, are that a post-quantum algorithm can either be used to digitally sign or encrypt data and, that the size of key pairs, signatures and ciphertexts can differ several orders of magnitude from one algorithm to the other. It follows that post-quantum algorithms cannot be simply dropped in existing solutions but they rather need to be carefully chosen depending on the use case they will support. In this document, we want to provide a collection of use cases, and sort them into categories on the basis of the key features they have in common. Ultimately, this document aims at providing the foundation to later on define solution blueprints, i.e. which cryptographic algorithms and how to deploy, manage and use them in the context of a post-quantum PKI, post-quantum Signing Service and any other relevant contexts.
+The document is structured into the following sections: "Post-quantum migration properties", defines the main features of each category;  "Post-quantum migration mechanisms", lists possible migration approaches; "Use case collection", describes, at a high level, of the use cases at hand, including prominent migration properties and an analysis of the pros and cons for each of the migration mechanisms applicable.
 
 ## Requirements Language
 
 {::boilerplate bcp14-tagged}
 
 ## Problem Statement
+
+EDNOTE14: I think this section is now obsolete
+
 Post-quantum cryptography introduces two main types of challenges:
 
 - technical challenges, related to the usage of the new post-quantum cryptographic algorithms, and
