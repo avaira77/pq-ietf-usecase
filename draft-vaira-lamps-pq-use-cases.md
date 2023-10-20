@@ -145,7 +145,7 @@ An extension of the existing standards would be needed to integrate the required
 
 TBD
 
-EDNOTE18: In this section we could cover multiple certificates, the isara and the camelion approach.
+EDNOTE1: In this section we could also cover multiple certificates as well as "Isara" and "Chameleon" approaches to PQC X.509 certificates.
 
 ## Composite Signatures
 TBD
@@ -155,7 +155,7 @@ TBD
 This section is the core this document. For each use case, we present a concise overview of the use case, the relevant categories it aligns with, and a list of potential migration methods. For each migration method, we highlight the advantages and disadvantages that stem from considering real-world deployment scenarios.
 
 ## Industrial communication protocols (that rely on IETF RFCs)
-EDNOTE11: the title is an attempt at generalizing what BACnet is and why it should be interesting to take it into account while discussing pqc migration approaches within the IETF.
+EDNOTE2: the title is an attempt at generalizing what BACnet is and why it should be interesting to take it into account while discussing pqc migration approaches within the IETF.
 
 Several industrial communication protocols, traditionally orthogonal to IP network infrastructure, are progressively being updated to make use of standard IP network infrastructure hence rely standard security mechanisms, like for example TLS 1.3.
 
@@ -190,8 +190,7 @@ TBD
 
 ## Firmware update
 
-EDNOTE22: generic note "we should contribute really crisp use cases that we are familiar with", we could later on rephrase this use case to "update distributed industrial systems" for example like here: https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-async-enroll-00#section-3.2
-EDNOTE13: Use terminology from SUIT for the firmware update use case (RFC 9019). Many people in the IETF are already familiar with it. Shorten!
+EDNOTE3: As a generic note "we should contribute short use cases that we are familiar with", we could later on rephrase this use case to "update distributed industrial systems" for example like here: https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-async-enroll-00#section-3.2
 
 Firmware, defined in {{RFC4949}}, refers to computer programs and data stored in hardware, typically in read-only memory (ROM) or programmable read-only memory (PROM). These programs and data are non-modifiable during execution, offering low-level hardware control.
 
@@ -245,14 +244,11 @@ TBD
 
 ## Additional use cases
 
-EDNOTE9: TO-DOs:
+EDNOTE8: TO-DOs:
 
-- add additional post-quantum relevant use cases which cover aspects not covered so far, also use cases that are not common in our line of work (e.g., FAA airworthiness certifications, medical records, etc.),
-- identify additional parties that would like to join this effort,
+- add additional post-quantum relevant use cases which cover aspects not covered so far, this could also include use cases that are not common in our line of work (e.g., FAA airworthiness certifications, medical records, etc.), maybe contributed by other participants,
 - any party that would be interested in contributing in this work may add additional post-quantum relevant use cases that are closer to her experience/field,
-- the goal is to cover as much ground as possible in terms of use cases and to be able to define categories of use cases. A possible follow-up document could come up with proposals about which set of post-quantum algorithms, certificate-type, PKI/Signature Service component, etc. is the best fit for the give use case,
-- this document should provide the ground for discussions in other documents where more analysis about whether each use case will have problematic points with regards to PQ migration and whether the IETF needs to take an active role in updating protocols or providing operational guidance,
-- additionally, this document can  be referenced in the technical discussions to help frame/structure the discussion, where needed.
+- the goal is to cover as much ground as possible in terms of use cases and to be able to define categories of use cases,
 
 # IANA Considerations {#IANA}
 
@@ -264,27 +260,23 @@ This document should not affect the security of the Internet.
 
 --- back
 
-# Appendix 1
-
-## Post-quantum migration properties
-
-EDNOTE: we have the risk of having too many empty sections in the beginning and divert attention of the reader from reading the core of the document. Move it to the Appendix, "it can be used later on to help classify the use case"
+# Appendix 1 - post-quantum migration properties
 
 The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{#}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
 
-### Active Negotiation
+## Active Negotiation
 
 TBD
 
 Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
 
-### Passive Negotiation
+## Passive Negotiation
 
 TBD
 
 Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
 
-### Non Agile
+## Non Agile
 
 TBD
 
