@@ -97,9 +97,7 @@ The scope of this document is to compile a list of real-life use cases character
 
 ## Terminology
 
-EDNOTE15: some of the terminology may be removed.
-
-This document assumes that the reader is familiar with post-quantum cryptography related terms, including those defined in draft-driscoll-pqt-hybrid-terminology.
+This document makes the assumption that the reader is familiar with post-quantum cryptography terminology and with draft-ietf-pquip-pqt-hybrid-terminology. The subsequent section provides clarifications on terminology to facilitate a smoother reading experience.
 
 - Cryptographic agility: also referred to as "crypto-agility", despite no precise definition is available at the time of writing, some intuitive working definitions have been proposed. In {{RFC6421}}, "crypto-agility is the ability of a protocol to adapt to evolving cryptography and security requirements. This may include the provision of a modular mechanism to allow cryptographic algorithms to be updated without substantial disruption to fielded implementations. It may provide for the dynamic negotiation and installation of cryptographic algorithms within protocol implementations (think of Dynamic-Link Libraries (DLL))". A more generic definition may be found in "NIST Cryptographic Agility and Interoperability: Proceedings of a Workshop", i.e.: crypto-agility includes (1) the ability for machines to select their security algorithms in real time and based on their combined security functions; (2) the ability to add new cryptographic features or algorithms to existing hardware or software, resulting in new, stronger security features; and (3) the ability to gracefully retire cryptographic systems that have become either vulnerable or obsolete.
 
@@ -219,51 +217,15 @@ TBD
 
 EDNOTE13: Use terminology from SUIT for the firmware update use case (RFC 9019). Many people in the IETF are already familiar with it. Shorten!
 
-Firmware, as defined in the {{RFC4949}}, is: computer programs and data stored in hardware -- typically in read-only memory (ROM) or programmable read-only memory (PROM) -- such that the programs and data cannot be dynamically written or modified during execution of the programs. It provides low-level access and control on the hardware.
+Firmware, defined in {{RFC4949}}, refers to computer programs and data stored in hardware, typically in read-only memory (ROM) or programmable read-only memory (PROM). These programs and data are non-modifiable during execution, offering low-level hardware control.
 
-Support for secure firmware update is key to ensure crypto-agility and that a device is operable in the field for long time, for example in industrial applications a device may be in the field for several decades.
-The following tasks may be carried out as part of a firmware update:
+Secure firmware updates are crucial for ensuring device security and long-term operation, especially in industrial, and critical infrastructure fields, where devices can stay active for decades. Such updates encompass tasks like introducing new trust anchors and upgrading cryptographic algorithm capabilities. However, upgrading every device's security capabilities isn't always feasible due to resource, accessibility, and cost constraints. Some "simple" devices may not support secure firmware updates at all.
 
-- new trust anchors may be rolled out as part of firmware updates and,
+Firmware updates are typically authenticated by the Original Equipment Manufacturer (OEM) by means of a digital signing process. At a high level, a usual process involves, a firmware build server, which requests a signature from a signing service. The signing service, often safeguarding the signing private key in secure environments like Hardware Security Modules (HSMs), returns the signature after authenticating the request.
 
-- cryptographic algorithms capabilities can be updated with a firmware update.
+Subsequently the firmware is distributed to target devices, which in turn must validate the firmware signature against a Trust Anchor (TA). The TA can be an X.509 certificate, a public key, or a hash of a combination of both, depending on the OEM's security measures.
 
-It will not be generally possible to upgrade the security capabilities of each device because, different devices exhibit different constrains in terms of resources, deployment environment (physically accessible or not) and costs. In some cases it might be a deliberate business decision to keep a device "simple" and to not support any security update via firmware updates altogether.
-
-Firmware updates are typically signed by the OEM and the signature workflow can be carried by using a Public Key Infrastructure and Signing Service. These services may be owned and operated directly by the OEM or by a third party.
-
-At a high level the signature process can be described with the following steps:
-
-1. the to-be-signed firmware updates are delivered to a build server (e.g. version control repository),
-1. the build server in turn requests a signature at a Signing Service,
-1. the Signing Service authenticates the requests and returns a signature back.
-
-Typically the Signing Service hosts the signing private key in a highly secure environment, e.g. in a Hardware Security Modules (HSM) and performs auditable access control.
-
-~~~~~~~~~~
-+-------------------------------------------------------+
-|                         +---------------------------+ |
-|                         |   +-------------------+   | |
-| +---------------+       |   |     +-------+     |   | |
-| | +-----------+ |       |   |     |Signing|     |   | |
-| | |SW artifact| |<----->|   |     |Key    |     |   | |
-| | +-----------+ |       |   |     +-------+     |   | |
-| |               |       |   |                   |   | |
-| | SW repository |       |   |  Signing Service  |   | |
-| +---------------+       |   +-------------------+   | |
-|                         |                           | |
-|                         |                           | |
-|                         |   High security network   | |
-| OEM network             +---------------------------+ |
-+-------------------------------------------------------+
-~~~~~~~~~~
-{: #Central-sig-serv title="central Signing Service"}
-
-In the previous figure all the signing entities, hence the entire signing process, are controlled by the Manufacturer but similar constrains and considerations applies if the Signing Service is provided by a third party. Further security considerations have to be made on the communication channels involved in the exchanges that are required to implement the signature workflow.
-Additionally, the signing process described is very generic and not restricted to signing of firmware updates but could be easily extended to other use cases.
-
-To install a firmware update the target device will have to successfully validate the firmware signature first. The validation of the firmware signature, and its associated trust chain if applicable, will be performed against a Trust Anchor. The TA can be a X.509 certificate (or a proprietary format certificate), a plain public key or a hash of a combination of both. In general the Trust Anchor format is highly dependent on the security measures implementation by the OEM.
-An additional aspect to consider is how can the device "trust" the Trust Anchor. Typically, for hardware devices, this is done by injecting the Trust Anchor during manufacturing time and "burning" it into the hardware. Usually this also means that there is no simple mechanism that would allow to replace the Trust Anchor, e.g. in case the underlaying cryptography is no longer considered secure. Alternatively the Trust Anchor may be deployed via a firmware/software update, and to validate the signature an already trusted Trust Anchor must be present. If this approach is not viable then the initial trust must be established by using ad-hoc processes, e.g. a trusted operator may manually install the update in a trusted environment.
+Usually, the device trusts the TA through injection at manufacturing time, making it challenging, if not impossible to replace it outside the factory. In same cases, the TA may be replaced and deployed via firmware/software updates, delivered, for example, over the air or through manual installation by a trusted operator in a secure environment, again depending on the OEM's security measures.
 
 ### Category
 
@@ -278,22 +240,13 @@ TBD
 
 ## Trust Anchor deployment
 
-EDNOTE2: The content should be shortned and subsection removed.
+Trust Anchors, such as X.509 Root CA certificates and raw public keys, must be made accessible before they can be used for signature validation. In scenarios like remote software updates, a Trust Anchor X.509 certificate, for instance, must be installed on a target device to enable the validation of certificate chains. While deployment of Trust Anchors may be relatively straightforward for "corporate IT" and "public web" applications, it can still be a time-consuming process to ensure that a new Trust Anchor X.509 certificate is propagated throughout the entire ecosystem. Additionally, when dealing with post-quantum Trust Anchors, an extra layer of complexity arises as the desired underlying cryptography may not yet be supported by the target device or software.
 
-Trust Anchors, like X.509 Root CA certificates, raw public keys, etc., have to be made available before they can be used to validate a signature. In the case of remote firmware update, for example, a Trust Anchor X.509 certificate has to be deployed onto a target device before it can be used to validate a certificate chain. For "corporate IT" and "public web" type of use cases, the deployment might be somehow easier but it might take a long time before a new Trust Anchor X.509 certificate is deployed across the entire ecosystem. For post-quantum Trust Anchor there might be the additional complication that the desired underlying cryptography might not yet be supported by the target device/software/etc.
-In the following sections we attempt a description of few variation of this use case.
+Two common variations of this use case are:
 
-### Injection within a factory
+- injection within a factory: in industrial contexts, Trust Anchors are typically injected into target devices during the manufacturing phase. Devices leaving the assembly line do not possess any credentials or Trusted Anchors initially. To bootstrap a Trust Anchor, the device is placed in a physically secure environment accessible only to trustworthy personnel. This injection can occur during manufacturing or when a device is being resold, but it's critical to note that not all scenarios support this method, potentially requiring the return of the device to the OEM for post-quantum Trust Anchor injection or it may be even not supported at all.
 
-In the industrial context a Trust Anchor is typically deployed onto a target device during manufacturing time. A device, which is coming out of the assembly line, does not hold any credentials nor Trusted Anchors yet. Therefore in order to inject a Trusted Anchor in a trustworthy manner, it may be placed in a physically secure environment where only trustworthy staff members have access. The Trust Anchor injection in a factory may take place at:
-
-- manufacturing time, i.e. when the device is being assembled hence all the steps are taking place within a secure environment under sole control of the OEM, or during
-
-- reservicing, i.e. when the device is being re-sold hence all the steps are taking place within an environment that is outside the control of the OEM. This use case may be not supported in all scenarios and it might be necessary to return the device to the OEM to inject a post-quantum Trust Anchor.
-
-### Injection via software and firmware updates
-
-For devices where the Trust Anchor is not "burned" into a ROM, typically these are also less constrained devices, and IT equipment, it may be possible to inject post-quantum Trust Anchor via either software of firmware update mechanisms. The deployment of the post-quantum Trust Anchors may rely on existing update mechanisms and traditional cryptography, to minimize the effort. Relying on traditional cryptography to deploy post-quantum Trust Anchors implies that the new Trust Anchors have to be distributed long before there is a suspicion that traditional cryptography is vulnerable. Factoring in the lead time required to distribute the Trust Anchors widely enough to make them useful, the time window where this mechanism is suitable is further reduced.
+- injection via software and firmware updates: for devices where the Trust Anchor is not burned onto the device, for example in less constrained devices and IT equipment, post-quantum Trust Anchors can be injected through software or firmware update mechanisms. The deployment of these Trust Anchors may leverage existing update mechanisms and traditional cryptography to minimize effort. However, this approach necessitates the distribution of the new Trust Anchors well in advance of any suspicion that traditional cryptography may become vulnerable. Given the lead time required to ensure widespread distribution, the time window where this mechanism is suitable is further reduced.
 
 ### Category
 TBD
