@@ -114,10 +114,8 @@ The document is structured into the following sections: "Post-quantum migration 
 
 ## Problem Statement
 
-Ensuring security of long lived digital signatures is a key aspect.
-Post-quantum cryptographic signature algorithm NIST round 3 finalists have been defined. Concerns regarding the long-term security, e.g., 10+ years, still remain. To date, only stateful Hash-Based Signature schemes are considered secure.
-Regulatory bodies mandate the inclusion of post-quantum cryptographic, and in some case of hybrid cryptography (TODO: add references), to prepare for the quantum threat.
-To date, the optimal migration mechanisms, to ensure the security of long-lived digital signatures across diverse use cases, has still to be identified.
+The transition to post-quantum cryptography poses a distinctive challenge in the domain of modern digital cryptography. This peculiarity stems from the absence of complete trust in both the outgoing and incoming cryptographic algorithms, crucial for ensuring data security throughout their required lifespans. This is of particular significance in guaranteeing the security of long-lived digital signatures, which are integral to secure software update workflows and manufacturer certificates, among other applications. Despite having NIST finalists for post-quantum cryptographic signature algorithms, concerns persist regarding their long-term security. At present, only stateful Hash-Based Signature schemes are considered secure.
+At the same time, regulatory bodies (TODO: add references) mandate the incorporation of post-quantum cryptographic techniques, and in some cases, hybrid cryptography, as a proactive response to the quantum threat. As of now, the most effective strategies for transitioning to protect long-lasting digital signatures across diverse usage scenarios remain uncertain.
 
 ## Scope
 
