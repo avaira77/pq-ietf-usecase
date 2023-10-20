@@ -83,6 +83,8 @@ informative:
   RFC8446:
   RFC8551:
   RFC5652:
+  I-D.ounsworth-pq-composite-sigs:
+  I-D.ounsworth-pq-composite-keys:
   ASN.1:
     title: >
       Information Technology — ASN.1 encoding rules:
@@ -148,7 +150,12 @@ TBD
 EDNOTE1: In this section we could also cover multiple certificates as well as "Isara" and "Chameleon" approaches to PQC X.509 certificates.
 
 ## Composite Signatures
-TBD
+
+The goal of composite signatures is to define a signature object to be used with any protocol or format. It is supposed to contain two signatures in a container that have been generated using two different cryptographic algorithms. The goal of this approach is to define a signature that offers the security properties of a classical signature and another signature, e.g., that is secure when attacked by a quantum computer, in the protocol or format without having to adapt them.
+
+In order for this approach to be applicable in arbitrary protocols and formats, a composite key must be defined in addition to the composite signature. According to the definition of composite signatures, such a composite public key must contain two public keys with their respective parameters as well as composite private key must contain two private keys.
+
+This concept is described in Composite Signatures For Use In Internet PKI {{I-D.ounsworth-pq-composite-sigs}} and Composite Public and Private Keys For Use In Internet PKI {{I-D.ounsworth-pq-composite-keys}} in more detail.
 
 # Use cases collection {#}
 
