@@ -151,7 +151,7 @@ EDNOTE1: In this section we could also cover multiple certificates as well as "I
 
 ## Composite Signatures
 
-The goal of composite signatures is to define a signature object to be used with any protocol or format. It is supposed to contain two signatures in a container that have been generated using two different cryptographic algorithms. The goal of this approach is to define a signature that offers the security properties of a classical signature and another signature, e.g., that is secure when attacked by a quantum computer, in the protocol or format without having to adapt them.
+The goal of composite signatures is to define a signature object to be used with any protocol or format. It is supposed to contain two signatures in a container that have been generated using two different cryptographic algorithms. The goal of this approach is to define a signature format, for the verification of which both contained signatures must be verified. In this way, the security properties of the classical signature and another signature that is secure when attacked by a quantum computer are used in the protocol or format without having to adapt them.
 
 In order for this approach to be applicable in arbitrary protocols and formats, a composite key must be defined in addition to the composite signature. According to the definition of composite signatures, such a composite public key must contain two public keys with their respective parameters as well as composite private key must contain two private keys.
 
