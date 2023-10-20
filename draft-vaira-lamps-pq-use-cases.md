@@ -4,16 +4,16 @@ ipr: trust200902
 cat: info
 submissiontype: IETF
 area: "Security"
-workgroup: "Post-Quantum Use In Protocols (pquip)"
+workgroup: "Post-Quantum Use In Protocols"
 venue:
-  group: "Limited Additional Mechanisms for PKIX and SMIME"
+  group: "Post-Quantum Use In Protocols"
   type: "Working Group"
-  mail: "spasm@ietf.org"
-  arch: "https://mailarchive.ietf.org/arch/browse/spasm/"
+  mail: "pqc@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/pqc/"
   github: "avaira77/pq-ietf-usecase"
   latest: "https://avaira77.github.io/pq-ietf-usecase/draft-vaira-lamps-pq-use-cases.html"
 
-docname: draft-vaira-lamps-pq-use-cases-00
+docname: draft-vaira-pquip-pqc-use-cases-00
 
 title: Post-quantum cryptography use case
 abbrev: PQC use cases
@@ -23,30 +23,49 @@ kw:
   - PQC use cases
 author:
 - name: Antonio Vaira
-  org: Siemens AG
-  street: Otto Hahn Ring 6
+  org: Siemens
+  abbrev: Siemens
+  street: Werner-von-Siemens-Strasse 1
+  code: '80333'
   city: Munich
-  code: 81739
-  country: DE
+  country: Germany
   email: antonio.vaira@siemens.com
+  uri: https://www.siemens.com
 - name: Hendrik Brockhaus
-  org: Siemens AG
+  org: Siemens
+  abbrev: Siemens
+  street: Werner-von-Siemens-Strasse 1
+  code: '80333'
+  city: Munich
+  country: Germany
   email: hendrik.brockhaus@siemens.com
-- name: Mike Ounsworth
-  org: Entrust Limited
-  street: 2500 Solandt Road -- Suite 100
-  city: Ottawa, Ontario
-  code: K2K 3G5
-  country: Canada
-  email: mike.ounsworth@entrust.com
+  uri: https://www.siemens.com
 - name: John Gray
-  org: Entrust Limited
+  org: Entrust
+  abbrev: Entrust
+  street: 1187 Park Place
+  region: MN
+  code: '55379'
+  city: Minneapolis
+  country: United States of America
   email: john.gray@entrust.com
+  uri: https://www.entrust.com
+- name: Mike Ounsworth
+  org: Entrust
+  abbrev: Entrust
+  street: 1187 Park Place
+  region: MN
+  code: '55379'
+  city: Minneapolis
+  country: United States of America
+  email: mike.ounsworth@entrust.com
+  uri: https://www.entrust.com
 
 normative:
   RFC5234:
 
 informative:
+  IEEE.802.1AR-2018: DOI.10.1109/IEEESTD.2018.8423794
   RFC4949:
   RFC4998:
   RFC5652:
@@ -83,13 +102,15 @@ The document is structured into the following sections: "Post-quantum migration 
 
 ## Problem Statement
 
-Post-quantum cryptography comes with two main challenges:
+TODO:
 
-- technical challenges: related to the difficulties of adopting and implementing the new post-quantum cryptographic algorithms. This includes understanding how these algorithms work and integrating them into existing systems securely.
-
-- "sorting/clustering" challenges: that arise from the limitations of post-quantum cryptographic algorithms. Organizations face the complexity of selecting the most suitable algorithm for a given use case. With numerous algorithms available and diverse use case requirements, it becomes challenging to identify the best-fit solution.
-
-This document aims at providing means to overcome the "sorting/clustering" challenges and identify best-fit migration solutions.
+- we need solutions to migrate long lived assertions
+- regulatory bodies and standardization bodies make use introduce pqc (add links if possible)
+- we have a list of finalist
+- we are not sufficiently confident about long term security on a 5-10 years timescale
+- we are not sure about CRQC will break traditional crypto, sHBS are the only one we know for a fact to be secure
+- what is the best solution for any use case
+- explain different proposals and ref to other documents -> ref to pqc for engineers
 
 ## Scope
 
@@ -97,41 +118,13 @@ The scope of this document is to compile a list of real-life use cases character
 
 ## Terminology
 
+TODO: write a sentence that we use terminology from pqc drafts 5280, SUIT, 4949, IEEE 802.1AR
+
 This document makes the assumption that the reader is familiar with post-quantum cryptography terminology and with draft-ietf-pquip-pqt-hybrid-terminology. The subsequent section provides clarifications on terminology to facilitate a smoother reading experience.
 
-- Cryptographic agility: also referred to as "crypto-agility", despite no precise definition is available at the time of writing, some intuitive working definitions have been proposed. In {{RFC6421}}, "crypto-agility is the ability of a protocol to adapt to evolving cryptography and security requirements. This may include the provision of a modular mechanism to allow cryptographic algorithms to be updated without substantial disruption to fielded implementations. It may provide for the dynamic negotiation and installation of cryptographic algorithms within protocol implementations (think of Dynamic-Link Libraries (DLL))". A more generic definition may be found in "NIST Cryptographic Agility and Interoperability: Proceedings of a Workshop", i.e.: crypto-agility includes (1) the ability for machines to select their security algorithms in real time and based on their combined security functions; (2) the ability to add new cryptographic features or algorithms to existing hardware or software, resulting in new, stronger security features; and (3) the ability to gracefully retire cryptographic systems that have become either vulnerable or obsolete.
-
-- Manufacturer issued certificate : also referred to as "IDevID" are X.509 certificates used for authentication purposes and typically issued to a physical device, by the OEM, during the manufacturing phase. These certificate may be used to prove authenticity of the device, as an original part, and to bootstrap the device within an operational context, see draft-ietf-anima-bootstrapping-keyinfra-45.
-
-- Trust Anchor (TA): as defined in {{RFC4949}} a TA is an established point of trust (usually based on the authority of some person, office, or organization) from which a certificate user begins the validation of a certification path. A trust anchor may be defined as being based on a public key, a CA, a public-key certificate, or some combination or variation of those. Additionally, TAs may be imprinted within a device at manufacturing time as it is done for IDevID certificates.
-
-- Secure Boot: is a security standard whose purpose it to ensure that only software trusted by the OEM is used during the boot phase of a device. At boot time of a device, the firmware checks the signature of each component of the boot software. The device will boot upon successful validation of the digital signatures of each software component involved in the boot process. The TAs required to validate the signatures have to be stored onto the device, e.g. within its firmware. EDNOTE20: we should align this terminology with SUIT RFC9019.
-
-- Stateful hash-based signature scheme: is a signature scheme whose private key changes over time and if a secret key state is used twice, all cryptographic security guarantees are lost. As a consequence of that, it becomes feasible to forge a signature on a new message. At the time of this writing there are two RFC that specify XMSS/XMSS^MT and LMS/HSS and the NIST SP 800 208 that describes deployment strategies.
-
-# Post-quantum migration properties
-
-The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{#}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
-
-## Active Negotiation
-
-TBD
-
-Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
-
-## Passive Negotiation
-
-TBD
-
-Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
-
-## Non Agile
-
-TBD
-
-Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
-
 # Post-quantum migration mechanisms
+
+EDNOTE: it should be very short, it could be as simple as bullet list, ref other documents, e.g. sHBS -> NIST docs, RFC, multiple sig, point to other work, *composite hybrid point to drafts
 
 The purpose of this section is to define a set of migration mechanisms that can be used by each of the use-cases in {{#}} in a consistent way.
 
@@ -191,23 +184,10 @@ The security of the BACnet/SC protocol, as well as of similar industrial protoco
 
 Furthermore, the geographical locations of the BACnet/SC-enabled devices in operation may necessitate the inclusion of extra considerations related to post-quantum cryptography, like for example the use of hybrid cryptography.
 
-### Category
-
-This use case can be categorized as:
-
-- "active negotiation", BACnet/SC hubs and spokes authenticate against each other frequently, for example on a daily basis.
-
-- "Long-term migration strategies": The devices are rarely upgraded because they are typically operated in environments with limited access. Additionally, the BACnet/SC standards heavily rely on IETF RFC. To comply with regional requirements for supporting hybrid cryptography, they are prime candidates for implementing composite-hybrid mechanisms.
-
-EDNOTE12: a limited number of categories has to be defined. We might introduce a category "hybrid support required" to tag the use cases for which an approach like hybrid-composite will be helpful.
-
 ### Suitable migration mechanisms
 TBD
 
 ## Software update
-TBD
-
-### Category
 TBD
 
 ### Suitable migration mechanisms
@@ -215,6 +195,7 @@ TBD
 
 ## Firmware update
 
+EDNOTE22: generic note "we should contribute really crisp use cases that we are familiar with", we could later on rephrase this use case to "update distributed industrial systems" for example. 
 EDNOTE13: Use terminology from SUIT for the firmware update use case (RFC 9019). Many people in the IETF are already familiar with it. Shorten!
 
 Firmware, defined in {{RFC4949}}, refers to computer programs and data stored in hardware, typically in read-only memory (ROM) or programmable read-only memory (PROM). These programs and data are non-modifiable during execution, offering low-level hardware control.
@@ -234,14 +215,6 @@ These devices are typically deployed in highly regulated environments, in remote
 - Smart cards – used for authenticating to workstations and buildings, or electronic document signing.
 - Security Tokens – such as FIDO2, cheap devices that users typically will typically not patch.
 
-### Category
-
-This use case can be categorized as:
-
-- "passive negotiation", if the entity that validates the firmware signature has a mechanism to update the Trust Anchor relied upon during signature validation. This is due to the fact that the SW package may be delivered with multiple signatures that use either traditional and/or post-quantum cryptography;
-
-- "non agile", if the entity that validates the signature cannot update the Trust Anchor.
-
 ### Suitable migration mechanisms
 TBD
 
@@ -255,9 +228,6 @@ Two common variations of this use case are:
 
 - injection via software and firmware updates: for devices where the Trust Anchor is not burned onto the device, for example in less constrained devices and IT equipment, post-quantum Trust Anchors can be injected through software or firmware update mechanisms. The deployment of these Trust Anchors may leverage existing update mechanisms and traditional cryptography to minimize effort. However, this approach necessitates the distribution of the new Trust Anchors well in advance of any suspicion that traditional cryptography may become vulnerable. Given the lead time required to ensure widespread distribution, the time window where this mechanism is suitable is further reduced.
 
-### Category
-TBD
-
 ### Suitable migration mechanisms
 TBD
 
@@ -265,9 +235,6 @@ TBD
 
 EDNOTE5: RFC 4998 - we could study this to understand how to re-sign old timestamp messages. Question: does re-signing give protection against a full break of the original algorithm.
 AV: an example is provided by "ETSI EN 319 142-1" (and "ETSI EN 319 142-2"), the standards define PDF advanced electronic signatures which have legal value EU. I assume that this concept may be extended to similar use cases, i.e., wherever long term validation is required new time-stamps may be added using post-quantum cryptography
-
-### Category
-TBD
 
 ### Suitable migration mechanisms
 TBD
@@ -278,16 +245,10 @@ EDNOTE6: You can do infinite nesting in CMS.
 
 EDNOTE7: The difficulty here will be non-uniform adoption: there are many many many email clients in the world at varying levels of maturity and maintenance. It is expected that some email clients will support PQ algorithms quickly while others may take more time or never adopt them fully. Suggestion to IETF: Study be put into RFC5652 the Cryptographic Message Syntax into signing messages with multiple signatures in a way that un-supported signatures will be ignored (likely this already "just works"). Email encryption probably requires either a flag day (you simply cannot encrypt a message for a recipient if you do not understand their PQ certificate)
 
-### Category
-TBD
-
 ### Suitable migration mechanisms
 TBD
 
 ## Additional use cases
-
-EDNOTE8: The use cases in section 2.1.x do not actually mention post-quantum, but you do a little bit in 2.2. I was expecting at least some analysis of whether the use case will present particular challenges to adoption of post-quantum. This, I think, is where the interesting discussion will happen.
-AV: as discussed in our call the plan, for the time being, is to defer these discussions to a follow up document to avoid tackling too much content at once.
 
 EDNOTE9: TO-DOs:
 
@@ -310,7 +271,29 @@ This document should not affect the security of the Internet.
 
 # Appendix 1
 
-Place holder.
+## Post-quantum migration properties
+
+EDNOTE: we have the risk of having too many empty sections in the beginning and divert attention of the reader from reading the core of the document. Move it to the Appendix, "it can be used later on to help classify the use case"
+
+The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{#}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
+
+### Active Negotiation
+
+TBD
+
+Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
+
+### Passive Negotiation
+
+TBD
+
+Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
+
+### Non Agile
+
+TBD
+
+Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
 
 # Acknowledgements {#Acknowledgements}
 {: numbered="false"}
