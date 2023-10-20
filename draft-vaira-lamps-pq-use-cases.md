@@ -195,7 +195,7 @@ TBD
 
 ## Firmware update
 
-EDNOTE22: generic note "we should contribute really crisp use cases that we are familiar with", we could later on rephrase this use case to "update distributed industrial systems" for example. 
+EDNOTE22: generic note "we should contribute really crisp use cases that we are familiar with", we could later on rephrase this use case to "update distributed industrial systems" for example like here: https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-async-enroll-00#section-3.2
 EDNOTE13: Use terminology from SUIT for the firmware update use case (RFC 9019). Many people in the IETF are already familiar with it. Shorten!
 
 Firmware, defined in {{RFC4949}}, refers to computer programs and data stored in hardware, typically in read-only memory (ROM) or programmable read-only memory (PROM). These programs and data are non-modifiable during execution, offering low-level hardware control.
