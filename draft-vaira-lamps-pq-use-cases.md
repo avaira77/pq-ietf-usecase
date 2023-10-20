@@ -225,7 +225,14 @@ Firmware updates are typically authenticated by the Original Equipment Manufactu
 
 Subsequently the firmware is distributed to target devices, which in turn must validate the firmware signature against a Trust Anchor (TA). The TA can be an X.509 certificate, a public key, or a hash of a combination of both, depending on the OEM's security measures.
 
-Usually, the device trusts the TA through injection at manufacturing time, making it challenging, if not impossible to replace it outside the factory. In same cases, the TA may be replaced and deployed via firmware/software updates, delivered, for example, over the air or through manual installation by a trusted operator in a secure environment, again depending on the OEM's security measures.
+These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifespan in mind, often spanning several decades. Notable examples of such devices encompass:
+- Vehicles - scale of deployment or vehicle recall difficulties
+- Satellites - no 'on-site' service reasonably possible
+- Servers and network devices - air-gapped, locked-down DCs, geographically distributed
+- Government infrastructure - power grids, nuclear power station equipment, etc.
+- Smart meters - device owned by the utility company, deployed in private homes.
+- Smart cards – used for authenticating to workstations and buildings, or electronic document signing.
+- Security Tokens – such as FIDO2, cheap devices that users typically will typically not patch.
 
 ### Category
 
