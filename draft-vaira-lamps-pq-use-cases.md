@@ -85,6 +85,16 @@ informative:
   RFC5652:
   I-D.ounsworth-pq-composite-sigs:
   I-D.ounsworth-pq-composite-keys:
+  I-D.bonnell-lamps-chameleon-certs:
+  I-D.ietf-lamps-cert-binding-for-multi-auth:
+  X.509:
+    title: >
+      Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks
+    author:
+      org: International Telecommunications Union
+    date: 2019
+    seriesinfo:
+      ITU-T: Recommendation X.509
   ASN.1:
     title: >
       Information Technology — ASN.1 encoding rules:
@@ -143,9 +153,9 @@ An extension of the existing standards would be needed to integrate the required
 
 ## Multiple Signatures
 
-TBD
+Several signatures have the approach of defining a second alternative signature in addition to the primary signature in the protocol or format, which can be transported in the protocol or format. In addition to the definition of the alternative signature, the associated signing algorithm and, if applicable, the associated public key or a reference to it must also be transferred. For X.509 PublicKey certificates, this is defined in {{X.509}}. Work is also underway for other protocols and formats. This approach overlaps with the protocol and format extension approach described in Section 3.1.
 
-EDNOTE1: In this section we could also cover multiple certificates as well as "Isara" and "Chameleon" approaches to PQC X.509 certificates.
+An alternative approach is to encode a second signature in a second certificate and bind it to the first one by a reference. For example, an implementation can decide based on the policy whether only the first certificate or the second or both certificates should be used for authentication. Further descriptions of this approach can be found in A Mechanism for Encoding Differences in Paired Certificates {{I-D.bonnell-lamps-chameleon-certs}} and Related Certificates for Use in Multiple Authentications within a Protocol {{I-D.ietf-lamps-cert-binding-for-multi-auth}}.
 
 ## Composite Signatures
 
