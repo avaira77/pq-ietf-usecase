@@ -117,15 +117,9 @@ This document assumes that the reader is familiar with post-quantum cryptography
 
 - Trust Anchor (TA): as defined in {{RFC4949}} a TA is an established point of trust (usually based on the authority of some person, office, or organization) from which a certificate user begins the validation of a certification path. A trust anchor may be defined as being based on a public key, a CA, a public-key certificate, or some combination or variation of those. Additionally, TAs may be imprinted within a device at manufacturing time as it is done for IDevID certificates.
 
-- Secure Boot: is a security standard whose purpose it to ensure that only software trusted by the OEM is used during the boot phase of a device. At boot time of a device, the firmware checks the signature of each component of the boot software. The device will boot upon successful validation of the digital signatures of each software component involved in the boot process. The TAs required to validate the signatures have to be stored onto the device, e.g. within its firmware.
+- Secure Boot: is a security standard whose purpose it to ensure that only software trusted by the OEM is used during the boot phase of a device. At boot time of a device, the firmware checks the signature of each component of the boot software. The device will boot upon successful validation of the digital signatures of each software component involved in the boot process. The TAs required to validate the signatures have to be stored onto the device, e.g. within its firmware. EDNOTE20: we should align this terminology with SUIT RFC9019.
 
 - Stateful hash-based signature scheme: is a signature scheme whose private key changes over time and if a secret key state is used twice, all cryptographic security guarantees are lost. As a consequence of that, it becomes feasible to forge a signature on a new message. At the time of this writing there are two RFC that specify XMSS/XMSS^MT and LMS/HSS and the NIST SP 800 208 that describes deployment strategies.
-
-- Active negotiation: protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
-
-- Passive negotiation: protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
-
-- Non-agile / flag day: no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
 
 # Post-quantum migration properties
 
@@ -135,13 +129,19 @@ The purpose of this section is to define a set of properties that can be used to
 
 TBD
 
+Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
+
 ## Passive Negotiation
 
 TBD
 
+Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
+
 ## Non Agile
 
 TBD
+
+Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
 
 # Post-quantum migration mechanisms
 
