@@ -77,7 +77,6 @@ informative:
   I-D.ietf-pquip-pqt-hybrid-terminology:
   NIST.SP.800-208:
   NIST.FIPS.186-5:
-  NIST.FIPS.205-ipd
   RFC8391:
   RFC8554:
   RFC6071:
@@ -148,7 +147,7 @@ According to NIST, these stateful HBS algorithms offer better performance than s
 
 ## Stateless Hash-based Signature Schemes
 
-NIST.FIPS.205-ipd specifies the ML-SLH (SPHINCS+) algorithm.  It is a stateless hashed based signature and is considered safe against attacks by quantum computers.  The advantage of this algorithm is that the state problem is resolved as part of the algorithm.  However, this tradeoff is that signature sizes are often an order of magnatude larger than XMSS or LMS.  This may make deploying these algorithms on constrained devices infeasible.  
+[NIST.FIPS.205-ipd] specifies the ML-SLH (SPHINCS+) algorithm.  It is a stateless hashed based signature and is considered safe against attacks by quantum computers.  The advantage of this algorithm is that the state problem is resolved as part of the algorithm.  However, this tradeoff is that signature sizes are often an order of magnatude larger than XMSS or LMS.  This may make deploying these algorithms on constrained devices infeasible.  
 
 ## Protocol Revision (Cryptographic Agility)
 
