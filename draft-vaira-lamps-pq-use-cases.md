@@ -287,7 +287,7 @@ This document should not affect the security of the Internet.
 
 # Appendix 1 - post-quantum migration properties
 
-The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{#sec-usecases}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
+The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{sec-usecases}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
 
 ## Active Negotiation
 
