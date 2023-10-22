@@ -171,7 +171,7 @@ The associated composite private key is a single atomic private key that is comp
 
 This concept is described in Composite Signatures For Use In Internet PKI {{I-D.ounsworth-pq-composite-sigs}} in more detail.
 
-# Use cases collection {#}
+# Use cases collection {#sec-usecases}
 
 This section is the core this document. For each use case, we present a concise overview of the use case, the relevant categories it aligns with, and a list of potential migration methods. For each migration method, we highlight the advantages and disadvantages that stem from considering real-world deployment scenarios.
 
@@ -287,7 +287,7 @@ This document should not affect the security of the Internet.
 
 # Appendix 1 - post-quantum migration properties
 
-The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{#}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
+The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{#sec-usecases}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
 
 ## Active Negotiation
 
