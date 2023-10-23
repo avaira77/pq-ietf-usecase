@@ -11,7 +11,7 @@ venue:
   mail: "pqc@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/pqc/"
   github: "avaira77/pq-ietf-usecase"
-  latest: "https://avaira77.github.io/pq-ietf-usecase/draft-vaira-lamps-pq-use-cases.html"
+  latest: "https://avaira77.github.io/pq-ietf-usecase/draft-vaira-pquip-pq-use-cases.html"
 
 docname: draft-vaira-pquip-pqc-use-cases-latest
 
@@ -171,7 +171,7 @@ This concept is described in Composite Signatures For Use In Internet PKI {{I-D.
 
 # Use cases collection {#sec-usecases}
 
-This section is the core this document. For each use case, we present a concise overview of the use case, the relevant categories it aligns with, and a list of potential migration methods. For each migration method, we highlight the advantages and disadvantages that stem from considering real-world deployment scenarios.
+This section is the core of this document. For each use case, we present a concise overview of the use case, the relevant categories it aligns with, and a list of potential migration methods. For each migration method, we highlight the advantages and disadvantages that stem from considering real-world deployment scenarios.
 
 ## Industrial communication protocols (that rely on IETF RFCs)
 EDNOTE2: the title is an attempt at generalizing what BACnet is and why it should be interesting to take it into account while discussing pqc migration approaches within the IETF.
@@ -217,6 +217,7 @@ Firmware updates are typically authenticated by the Original Equipment Manufactu
 Subsequently the firmware is distributed to target devices, which in turn must validate the firmware signature against a Trust Anchor (TA). The TA can be an X.509 certificate, a public key, or a hash of a combination of both, depending on the OEM's security measures.
 
 These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifespan in mind, often spanning several decades. Notable examples of such devices encompass:
+
 - Vehicles - scale of deployment or vehicle recall difficulties
 - Satellites - no 'on-site' service reasonably possible
 - Servers and network devices - air-gapped, locked-down DCs, geographically distributed
@@ -226,8 +227,9 @@ These devices are typically deployed in highly regulated environments, in remote
 - Security Tokens – such as FIDO2, cheap devices that users typically will typically not patch.
 
 ### Suitable migration mechanisms
-Given the long term requirements of the signatures and physically contrained locations, a signature used in these environments must be able to withstand future crytanalysis attacks as well as technological advancements.  Therefore the following migration mechanisms should be considerd for these enviornments:
-- Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.
+Given the long term requirements of the signatures and physically constrained locations, a signature used in these environments must be able to withstand future cryptanalysis attacks as well as technological advancements.  Therefore the following migration mechanisms should be considered for these environments:
+
+- Multiple Signatures - These can be used to give the environment resilience to cryptanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for additional time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.
 - Composite Signatures - Similar to multiple signatures but would only require updates to the cryptographic libraries as well as a signature algorithm update in protocols.  It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically be used.
 - Stateful hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateful hash based signature may be sufficient.
 
@@ -242,8 +244,9 @@ Two common variations of this use case are:
 - injection via software and firmware updates: for devices where the Trust Anchor is not burned onto the device, for example in less constrained devices and IT equipment, post-quantum Trust Anchors can be injected through software or firmware update mechanisms. The deployment of these Trust Anchors may leverage existing update mechanisms and traditional cryptography to minimize effort. However, this approach necessitates the distribution of the new Trust Anchors well in advance of any suspicion that traditional cryptography may become vulnerable. Given the lead time required to ensure widespread distribution, the time window where this mechanism is suitable is further reduced.
 
 ### Suitable migration mechanisms
-Trust anchors that have limited to no ability to be upgraded but which must be able to be trusted for a long time will require the use of signatures which must be able to withstand future crytanalysis attacks as well as technological advancements.  The following migration mechanisms should be considered for these environments:
-- Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.
+Trust anchors that have limited to no ability to be upgraded, but which must be able to be trusted for a long time will require the use of signatures which must be able to withstand future cryptanalysis attacks as well as technological advancements.  The following migration mechanisms should be considered for these environments:
+
+- Multiple Signatures - These can be used to give the environment resilience to cryptanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for additional time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.
 - Composite Signatures - Similar to multiple signatures but would only require updates to the cryptographic libraries as well as a signature algorithm update in protocols.  It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically be used.
 - Stateful hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateful hash based signature may be sufficient.
 
@@ -316,7 +319,7 @@ TODO: How to reference this page:  https://security.googleblog.com/2023/08/towar
 ## Entrust
 During the transition to post-quantum cryptography, there will be uncertainty as to the strength of cryptographic algorithms; we will no longer fully trust traditional cryptography such as RSA, Diffie-Hellman, DSA and their elliptic curve variants, but we will also not fully trust their post-quantum replacements until they have had sufficient scrutiny and time to discover and fix implementation bugs. Unlike previous cryptographic algorithm migrations, the choice of when to migrate and which algorithms to migrate to, is not so clear.  Even after the migration period, it may be advantageous for an entity's cryptographic identity to be composed of multiple public-key algorithms.
 
-Entrust will support composite signatures in PKI infrastructure
+Entrust will support composite signatures in PKI infrastructure.
 
 ## Charter - Robert Hulshof
 "The rationale behind combined keys is that I can see an important use-case for very sensitive data (government, financial or other high value data) to combine multiple (PQ) key algorithms, and that this migration to PQ is a good time to start supporting that by default in the crypto libraries.
@@ -326,6 +329,7 @@ If I were the government/bank etc. I would not like to have a 1% risk that all m
 ## MTG - Falko Strenzke
 "Without hybrid signatures, a decision to move away from traditional signatures to Dilithium (or other non-hash-based signatures) has a certain risk to make things worse and I think many decision makers will not be ready to take the responsibility for it until the quantum computer threat becomes imminent.
 - If composite signature is not standardised, non-composite hybrids would be left. This implies protocol changes which will:
+
   - need more discussion,
   - need more changes to existing applications,
   - and thus be more bug prone.
