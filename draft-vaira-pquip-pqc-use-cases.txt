@@ -4,8 +4,9 @@
 
 Post-Quantum Use In Protocols                                   A. Vaira
 Internet-Draft                                              H. Brockhaus
-Intended status: Informational                                   Siemens
-Expires: 25 April 2024                                           J. Gray
+Intended status: Informational                                A. Railean
+Expires: 25 April 2024                                           Siemens
+                                                                 J. Gray
                                                             M. Ounsworth
                                                                  Entrust
                                                          23 October 2023
@@ -944,6 +945,15 @@ Authors' Addresses
    80333 Munich
    Germany
    Email: hendrik.brockhaus@siemens.com
+   URI:   https://www.siemens.com
+
+
+   Alexander Railean
+   Siemens
+   Werner-von-Siemens-Strasse 1
+   80333 Munich
+   Germany
+   Email: alexander.railean@siemens.com
    URI:   https://www.siemens.com
 
 
