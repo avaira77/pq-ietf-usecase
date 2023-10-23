@@ -68,6 +68,7 @@ informative:
   IEEE.802.1AR-2018: DOI.10.1109/IEEESTD.2018.8423794
   RFC4949:
   RFC4998:
+  RFC5280:
   RFC5652:
   RFC6421:
   RFC7468:
@@ -84,7 +85,6 @@ informative:
   RFC8551:
   RFC5652:
   I-D.ounsworth-pq-composite-sigs:
-  I-D.ounsworth-pq-composite-keys:
   I-D.bonnell-lamps-chameleon-certs:
   I-D.ietf-lamps-cert-binding-for-multi-auth:
   X.509:
@@ -145,6 +145,10 @@ For a general introduction, we also refer to {{I-D.ietf-pquip-pqc-engineers}}.
 The only algorithms that are considered safe against attacks with quantum computers are the stateful hash-bases signature (HBS) schemes {{NIST.SP.800-208}} {{NIST.FIPS.186-5}} XMSS {{RFC8391}} and LMS {{RFC8554}}.
 According to NIST, these stateful HBS algorithms offer better performance than stateless HBS algorithms, and the underlying technology is considered well understood. More stateful HBS algorithms are considered safe against attacks by quantum computers but cannot be widely used due to the state management that is very important for the security of stateful HBS. Especially for the secure signing of data that can be signed repeatedly over a very long period of time and whose signatures must be able to be securely validated with the same public key, stateful HBS do not appear to be suitable. This is because there are currently insufficient solutions for the replacement of the hardware security modules used and for disaster recovery cases.
 
+## Stateless Hash-based Signature Schemes
+
+NIST FIPS 205 specifies the ML-SLH (SPHINCS+) algorithm.  It is a stateless hashed based signature and is considered safe against attacks by quantum computers.  The advantage of this algorithm is that the state problem is resolved as part of the algorithm.  However, this tradeoff is that signature sizes are often an order of magnatude larger than XMSS or LMS.  This may make deploying these algorithms on constrained devices infeasible.
+
 ## Protocol Revision (Cryptographic Agility)
 
 Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) {{RFC6071}}, Transport Layer Security (TLS){{RFC8446}}, Secure/Multipurpose Internet Mail Extensions (S/MIME){{RFC8551}}, is usually understood as the dynamic referencing of the algorithms to be used. A concrete migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period is usually not described in the respective standards.
@@ -159,13 +163,13 @@ An alternative approach is to encode a second signature in a second certificate 
 
 ## Composite Signatures
 
-The goal of composite signatures is to define a signature object to be used with any protocol or format. It is supposed to contain two signatures in a container that have been generated using two different cryptographic algorithms. The goal of this approach is to define a signature format, for the verification of which both contained signatures must be verified. In this way, the security properties of the classical signature and another signature that is secure when attacked by a quantum computer are used in the protocol or format without having to adapt them.
+The goal of composite signatures is to define a signature object to be used with any protocol or format. It contains two signatures in a single atomic container that have been generated using two different cryptographic algorithms. The goal of this approach is to define a signature format which requires both contained signtures to be verified.  In this way, the security properties of the classical signature and another signature that is secure when attacked by a quantum computer are used in the protocol or format without having to adapt them.
 
-In order for this approach to be applicable in arbitrary protocols and formats, a composite key must be defined in addition to the composite signature. According to the definition of composite signatures, such a composite public key must contain two public keys with their respective parameters as well as composite private key must contain two private keys.
+In order for this approach to be applicable in arbitrary protocols and formats, a composite key must be defined in addition to the composite signature. According to the definition of composite signatures, a composite public is a single atomic container composed of two public keys. The associated composite private key is a single atomic private key that is composed of the two private keys which correspond to the two public keys contained in the composite public key.
 
-This concept is described in Composite Signatures For Use In Internet PKI {{I-D.ounsworth-pq-composite-sigs}} and Composite Public and Private Keys For Use In Internet PKI {{I-D.ounsworth-pq-composite-keys}} in more detail.
+This concept is described in Composite Signatures For Use In Internet PKI {{I-D.ounsworth-pq-composite-sigs}} in more detail.
 
-# Use cases collection {#}
+# Use cases collection {#sec-usecases}
 
 This section is the core this document. For each use case, we present a concise overview of the use case, the relevant categories it aligns with, and a list of potential migration methods. For each migration method, we highlight the advantages and disadvantages that stem from considering real-world deployment scenarios.
 
@@ -200,9 +204,6 @@ TBD
 ## Software update
 TBD
 
-### Suitable migration mechanisms
-TBD
-
 ## Firmware update
 
 EDNOTE3: As a generic note "we should contribute short use cases that we are familiar with", we could later on rephrase this use case to "update distributed industrial systems" for example like here: https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-async-enroll-00#section-3.2
@@ -225,7 +226,10 @@ These devices are typically deployed in highly regulated environments, in remote
 - Security Tokens – such as FIDO2, cheap devices that users typically will typically not patch.
 
 ### Suitable migration mechanisms
-TBD
+Given the long term requirements of the signatures and physically contrained locations, a signature used in these environments must be able to withstand future crytanalysis attacks as well as technological advancements.  Therefore the following migration mechanisms should be considerd for these enviornments:
+- Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.
+- Composite Signatures - Similar to multiple signatures but would only require updates to the cryptographic libraries as well as a signature algorithm update in protocols.  It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically be used.
+- Stateful hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateful hash based signature may be sufficient.
 
 ## Trust Anchor deployment
 
@@ -238,7 +242,10 @@ Two common variations of this use case are:
 - injection via software and firmware updates: for devices where the Trust Anchor is not burned onto the device, for example in less constrained devices and IT equipment, post-quantum Trust Anchors can be injected through software or firmware update mechanisms. The deployment of these Trust Anchors may leverage existing update mechanisms and traditional cryptography to minimize effort. However, this approach necessitates the distribution of the new Trust Anchors well in advance of any suspicion that traditional cryptography may become vulnerable. Given the lead time required to ensure widespread distribution, the time window where this mechanism is suitable is further reduced.
 
 ### Suitable migration mechanisms
-TBD
+Trust anchors that have limited to no ability to be upgraded but which must be able to be trusted for a long time will require the use of signatures which must be able to withstand future crytanalysis attacks as well as technological advancements.  The following migration mechanisms should be considered for these environments:
+- Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.
+- Composite Signatures - Similar to multiple signatures but would only require updates to the cryptographic libraries as well as a signature algorithm update in protocols.  It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically be used.
+- Stateful hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateful hash based signature may be sufficient.
 
 ## Timestamping
 
@@ -277,7 +284,7 @@ This document should not affect the security of the Internet.
 
 # Appendix 1 - post-quantum migration properties
 
-The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{#}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
+The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  {{sec-usecases}} in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
 
 ## Active Negotiation
 
@@ -297,7 +304,59 @@ TBD
 
 Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
 
+# Appendix 2 - Composite Signature individual and organization position statements
+
+## BSI - Stavros Kousidis
+"from a strategic point of view we don’t want to replace our current RSA algorithm with standalone Dilithium since: If Dilithium does not withstand cryptanalysis in the future then all our efforts are for nothing. With a composite signature Dilithium+ECDSA in AND-mode we can buy ourselves some time in case the Dilithium security guarantees do not withstand future cryptanalysis."
+
+## Google
+Relying on a hybrid signature is critical as the security of Dilithium and other recently standardized quantum resistant algorithms haven’t yet stood the test of time and recent attacks on Rainbow (another quantum resilient algorithm) demonstrate the need for caution. This cautiousness is particularly warranted for security keys as most can’t be upgraded – although we are working toward it for OpenSK. The hybrid approach is also used in other post-quantum efforts like Chrome’s support for TLS.
+TODO: How to reference this page:  https://security.googleblog.com/2023/08/toward-quantum-resilient-security-keys.html?m=1
+
+## Entrust
+During the transition to post-quantum cryptography, there will be uncertainty as to the strength of cryptographic algorithms; we will no longer fully trust traditional cryptography such as RSA, Diffie-Hellman, DSA and their elliptic curve variants, but we will also not fully trust their post-quantum replacements until they have had sufficient scrutiny and time to discover and fix implementation bugs. Unlike previous cryptographic algorithm migrations, the choice of when to migrate and which algorithms to migrate to, is not so clear.  Even after the migration period, it may be advantageous for an entity's cryptographic identity to be composed of multiple public-key algorithms.
+
+Entrust will support composite signatures in PKI infrastructure
+
+## Charter - Robert Hulshof
+"The rationale behind combined keys is that I can see an important use-case for very sensitive data (government, financial or other high value data) to combine multiple (PQ) key algorithms, and that this migration to PQ is a good time to start supporting that by default in the crypto libraries.
+Trying to estimate the probability that a NIST standardized Crypto algorithm gets broken in the next 5-10 years is very difficult. However I assume that everybody agrees that this probability is definitely not zero. Personally I would put that probability somewhere in the range of 0.1% – 1%.
+If I were the government/bank etc. I would not like to have a 1% risk that all my secrets get exposed. Adding one or two more PQ algorithms would reduce that probability to 1 in a million or 1 in a Billion would be much more acceptable."
+
+## MTG - Falko Strenzke
+"Without hybrid signatures, a decision to move away from traditional signatures to Dilithium (or other non-hash-based signatures) has a certain risk to make things worse and I think many decision makers will not be ready to take the responsibility for it until the quantum computer threat becomes imminent.
+- If composite signature is not standardised, non-composite hybrids would be left. This implies protocol changes which will:
+  - need more discussion,
+  - need more changes to existing applications,
+  - and thus be more bug prone.
+- Not having hybrid signatures at all will likely cause many decision makers to
+  - use hash-based schemes where possible / affordable
+  - and elsewhere stick to traditional schemes as long as possible, thus effectively delaying the migration to PQC."
+
+## Transmute - Orie Steele
+TODO but something about this:  There are use cases for long lived verifiable credentials, and attribute cert like stuff we work on in supply chain, with DHS / CBP.
+
+## CRYSTALS-Dilithium design team
+- https://pq-crystals.org/dilithium/ (accessed: 2023-08-21):
+“For users who are interested in using Dilithium, we recommend the following:
+- Use Dilithium in a so-called hybrid mode in combination with an established "pre-quantum" signature scheme.”
+
+## Hybrid Post-Quantum Signatures in Hardware Security Keys
+https://storage.googleapis.com/pub-tools-public-publication-data/pdf/8becef5ac3da51c3b2e36d2dbcd18a4bd3d220d9.pdf
+
+“A hybrid signature scheme combines a classical signature algorithm with a post-quantum secure signature algorithm. Before discussing the design of our hybrid scheme, we explain why such an approach is relevant instead of simply replacing classically secure schemes with post-quantum secure schemes. We present the assumptions below:
+
+ 1. Cryptographically-Relevant Quantum Computers (i.e. with enough qubits to break ECDSA) are not available yet.
+ 2. Classical signature algorithms withstands attacks from classical computers.
+ 3. The post-quantum secure signature algorithm might be breakable by classical computers due to design or implementation bugs. If any of these assumptions fails, using a hybrid approach instead of replacing classical schemes with post-quantum schemes indeed does not add any security. We believe that all of these assumptions are currently correct. The third assumption is motivated by a newly discovered attack against Rainbow, one of the NIST standardization finalists.
+
+We can now discuss the informal requirements a hybrid scheme H should satisfy:
+1. If a quantum computer becomes available, and hence H’s underlying classical scheme is broken, H should maintain the security of its underlying post-quantum scheme.
+2. If a classical attack for H’s underlying post-quantum secure scheme is discovered, H should maintain the security of its underlying classical scheme."
+
+
 # Acknowledgements {#Acknowledgements}
 {: numbered="false"}
 
+This draft would not be possible without the support of a great number of contributers.   We thank Stavros Kousidis, Robert Hulshof, Falko Strenzke and Orie Steele for allowing us to use their statements regarding composite signatures.
 TBD.
