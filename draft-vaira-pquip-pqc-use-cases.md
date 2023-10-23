@@ -77,7 +77,6 @@ informative:
   I-D.ietf-pquip-pqt-hybrid-terminology:
   NIST.SP.800-208:
   NIST.FIPS.186-5:
-  NIST.FIPS.205:
   RFC8391:
   RFC8554:
   RFC6071:
