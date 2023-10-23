@@ -13,7 +13,7 @@ venue:
   github: "avaira77/pq-ietf-usecase"
   latest: "https://avaira77.github.io/pq-ietf-usecase/draft-vaira-lamps-pq-use-cases.html"
 
-docname: draft-vaira-pquip-pqc-use-cases-00
+docname: draft-vaira-pquip-pqc-use-cases-latest
 
 title: Post-quantum cryptography use case
 abbrev: PQC use cases
