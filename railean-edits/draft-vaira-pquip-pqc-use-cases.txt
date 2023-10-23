@@ -432,7 +432,7 @@ Table of Contents
    constrained locations, a signature used in these environments must be
    able to withstand future cryptanalysis attacks as well as
    technological advancements.  Therefore the following migration
-   mechanisms should be considerd for these enviornments:
+   mechanisms should be considered for these environments:
 
    *  Multiple Signatures - These can be used to give the environment
       resilience to cryptanalysis attacks and technological advancements
