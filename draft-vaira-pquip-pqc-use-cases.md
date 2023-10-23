@@ -187,6 +187,8 @@ This concept is described in Composite Signatures For Use In Internet PKI {{I-D.
 
 # Use cases collection {#sec-usecases}
 
+EDNOTE9: The collection of use cases requires further edit.
+
 This section is the core of this document. For each use case, we present a concise overview of the use case and a list of potential migration strategies. For each migration strategy, we highlight the advantages and disadvantages that stem from considering real-world deployment scenarios.
 
 ## Industrial communication protocols (that rely on IETF RFCs)
@@ -214,7 +216,7 @@ The security of the BACnet/SC protocol, as well as of similar industrial protoco
 Furthermore, the regulations applicable to the environment the BACnet/SC-enabled devices is operated in may necessitate the usage of a specific migration strategy, e.g., the use of hybrid cryptography.
 
 ### Suitable migration mechanisms
-- Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints. This would require cryptographic library updates as well as protocol level changes to support multiple signatures. Additionally, it would require the introduction of security policy to allow to switch the validation from one signature to the other, if needed. These modifications to the protocols, and introduction of additional policies will not be easily attainable due to the interdependencies of protocols and might come at a detriment of interoperability especially cross-vendor interoperability.
+- Multiple Signatures - These can be used to give the environment resilience to cryptanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints. This would require cryptographic library updates as well as protocol level changes to support multiple signatures. Additionally, it would require the introduction of security policy to allow to switch the validation from one signature to the other, if needed. These modifications to the protocols, and introduction of additional policies will not be easily attainable due to the interdependencies of protocols and might come at a detriment of interoperability especially cross-vendor interoperability.
 - Composite Signatures - Similar to multiple signatures but may only require updates to the cryptographic libraries as well as a signature algorithm update in protocols. It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically been used. In the use case at hand, this would be the best fit, because it would require no modifications of industrial protocol, which are usually harder to update.
 
 ## Software update
@@ -222,7 +224,7 @@ TBD
 
 ## Firmware update
 
-EDNOTE3: As a generic note "we should contribute short use cases that we are familiar with", we could later on rephrase this use case to "update distributed industrial systems" for example like here: https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-async-enroll-00#section-3.2
+EDNOTE3: The firmware update use case, and the software update one, have to be further defined and its differences have to be made more clear.
 
 Firmware, defined in {{RFC4949}}, refers to computer programs and data stored in hardware, typically in read-only memory (ROM) or programmable read-only memory (PROM). These programs and data are non-modifiable during execution, offering low-level hardware control.
 
