@@ -11,7 +11,7 @@ Expires: 25 April 2024                                           J. Gray
                                                          23 October 2023
 
 
-                   Post-quantum cryptography use case
+                  Post-quantum cryptography use cases
                  draft-vaira-pquip-pqc-use-cases-latest
 
 Abstract
@@ -19,14 +19,15 @@ Abstract
    This document focuses on the critical challenge of migrating long-
    term security assertions with security requirements spanning over a
    decade, encompassing X.509 certificates, including those that serve
-   as IDevID credentials, signed firmware/software, and other electronic
-   artifacts.  We investigate a range of migration mechanisms,
-   specifically hybrid cryptography and the feasibility of stateful
-   Hash-Based Signatures (HBS) schemes, including its pros and cons.  To
-   offer a comprehensive context, we present a list of use cases
-   centered around long-lived security assertions, categorize them, and
-   evaluate them against the various migration approaches identified.
-   We also aim at listing pros and cons associated with each method.
+   as IDevID certificates, signed firmware/software, and other
+   electronic artifacts.  We investigate a range of migration
+   strategies, specifically hybrid cryptography and the feasibility of
+   stateful Hash-Based Signatures (HBS) schemes, including its pros and
+   cons.  To offer a comprehensive context, we present a list of use
+   cases centered around long-lived security assertions, categorize
+   them, and evaluate them against the various migration strategies
+   identified.  We also aim at listing pros and cons associated with
+   each method.
 
 About This Document
 
@@ -127,21 +128,18 @@ Table of Contents
 1.  Introduction
 
    The purpose of this document is to compile a list of real-world use
-   cases, focusing on long-term security assertions, and categorize them
-   according to their post-quantum migration properties.  This document
-   additionally aims at evaluating, for each use case category, a set of
-   migration mechanisms, like hybrid cryptography, including multiple
+   cases, focusing on long-term security assertions.  This document
+   additionally aims at evaluating, for each use case, a set of
+   migration strategies, like hybrid cryptography, including multiple
    and composite signatures, and the feasibility of using stateful Hash-
-   Based Signatures (HBS) schemes, evaluating the pros and cons of each
+   Based Signature (HBS) schemes, evaluating the pros and cons of each
    approach.
 
    The document is structured into the following sections: "Post-quantum
-   migration properties", defines the main features of each category;
-   "Post-quantum migration mechanisms", lists possible migration
-   approaches; "Use case collection", describes, at a high level, of the
-   use cases at hand, including prominent migration properties and an
-   analysis of the pros and cons for each of the migration mechanisms
-   applicable.
+   migration strategies", lists possible migration approaches; "Use case
+   collection", describes, at a high level, the use cases at hand,
+   including an analysis of the pros and cons for each of the migration
+   strategies applicable.
 
 1.1.  Requirements Language
 
@@ -565,11 +563,6 @@ Table of Contents
 
 6.1.  Normative References
 
-   [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
-              Specifications: ABNF", STD 68, RFC 5234,
-              DOI 10.17487/RFC5234, January 2008,
-              <https://www.rfc-editor.org/rfc/rfc5234>.
-
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -701,12 +694,6 @@ Table of Contents
               technology – Open Systems Interconnection – The Directory:
               Public-key and attribute certificate frameworks",
               ITU-T Recommendation X.509, 2019.
-
-   [ASN.1]    International Telecommunications Union, "Information
-              Technology — ASN.1 encoding rules: Specification of Basic
-              Encoding Rules (BER), Canonical Encoding Rules (CER) and
-              Distinguished Encoding Rules (DER)", ITU-T Recommendation
-              X.690, 1994.
 
 Appendix A.  Appendix 1 - post-quantum migration properties
 
