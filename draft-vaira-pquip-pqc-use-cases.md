@@ -247,7 +247,7 @@ Given the long term requirements of the signatures and physically contrained loc
 
 - Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.
 - Composite Signatures - Similar to multiple signatures but may only require updates to the cryptographic libraries as well as a signature algorithm update in protocols.  It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically be used.
-- Stateful hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateful hash based signature may be sufficient.
+- Stateless hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateless hash based signature may be sufficient.
 
 ## Trust Anchor deployment
 
@@ -263,7 +263,7 @@ Trust anchors that have limited to no ability to be upgraded but which must be a
 
 - Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.
 - Composite Signatures - Similar to multiple signatures but may only require updates to the cryptographic libraries as well as a signature algorithm update in protocols.  It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically be used.
-- Stateful hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateful hash based signature may be sufficient.
+- Stateless hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateless hash based signature may be sufficient.
 
 ## Timestamping
 
