@@ -15,7 +15,7 @@ venue:
 
 docname: draft-vaira-pquip-pqc-use-cases-latest
 
-title: Post-quantum cryptography use case
+title: Post-quantum cryptography use cases
 abbrev: PQC use cases
 lang: en
 kw:
@@ -62,7 +62,6 @@ author:
   uri: https://www.entrust.com
 
 normative:
-  RFC5234:
 
 informative:
   IEEE.802.1AR-2018: DOI.10.1109/IEEESTD.2018.8423794
@@ -95,28 +94,18 @@ informative:
     date: 2019
     seriesinfo:
       ITU-T: Recommendation X.509
-  ASN.1:
-    title: >
-      Information Technology — ASN.1 encoding rules:
-      Specification of Basic Encoding Rules (BER), Canonical Encoding
-      Rules (CER) and Distinguished Encoding Rules (DER)
-    author:
-      org: International Telecommunications Union
-    date: 1994
-    seriesinfo:
-      ITU-T: Recommendation X.690
 
 --- abstract
 
-This document focuses on the critical challenge of migrating long-term security assertions with security requirements spanning over a decade, encompassing X.509 certificates, including those that serve as IDevID credentials, signed firmware/software, and other electronic artifacts. We investigate a range of migration mechanisms, specifically hybrid cryptography and the feasibility of stateful Hash-Based Signatures (HBS) schemes, including its pros and cons. To offer a comprehensive context, we present a list of use cases centered around long-lived security assertions, categorize them, and evaluate them against the various migration approaches identified. We also aim at listing pros and cons associated with each method.
+This document focuses on the critical challenge of migrating long-term security assertions with security requirements spanning over a decade, encompassing X.509 certificates, including those that serve as IDevID certificates, signed firmware/software, and other electronic artifacts. We investigate a range of migration strategies, specifically hybrid cryptography and the feasibility of stateful Hash-Based Signatures (HBS) schemes, including its pros and cons. To offer a comprehensive context, we present a list of use cases centered around long-lived security assertions, categorize them, and evaluate them against the various migration strategies identified. We also aim at listing pros and cons associated with each method.
 
 --- middle
 
 # Introduction
 
-The purpose of this document is to compile a list of real-world use cases, focusing on long-term security assertions, and categorize them according to their post-quantum migration properties. This document additionally aims at evaluating, for each use case category, a set of migration mechanisms, like hybrid cryptography, including multiple and composite signatures, and the feasibility of using stateful Hash-Based Signatures (HBS) schemes,  evaluating the pros and cons of each approach.
+The purpose of this document is to compile a list of real-world use cases, focusing on long-term security assertions. This document additionally aims at evaluating, for each use case, a set of migration strategies, like hybrid cryptography, including multiple and composite signatures, and the feasibility of using stateful Hash-Based Signature (HBS) schemes,  evaluating the pros and cons of each approach.
 
-The document is structured into the following sections: "Post-quantum migration properties", defines the main features of each category;  "Post-quantum migration mechanisms", lists possible migration approaches; "Use case collection", describes, at a high level, of the use cases at hand, including prominent migration properties and an analysis of the pros and cons for each of the migration mechanisms applicable.
+The document is structured into the following sections: "Post-quantum migration strategies", lists possible migration approaches; "Use case collection", describes, at a high level, the use cases at hand, including an analysis of the pros and cons for each of the migration strategies applicable.
 
 ## Requirements Language
 
