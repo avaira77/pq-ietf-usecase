@@ -463,9 +463,9 @@ Table of Contents
       objects are used which is similar to what has historically be
       used.
 
-   *  Stateful hash based signatures - In constrained locations where
+   *  Stateless hash based signatures - In constrained locations where
       larger signature sizes are acceptable, direct upgrade to a
-      stateful hash based signature may be sufficient.
+      stateless hash based signature may be sufficient.
 
 3.4.  Trust Anchor deployment
 
@@ -531,9 +531,9 @@ Table of Contents
       objects are used which is similar to what has historically be
       used.
 
-   *  Stateful hash based signatures - In constrained locations where
+   *  Stateless hash based signatures - In constrained locations where
       larger signature sizes are acceptable, direct upgrade to a
-      stateful hash based signature may be sufficient.
+      stateless hash based signature may be sufficient.
 
 3.5.  Timestamping
 
