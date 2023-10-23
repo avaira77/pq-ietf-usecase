@@ -19,22 +19,22 @@ Abstract
    This document focuses on the critical challenge of migrating long-
    term security assertions with security requirements spanning over a
    decade, encompassing X.509 certificates, including those that serve
-   as IDevID certificates, signed firmware/software, and other
-   electronic artifacts.  We investigate a range of migration
-   strategies, specifically hybrid cryptography and the feasibility of
-   stateful Hash-Based Signatures (HBS) schemes, including its pros and
-   cons.  To offer a comprehensive context, we present a list of use
-   cases centered around long-lived security assertions, categorize
-   them, and evaluate them against the various migration strategies
-   identified.  We also aim at listing pros and cons associated with
-   each method.
+   as manufacturer issued certificates (IDevID), signed firmware/
+   software, and other electronic artifacts.  We investigate a range of
+   migration strategies, specifically hybrid cryptography and the
+   feasibility of stateful Hash-Based Signatures (HBS) schemes,
+   including its pros and cons.  To offer a comprehensive context, we
+   present a list of use cases centered around long-lived security
+   assertions, categorize them, and evaluate them against the various
+   migration strategies identified.  We also aim at listing pros and
+   cons associated with each method.
 
 About This Document
 
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://avaira77.github.io/pq-ietf-usecase/draft-vaira-lamps-pq-use-
+   https://avaira77.github.io/pq-ietf-usecase/draft-vaira-pquip-pq-use-
    cases.html.  Status information for this document may be found at
    https://datatracker.ietf.org/doc/draft-vaira-pquip-pqc-use-cases/.
 
@@ -202,28 +202,28 @@ Table of Contents
 
    The only algorithms that can be considered safe against attacks with
    quantum computers with sufficient certainty today are the stateful
-   hash-bases signature (HBS) schemes [NIST.SP.800-208]
+   hash-based signature (HBS) schemes [NIST.SP.800-208]
    [NIST.FIPS.186-5] XMSS [RFC8391] and LMS [RFC8554].  According to
    NIST, these stateful HBS algorithms offer better performance than
    stateless HBS algorithms, and the underlying technology is considered
-   well understood.  More stateful HBS algorithms are considered safe
-   against attacks by quantum computers but cannot be widely used due to
-   the state management that is very important for the security of
-   stateful HBS.  Especially for the secure signing of data that can be
-   signed repeatedly over a very long period of time and whose
-   signatures must be able to be securely validated with the same public
-   key, stateful HBS do not appear to be suitable.  This is because
-   there are currently insufficient solutions for the replacement of the
-   hardware security modules used and for disaster recovery cases.
+   well understood.  Moreover stateful HBS algorithms are considered
+   safe against attacks by quantum computers but the lack of standard
+   operating procedures for how to manage state makes adoption harder.
+   Especially for the secure signing of data that can be signed
+   repeatedly over a very long period of time and whose signatures must
+   be able to be securely validated with the same public key, stateful
+   HBS do not appear to be suitable.  This is because there are
+   currently insufficient solutions for the replacement of the hardware
+   security modules used and for disaster recovery cases.
 
 2.2.  Stateless Hash-based Signature Schemes
 
    [NIST.FIPS.205] specifies the ML-SLH (SPHINCS+) algorithm.  It is a
-   stateless hashed-based signature algorithm and is considered safe
+   stateless hash-based signature algorithm and is considered safe
    against attacks by quantum computers.  The advantage of this
    algorithm is that the state problem is resolved as part of the
-   algorithm.  However, this tradeoff is that signature sizes are often
-   an order of magnatude larger than XMSS or LMS.  This may make
+   algorithm.  However, the tradeoff is that signature sizes are often
+   an order of magnitude larger than XMSS or LMS.  This may make
    deploying these algorithms on constrained devices infeasible.
 
 2.3.  Protocol Revision (Cryptographic Agility)
@@ -254,7 +254,7 @@ Table of Contents
    addition to the definition of the alternative signature, the
    associated signing algorithm and, if applicable, the associated
    public key or a reference to it must also be transferred.  For X.509
-   PublicKey certificates, this is defined in [X.509].  Work is also
+   public key certificates, this is defined in [X.509].  Work is also
    underway for other protocols and formats.  This approach overlaps
    with the protocol and format extension approach described in
    Section 2.3.
@@ -275,7 +275,7 @@ Table of Contents
    be used with any protocol or format.  It contains two signatures in a
    single atomic container that have been generated using two different
    cryptographic algorithms.  The goal of this approach is to define a
-   signature format which requires both contained signtures to be
+   signature format which requires both contained signatures to be
    verified.  In this way, the security properties of the classical
    signature and another signature that is secure when attacked by a
    quantum computer are used in the protocol or format without having to
@@ -305,8 +305,8 @@ Table of Contents
 
    Several industrial communication protocols, traditionally orthogonal
    to IP network infrastructure, are progressively being updated to make
-   use of standard IP network infrastructure hence rely standard
-   security mechanisms, like for example TLS 1.3.
+   use of standard IP network infrastructure hence rely on standard
+   security mechanisms, like for example TLS 1.3 [RFC8446].
 
    The building automation industry makes use of the data communication
    protocol 'Building Automation and Control Networks / Secure Connect'
@@ -364,8 +364,8 @@ Table of Contents
       might come at a detriment of interoperability especially cross-
       vendor interoperability.
 
-   *  Composite Signatures - Similar to multiple signatures but would
-      only require updates to the cryptographic libraries as well as a
+   *  Composite Signatures - Similar to multiple signatures but may only
+      require updates to the cryptographic libraries as well as a
       signature algorithm update in protocols.  It is likely composite
       signatures would be easier to deploy as single key and signature
       objects are used which is similar to what has historically been
@@ -407,7 +407,7 @@ Table of Contents
    environments like Hardware Security Modules (HSMs), returns the
    signature after authenticating the request.
 
-   Subsequently the firmware is distributed to target devices, which in
+   Subsequently, the firmware is distributed to target devices, which in
    turn must validate the firmware signature against a Trust Anchor
    (TA).  The TA can be an X.509 certificate, a public key, or a hash of
    a combination of both, depending on the OEM's security measures.
@@ -419,16 +419,26 @@ Table of Contents
    can also be viewed as a security feature, as it restricts potential
    attack vectors associated with over-the-air updates.  These devices
    are designed with a long operational lifespan in mind, often spanning
-   several decades.  Notable examples of such devices encompass: -
-   Vehicles - scale of deployment or vehicle recall difficulties -
-   Satellites - no 'on-site' service reasonably possible - Servers and
-   network devices - air-gapped, locked-down DCs, geographically
-   distributed - Government infrastructure - power grids, nuclear power
-   station equipment, etc. - Smart meters - device owned by the utility
-   company, deployed in private homes. - Smart cards – used for
-   authenticating to workstations and buildings, or electronic document
-   signing. - Security Tokens – such as FIDO2, cheap devices that users
-   typically will typically not patch.
+   several decades.  Notable examples of such devices encompass:
+
+   *  Vehicles - scale of deployment or vehicle recall difficulties
+
+   *  Satellites - no 'on-site' service reasonably possible
+
+   *  Servers and network devices - air-gapped, locked-down DCs,
+      geographically distributed
+
+   *  Government infrastructure - power grids, nuclear power station
+      equipment, etc.
+
+   *  Smart meters - device owned by the utility company, deployed in
+      private homes.
+
+   *  Smart cards – used for authenticating to workstations and
+      buildings, or electronic document signing.
+
+   *  Security Tokens – such as FIDO2, cheap devices that users will
+      typically not patch.
 
 3.3.1.  Suitable migration mechanisms
 
@@ -436,21 +446,26 @@ Table of Contents
    contrained locations, a signature used in these environments must be
    able to withstand future crytanalysis attacks as well as
    technological advancements.  Therefore the following migration
-   mechanisms should be considerd for these enviornments: - Multiple
-   Signatures - These can be used to give the environment resilience to
-   crytanalysis attacks and technological advancements because should a
-   critical break happen, the secondary signature should allow for
-   addition time for upgrade which will be welcome given the location
-   constraints.  This would require cryptographic library updates as
-   well as protocol level changes to support multiple signatures. -
-   Composite Signatures - Similar to multiple signatures but would only
-   require updates to the cryptographic libraries as well as a signature
-   algorithm update in protocols.  It is likely composite signatures
-   would be easier to deploy as single key and signature objects are
-   used which is similar to what has historically be used. - Stateful
-   hash based signatures - In constrained locations where larger
-   signature sizes are acceptable, direct upgrade to a stateful hash
-   based signature may be sufficient.
+   mechanisms should be considerd for these enviornments:
+
+   *  Multiple Signatures - These can be used to give the environment
+      resilience to crytanalysis attacks and technological advancements
+      because should a critical break happen, the secondary signature
+      should allow for addition time for upgrade which will be welcome
+      given the location constraints.  This would require cryptographic
+      library updates as well as protocol level changes to support
+      multiple signatures.
+
+   *  Composite Signatures - Similar to multiple signatures but may only
+      require updates to the cryptographic libraries as well as a
+      signature algorithm update in protocols.  It is likely composite
+      signatures would be easier to deploy as single key and signature
+      objects are used which is similar to what has historically be
+      used.
+
+   *  Stateful hash based signatures - In constrained locations where
+      larger signature sizes are acceptable, direct upgrade to a
+      stateful hash based signature may be sufficient.
 
 3.4.  Trust Anchor deployment
 
@@ -499,21 +514,26 @@ Table of Contents
    which must be able to be trusted for a long time will require the use
    of signatures which must be able to withstand future crytanalysis
    attacks as well as technological advancements.  The following
-   migration mechanisms should be considered for these environments: -
-   Multiple Signatures - These can be used to give the environment
-   resilience to crytanalysis attacks and technological advancements
-   because should a critical break happen, the secondary signature
-   should allow for addition time for upgrade which will be welcome
-   given the location constraints.  This would require cryptographic
-   library updates as well as protocol level changes to support multiple
-   signatures. - Composite Signatures - Similar to multiple signatures
-   but would only require updates to the cryptographic libraries as well
-   as a signature algorithm update in protocols.  It is likely composite
-   signatures would be easier to deploy as single key and signature
-   objects are used which is similar to what has historically be used. -
-   Stateful hash based signatures - In constrained locations where
-   larger signature sizes are acceptable, direct upgrade to a stateful
-   hash based signature may be sufficient.
+   migration mechanisms should be considered for these environments:
+
+   *  Multiple Signatures - These can be used to give the environment
+      resilience to crytanalysis attacks and technological advancements
+      because should a critical break happen, the secondary signature
+      should allow for addition time for upgrade which will be welcome
+      given the location constraints.  This would require cryptographic
+      library updates as well as protocol level changes to support
+      multiple signatures.
+
+   *  Composite Signatures - Similar to multiple signatures but may only
+      require updates to the cryptographic libraries as well as a
+      signature algorithm update in protocols.  It is likely composite
+      signatures would be easier to deploy as single key and signature
+      objects are used which is similar to what has historically be
+      used.
+
+   *  Stateful hash based signatures - In constrained locations where
+      larger signature sizes are acceptable, direct upgrade to a
+      stateful hash based signature may be sufficient.
 
 3.5.  Timestamping
 
@@ -540,7 +560,7 @@ Table of Contents
    will support PQ algorithms quickly while others may take more time or
    never adopt them fully.  Suggestion to IETF: Study be put into
    RFC5652 the Cryptographic Message Syntax into signing messages with
-   multiple signatures in a way that un-supported signatures will be
+   multiple signatures in a way that unsupported signatures will be
    ignored (likely this already "just works").  Email encryption
    probably requires either a flag day (you simply cannot encrypt a
    message for a recipient if you do not understand their PQ
@@ -736,8 +756,8 @@ Table of Contents
 Appendix A.  Appendix 1 - post-quantum migration properties
 
    The purpose of this section is to define a set of properties that can
-   be used to classify each of the use-cases listed in Section 3 in a
-   consistent way.  The goal is to make the document a resource to help
+   be used to classify each of the use-cases listed in a consistent way
+   Section 3.  The goal is to make the document a resource to help
    classify use cases which are not covered herein because, for example,
    implementors could classify their own use-case and then find one in
    this document with the same properties / classification.
@@ -810,7 +830,7 @@ B.3.  Entrust
    entity's cryptographic identity to be composed of multiple public-key
    algorithms.
 
-   Entrust will support composite signatures in PKI infrastructure
+   Entrust will support composite signatures in PKI infrastructure.
 
 B.4.  Charter - Robert Hulshof
 
@@ -836,12 +856,21 @@ B.5.  MTG - Falko Strenzke
    will not be ready to take the responsibility for it until the quantum
    computer threat becomes imminent. - If composite signature is not
    standardised, non-composite hybrids would be left.  This implies
-   protocol changes which will: - need more discussion, - need more
-   changes to existing applications, - and thus be more bug prone. - Not
-   having hybrid signatures at all will likely cause many decision
-   makers to - use hash-based schemes where possible / affordable - and
-   elsewhere stick to traditional schemes as long as possible, thus
-   effectively delaying the migration to PQC."
+   protocol changes which will:
+
+   *  need more discussion,
+
+   *  need more changes to existing applications,
+
+   *  and thus be more bug prone.
+
+   *  Not having hybrid signatures at all will likely cause many
+      decision makers to
+
+      -  use hash-based schemes where possible / affordable
+
+      -  and elsewhere stick to traditional schemes as long as possible,
+         thus effectively delaying the migration to PQC."
 
 B.6.  Transmute - Orie Steele
 
@@ -894,7 +923,7 @@ B.8.  Hybrid Post-Quantum Signatures in Hardware Security Keys
 Acknowledgements
 
    This draft would not be possible without the support of a great
-   number of contributers.  We thank Stavros Kousidis, Robert Hulshof,
+   number of contributors.  We thank Stavros Kousidis, Robert Hulshof,
    Falko Strenzke and Orie Steele for allowing us to use their
    statements regarding composite signatures.  TBD.
 

@@ -10,7 +10,7 @@
 <meta content="John Gray" name="author">
 <meta content="Mike Ounsworth" name="author">
 <meta content="
-       This document focuses on the critical challenge of migrating long-term security assertions with security requirements spanning over a decade, encompassing X.509 certificates, including those that serve as IDevID certificates, signed firmware/software, and other electronic artifacts. We investigate a range of migration strategies, specifically hybrid cryptography and the feasibility of stateful Hash-Based Signatures (HBS) schemes, including its pros and cons. To offer a comprehensive context, we present a list of use cases centered around long-lived security assertions, categorize them, and evaluate them against the various migration strategies identified. We also aim at listing pros and cons associated with each method. 
+       This document focuses on the critical challenge of migrating long-term security assertions with security requirements spanning over a decade, encompassing X.509 certificates, including those that serve as manufacturer issued certificates (IDevID), signed firmware/software, and other electronic artifacts. We investigate a range of migration strategies, specifically hybrid cryptography and the feasibility of stateful Hash-Based Signatures (HBS) schemes, including its pros and cons. To offer a comprehensive context, we present a list of use cases centered around long-lived security assertions, categorize them, and evaluate them against the various migration strategies identified. We also aim at listing pros and cons associated with each method. 
     " name="description">
 <meta content="xml2rfc 3.18.2" name="generator">
 <meta content="post-quantum cryptography" name="keyword">
@@ -1076,7 +1076,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Post-quantum cryptography use cases</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document focuses on the critical challenge of migrating long-term security assertions with security requirements spanning over a decade, encompassing X.509 certificates, including those that serve as IDevID certificates, signed firmware/software, and other electronic artifacts. We investigate a range of migration strategies, specifically hybrid cryptography and the feasibility of stateful Hash-Based Signatures (HBS) schemes, including its pros and cons. To offer a comprehensive context, we present a list of use cases centered around long-lived security assertions, categorize them, and evaluate them against the various migration strategies identified. We also aim at listing pros and cons associated with each method.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document focuses on the critical challenge of migrating long-term security assertions with security requirements spanning over a decade, encompassing X.509 certificates, including those that serve as manufacturer issued certificates (IDevID), signed firmware/software, and other electronic artifacts. We investigate a range of migration strategies, specifically hybrid cryptography and the feasibility of stateful Hash-Based Signatures (HBS) schemes, including its pros and cons. To offer a comprehensive context, we present a list of use cases centered around long-lived security assertions, categorize them, and evaluate them against the various migration strategies identified. We also aim at listing pros and cons associated with each method.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1084,7 +1084,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://avaira77.github.io/pq-ietf-usecase/draft-vaira-lamps-pq-use-cases.html">https://avaira77.github.io/pq-ietf-usecase/draft-vaira-lamps-pq-use-cases.html</a></span>.
+        The latest revision of this draft can be found at <span><a href="https://avaira77.github.io/pq-ietf-usecase/draft-vaira-pquip-pq-use-cases.html">https://avaira77.github.io/pq-ietf-usecase/draft-vaira-pquip-pq-use-cases.html</a></span>.
         Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-vaira-pquip-pqc-use-cases/">https://datatracker.ietf.org/doc/draft-vaira-pquip-pqc-use-cases/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
@@ -1357,8 +1357,8 @@ For a general introduction, we also refer to <span>[<a href="#I-D.ietf-pquip-pqc
         <h3 id="name-stateful-hash-based-signatu">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-stateful-hash-based-signatu" class="section-name selfRef">Stateful Hash-based Signature Schemes</a>
         </h3>
-<p id="section-2.1-1">The only algorithms that can be considered safe against attacks with quantum computers with sufficient certainty today are the stateful hash-bases signature (HBS) schemes <span>[<a href="#NIST.SP.800-208" class="cite xref">NIST.SP.800-208</a>]</span> <span>[<a href="#NIST.FIPS.186-5" class="cite xref">NIST.FIPS.186-5</a>]</span> XMSS <span>[<a href="#RFC8391" class="cite xref">RFC8391</a>]</span> and LMS <span>[<a href="#RFC8554" class="cite xref">RFC8554</a>]</span>.
-According to NIST, these stateful HBS algorithms offer better performance than stateless HBS algorithms, and the underlying technology is considered well understood. More stateful HBS algorithms are considered safe against attacks by quantum computers but cannot be widely used due to the state management that is very important for the security of stateful HBS. Especially for the secure signing of data that can be signed repeatedly over a very long period of time and whose signatures must be able to be securely validated with the same public key, stateful HBS do not appear to be suitable. This is because there are currently insufficient solutions for the replacement of the hardware security modules used and for disaster recovery cases.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-1">The only algorithms that can be considered safe against attacks with quantum computers with sufficient certainty today are the stateful hash-based signature (HBS) schemes <span>[<a href="#NIST.SP.800-208" class="cite xref">NIST.SP.800-208</a>]</span> <span>[<a href="#NIST.FIPS.186-5" class="cite xref">NIST.FIPS.186-5</a>]</span> XMSS <span>[<a href="#RFC8391" class="cite xref">RFC8391</a>]</span> and LMS <span>[<a href="#RFC8554" class="cite xref">RFC8554</a>]</span>.
+According to NIST, these stateful HBS algorithms offer better performance than stateless HBS algorithms, and the underlying technology is considered well understood.  Moreover stateful HBS algorithms are considered safe against attacks by quantum computers but the lack of standard operating procedures for how to manage state makes adoption harder. Especially for the secure signing of data that can be signed repeatedly over a very long period of time and whose signatures must be able to be securely validated with the same public key, stateful HBS do not appear to be suitable. This is because there are currently insufficient solutions for the replacement of the hardware security modules used and for disaster recovery cases.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="stateless-hash-based-signature-schemes">
@@ -1366,7 +1366,7 @@ According to NIST, these stateful HBS algorithms offer better performance than s
         <h3 id="name-stateless-hash-based-signat">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-stateless-hash-based-signat" class="section-name selfRef">Stateless Hash-based Signature Schemes</a>
         </h3>
-<p id="section-2.2-1"><span>[<a href="#NIST.FIPS.205" class="cite xref">NIST.FIPS.205</a>]</span> specifies the ML-SLH (SPHINCS+) algorithm.  It is a stateless hashed-based signature algorithm and is considered safe against attacks by quantum computers.  The advantage of this algorithm is that the state problem is resolved as part of the algorithm.  However, this tradeoff is that signature sizes are often an order of magnatude larger than XMSS or LMS.  This may make deploying these algorithms on constrained devices infeasible.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-1"><span>[<a href="#NIST.FIPS.205" class="cite xref">NIST.FIPS.205</a>]</span> specifies the ML-SLH (SPHINCS+) algorithm.  It is a stateless hash-based signature algorithm and is considered safe against attacks by quantum computers.  The advantage of this algorithm is that the state problem is resolved as part of the algorithm.  However, the tradeoff is that signature sizes are often an order of magnitude larger than XMSS or LMS.  This may make deploying these algorithms on constrained devices infeasible.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="protocols">
@@ -1383,7 +1383,7 @@ According to NIST, these stateful HBS algorithms offer better performance than s
         <h3 id="name-multiple-signatures">
 <a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-multiple-signatures" class="section-name selfRef">Multiple Signatures</a>
         </h3>
-<p id="section-2.4-1">Several signatures have the approach of defining a second alternative signature in addition to the primary signature in the protocol or format, which can be transported in the protocol or format. In addition to the definition of the alternative signature, the associated signing algorithm and, if applicable, the associated public key or a reference to it must also be transferred. For X.509 PublicKey certificates, this is defined in <span>[<a href="#X.509" class="cite xref">X.509</a>]</span>. Work is also underway for other protocols and formats. This approach overlaps with the protocol and format extension approach described in <a href="#protocols" class="auto internal xref">Section 2.3</a>.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.4-1">Several signatures have the approach of defining a second alternative signature in addition to the primary signature in the protocol or format, which can be transported in the protocol or format. In addition to the definition of the alternative signature, the associated signing algorithm and, if applicable, the associated public key or a reference to it must also be transferred. For X.509 public key certificates, this is defined in <span>[<a href="#X.509" class="cite xref">X.509</a>]</span>. Work is also underway for other protocols and formats. This approach overlaps with the protocol and format extension approach described in <a href="#protocols" class="auto internal xref">Section 2.3</a>.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
 <p id="section-2.4-2">An alternative approach is to encode a second signature in a second certificate and bind it to the first one by a reference. For example, an implementation can decide based on its policy whether only the first certificate or the second or both certificates should be used for authentication. Further descriptions of this approach can be found in A Mechanism for Encoding Differences in Paired Certificates <span>[<a href="#I-D.bonnell-lamps-chameleon-certs" class="cite xref">I-D.bonnell-lamps-chameleon-certs</a>]</span> and Related Certificates for Use in Multiple Authentications within a Protocol <span>[<a href="#I-D.ietf-lamps-cert-binding-for-multi-auth" class="cite xref">I-D.ietf-lamps-cert-binding-for-multi-auth</a>]</span>.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1392,7 +1392,7 @@ According to NIST, these stateful HBS algorithms offer better performance than s
         <h3 id="name-composite-signatures">
 <a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-composite-signatures" class="section-name selfRef">Composite Signatures</a>
         </h3>
-<p id="section-2.5-1">The goal of composite signatures is to define a signature object to be used with any protocol or format. It contains two signatures in a single atomic container that have been generated using two different cryptographic algorithms. The goal of this approach is to define a signature format which requires both contained signtures to be verified.  In this way, the security properties of the classical signature and another signature that is secure when attacked by a quantum computer are used in the protocol or format without having to adapt them.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
+<p id="section-2.5-1">The goal of composite signatures is to define a signature object to be used with any protocol or format. It contains two signatures in a single atomic container that have been generated using two different cryptographic algorithms. The goal of this approach is to define a signature format which requires both contained signatures to be verified.  In this way, the security properties of the classical signature and another signature that is secure when attacked by a quantum computer are used in the protocol or format without having to adapt them.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
 <p id="section-2.5-2">In order for this approach to be applicable in arbitrary protocols and formats, a composite key must be defined in addition to the composite signature. According to the definition of composite signatures, a composite public is a single atomic container composed of two public keys. The associated composite private key is a single atomic private key that is composed of the two private keys which correspond to the two public keys contained in the composite public key.<a href="#section-2.5-2" class="pilcrow">¶</a></p>
 <p id="section-2.5-3">This concept is described in Composite Signatures For Use In Internet PKI <span>[<a href="#I-D.ounsworth-pq-composite-sigs" class="cite xref">I-D.ounsworth-pq-composite-sigs</a>]</span> in more detail.<a href="#section-2.5-3" class="pilcrow">¶</a></p>
 </section>
@@ -1410,7 +1410,7 @@ According to NIST, these stateful HBS algorithms offer better performance than s
         <h3 id="name-industrial-communication-pr">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-industrial-communication-pr" class="section-name selfRef">Industrial communication protocols (that rely on IETF RFCs)</a>
         </h3>
-<p id="section-3.1-1">Several industrial communication protocols, traditionally orthogonal to IP network infrastructure, are progressively being updated to make use of standard IP network infrastructure hence rely standard security mechanisms, like for example TLS 1.3.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">Several industrial communication protocols, traditionally orthogonal to IP network infrastructure, are progressively being updated to make use of standard IP network infrastructure hence rely on standard security mechanisms, like for example TLS 1.3 <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1-2">The building automation industry makes use of the data communication protocol 'Building Automation and Control Networks / Secure Connect' (BACnet/SC) <span>[<a href="#ANSI_ASHRAE.Standard.135-2016" class="cite xref">ANSI_ASHRAE.Standard.135-2016</a>]</span>. BACnet was defined before 1995, when the TCP/IP protocol suite was expensive and not available for smaller devices common in building automation. BACnet/SC proposes a new datalink layer option that makes full use of TLS secured WebSocket connections. This new BACnet/SC datalink layer option uses a virtual hub-and-spoke topology where the spokes are WebSocket connections from the nodes to the hub.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1-3">The main features of BACnet/SC are:<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -1443,7 +1443,7 @@ According to NIST, these stateful HBS algorithms offer better performance than s
               <p id="section-3.1.1-1.1.1">Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints. This would require cryptographic library updates as well as protocol level changes to support multiple signatures. Additionally, it would require the introduction of security policy to allow to switch the validation from one signature to the other, if needed. These modifications to the protocols, and introduction of additional policies will not be easily attainable due to the interdependencies of protocols and might come at a detriment of interoperability especially cross-vendor interoperability.<a href="#section-3.1.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.1.1-1.2">
-              <p id="section-3.1.1-1.2.1">Composite Signatures - Similar to multiple signatures but would only require updates to the cryptographic libraries as well as a signature algorithm update in protocols. It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically been used. In the use case at hand, this would be the best fit, because it would require no modifications of industrial protocol, which are usually harder to update.<a href="#section-3.1.1-1.2.1" class="pilcrow">¶</a></p>
+              <p id="section-3.1.1-1.2.1">Composite Signatures - Similar to multiple signatures but may only require updates to the cryptographic libraries as well as a signature algorithm update in protocols. It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically been used. In the use case at hand, this would be the best fit, because it would require no modifications of industrial protocol, which are usually harder to update.<a href="#section-3.1.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -1467,24 +1467,48 @@ According to NIST, these stateful HBS algorithms offer better performance than s
 <p id="section-3.3-2">Firmware, defined in <span>[<a href="#RFC4949" class="cite xref">RFC4949</a>]</span>, refers to computer programs and data stored in hardware, typically in read-only memory (ROM) or programmable read-only memory (PROM). These programs and data are non-modifiable during execution, offering low-level hardware control.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 <p id="section-3.3-3">Secure firmware updates are crucial for ensuring device security and long-term operation, especially in industrial, and critical infrastructure fields, where devices can stay active for decades. Such updates encompass tasks like introducing new trust anchors and upgrading cryptographic algorithm capabilities. However, upgrading every device's security capabilities isn't always feasible due to resource, accessibility, and cost constraints. Some "simple" devices may not support secure firmware updates at all.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
 <p id="section-3.3-4">Firmware updates are typically authenticated by the Original Equipment Manufacturer (OEM) by means of a digital signing process. At a high level, a usual process involves, a firmware build server, which requests a signature from a signing service. The signing service, often safeguarding the signing private key in secure environments like Hardware Security Modules (HSMs), returns the signature after authenticating the request.<a href="#section-3.3-4" class="pilcrow">¶</a></p>
-<p id="section-3.3-5">Subsequently the firmware is distributed to target devices, which in turn must validate the firmware signature against a Trust Anchor (TA). The TA can be an X.509 certificate, a public key, or a hash of a combination of both, depending on the OEM's security measures.<a href="#section-3.3-5" class="pilcrow">¶</a></p>
-<p id="section-3.3-6">These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifespan in mind, often spanning several decades. Notable examples of such devices encompass:
-- Vehicles - scale of deployment or vehicle recall difficulties
-- Satellites - no 'on-site' service reasonably possible
-- Servers and network devices - air-gapped, locked-down DCs, geographically distributed
-- Government infrastructure - power grids, nuclear power station equipment, etc.
-- Smart meters - device owned by the utility company, deployed in private homes.
-- Smart cards – used for authenticating to workstations and buildings, or electronic document signing.
-- Security Tokens – such as FIDO2, cheap devices that users typically will typically not patch.<a href="#section-3.3-6" class="pilcrow">¶</a></p>
+<p id="section-3.3-5">Subsequently, the firmware is distributed to target devices, which in turn must validate the firmware signature against a Trust Anchor (TA). The TA can be an X.509 certificate, a public key, or a hash of a combination of both, depending on the OEM's security measures.<a href="#section-3.3-5" class="pilcrow">¶</a></p>
+<p id="section-3.3-6">These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifespan in mind, often spanning several decades. Notable examples of such devices encompass:<a href="#section-3.3-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3-7.1">
+            <p id="section-3.3-7.1.1">Vehicles - scale of deployment or vehicle recall difficulties<a href="#section-3.3-7.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.2">
+            <p id="section-3.3-7.2.1">Satellites - no 'on-site' service reasonably possible<a href="#section-3.3-7.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.3">
+            <p id="section-3.3-7.3.1">Servers and network devices - air-gapped, locked-down DCs, geographically distributed<a href="#section-3.3-7.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.4">
+            <p id="section-3.3-7.4.1">Government infrastructure - power grids, nuclear power station equipment, etc.<a href="#section-3.3-7.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.5">
+            <p id="section-3.3-7.5.1">Smart meters - device owned by the utility company, deployed in private homes.<a href="#section-3.3-7.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.6">
+            <p id="section-3.3-7.6.1">Smart cards – used for authenticating to workstations and buildings, or electronic document signing.<a href="#section-3.3-7.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.7">
+            <p id="section-3.3-7.7.1">Security Tokens – such as FIDO2, cheap devices that users will typically not patch.<a href="#section-3.3-7.7.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 <div id="suitable-migration-mechanisms-1">
 <section id="section-3.3.1">
           <h4 id="name-suitable-migration-mechanism">
 <a href="#section-3.3.1" class="section-number selfRef">3.3.1. </a><a href="#name-suitable-migration-mechanism" class="section-name selfRef">Suitable migration mechanisms</a>
           </h4>
-<p id="section-3.3.1-1">Given the long term requirements of the signatures and physically contrained locations, a signature used in these environments must be able to withstand future crytanalysis attacks as well as technological advancements.  Therefore the following migration mechanisms should be considerd for these enviornments:
-- Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.
-- Composite Signatures - Similar to multiple signatures but would only require updates to the cryptographic libraries as well as a signature algorithm update in protocols.  It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically be used.
-- Stateful hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateful hash based signature may be sufficient.<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-1">Given the long term requirements of the signatures and physically contrained locations, a signature used in these environments must be able to withstand future crytanalysis attacks as well as technological advancements.  Therefore the following migration mechanisms should be considerd for these enviornments:<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3.1-2.1">
+              <p id="section-3.3.1-2.1.1">Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.<a href="#section-3.3.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.3.1-2.2">
+              <p id="section-3.3.1-2.2.1">Composite Signatures - Similar to multiple signatures but may only require updates to the cryptographic libraries as well as a signature algorithm update in protocols.  It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically be used.<a href="#section-3.3.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.3.1-2.3">
+              <p id="section-3.3.1-2.3.1">Stateful hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateful hash based signature may be sufficient.<a href="#section-3.3.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
 </section>
 </div>
 </section>
@@ -1509,10 +1533,18 @@ According to NIST, these stateful HBS algorithms offer better performance than s
           <h4 id="name-suitable-migration-mechanisms">
 <a href="#section-3.4.1" class="section-number selfRef">3.4.1. </a><a href="#name-suitable-migration-mechanisms" class="section-name selfRef">Suitable migration mechanisms</a>
           </h4>
-<p id="section-3.4.1-1">Trust anchors that have limited to no ability to be upgraded but which must be able to be trusted for a long time will require the use of signatures which must be able to withstand future crytanalysis attacks as well as technological advancements.  The following migration mechanisms should be considered for these environments:
-- Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.
-- Composite Signatures - Similar to multiple signatures but would only require updates to the cryptographic libraries as well as a signature algorithm update in protocols.  It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically be used.
-- Stateful hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateful hash based signature may be sufficient.<a href="#section-3.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.4.1-1">Trust anchors that have limited to no ability to be upgraded but which must be able to be trusted for a long time will require the use of signatures which must be able to withstand future crytanalysis attacks as well as technological advancements.  The following migration mechanisms should be considered for these environments:<a href="#section-3.4.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.1-2.1">
+              <p id="section-3.4.1-2.1.1">Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.<a href="#section-3.4.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.4.1-2.2">
+              <p id="section-3.4.1-2.2.1">Composite Signatures - Similar to multiple signatures but may only require updates to the cryptographic libraries as well as a signature algorithm update in protocols.  It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically be used.<a href="#section-3.4.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.4.1-2.3">
+              <p id="section-3.4.1-2.3.1">Stateful hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateful hash based signature may be sufficient.<a href="#section-3.4.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
 </section>
 </div>
 </section>
@@ -1540,7 +1572,7 @@ AV: an example is provided by "ETSI EN 319 142-1" (and "ETSI EN 319 142-2"), the
 <a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-cms-s-mime" class="section-name selfRef">CMS (S/MIME)</a>
         </h3>
 <p id="section-3.6-1">EDNOTE6: You can do infinite nesting in CMS.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
-<p id="section-3.6-2">EDNOTE7: The difficulty here will be non-uniform adoption: there are many many many email clients in the world at varying levels of maturity and maintenance. It is expected that some email clients will support PQ algorithms quickly while others may take more time or never adopt them fully. Suggestion to IETF: Study be put into RFC5652 the Cryptographic Message Syntax into signing messages with multiple signatures in a way that un-supported signatures will be ignored (likely this already "just works"). Email encryption probably requires either a flag day (you simply cannot encrypt a message for a recipient if you do not understand their PQ certificate)<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+<p id="section-3.6-2">EDNOTE7: The difficulty here will be non-uniform adoption: there are many many many email clients in the world at varying levels of maturity and maintenance. It is expected that some email clients will support PQ algorithms quickly while others may take more time or never adopt them fully. Suggestion to IETF: Study be put into RFC5652 the Cryptographic Message Syntax into signing messages with multiple signatures in a way that unsupported signatures will be ignored (likely this already "just works"). Email encryption probably requires either a flag day (you simply cannot encrypt a message for a recipient if you do not understand their PQ certificate)<a href="#section-3.6-2" class="pilcrow">¶</a></p>
 <div id="suitable-migration-mechanisms-4">
 <section id="section-3.6.1">
           <h4 id="name-suitable-migration-mechanisms-3">
@@ -1720,7 +1752,7 @@ AV: an example is provided by "ETSI EN 319 142-1" (and "ETSI EN 319 142-2"), the
       <h2 id="name-appendix-1-post-quantum-mig">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-appendix-1-post-quantum-mig" class="section-name selfRef">Appendix 1 - post-quantum migration properties</a>
       </h2>
-<p id="appendix-A-1">The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in  <a href="#sec-usecases" class="auto internal xref">Section 3</a> in a consistent way. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in a consistent way <a href="#sec-usecases" class="auto internal xref">Section 3</a>. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <div id="active-negotiation">
 <section id="appendix-A.1">
         <h3 id="name-active-negotiation">
@@ -1778,7 +1810,7 @@ TODO: How to reference this page:  https://security.googleblog.com/2023/08/towar
 <a href="#appendix-B.3" class="section-number selfRef">B.3. </a><a href="#name-entrust" class="section-name selfRef">Entrust</a>
         </h3>
 <p id="appendix-B.3-1">During the transition to post-quantum cryptography, there will be uncertainty as to the strength of cryptographic algorithms; we will no longer fully trust traditional cryptography such as RSA, Diffie-Hellman, DSA and their elliptic curve variants, but we will also not fully trust their post-quantum replacements until they have had sufficient scrutiny and time to discover and fix implementation bugs. Unlike previous cryptographic algorithm migrations, the choice of when to migrate and which algorithms to migrate to, is not so clear.  Even after the migration period, it may be advantageous for an entity's cryptographic identity to be composed of multiple public-key algorithms.<a href="#appendix-B.3-1" class="pilcrow">¶</a></p>
-<p id="appendix-B.3-2">Entrust will support composite signatures in PKI infrastructure<a href="#appendix-B.3-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-2">Entrust will support composite signatures in PKI infrastructure.<a href="#appendix-B.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="charter-robert-hulshof">
@@ -1797,13 +1829,29 @@ If I were the government/bank etc. I would not like to have a 1% risk that all m
 <a href="#appendix-B.5" class="section-number selfRef">B.5. </a><a href="#name-mtg-falko-strenzke" class="section-name selfRef">MTG - Falko Strenzke</a>
         </h3>
 <p id="appendix-B.5-1">"Without hybrid signatures, a decision to move away from traditional signatures to Dilithium (or other non-hash-based signatures) has a certain risk to make things worse and I think many decision makers will not be ready to take the responsibility for it until the quantum computer threat becomes imminent.
-- If composite signature is not standardised, non-composite hybrids would be left. This implies protocol changes which will:
-  - need more discussion,
-  - need more changes to existing applications,
-  - and thus be more bug prone.
-- Not having hybrid signatures at all will likely cause many decision makers to
-  - use hash-based schemes where possible / affordable
-  - and elsewhere stick to traditional schemes as long as possible, thus effectively delaying the migration to PQC."<a href="#appendix-B.5-1" class="pilcrow">¶</a></p>
+- If composite signature is not standardised, non-composite hybrids would be left. This implies protocol changes which will:<a href="#appendix-B.5-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B.5-2.1">
+            <p id="appendix-B.5-2.1.1">need more discussion,<a href="#appendix-B.5-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.5-2.2">
+            <p id="appendix-B.5-2.2.1">need more changes to existing applications,<a href="#appendix-B.5-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.5-2.3">
+            <p id="appendix-B.5-2.3.1">and thus be more bug prone.<a href="#appendix-B.5-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.5-2.4">
+            <p id="appendix-B.5-2.4.1">Not having hybrid signatures at all will likely cause many decision makers to<a href="#appendix-B.5-2.4.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B.5-2.4.2.1">
+                <p id="appendix-B.5-2.4.2.1.1">use hash-based schemes where possible / affordable<a href="#appendix-B.5-2.4.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-B.5-2.4.2.2">
+                <p id="appendix-B.5-2.4.2.2.1">and elsewhere stick to traditional schemes as long as possible, thus effectively delaying the migration to PQC."<a href="#appendix-B.5-2.4.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+        </ul>
 </section>
 </div>
 <div id="transmute-orie-steele">
@@ -1860,7 +1908,7 @@ If I were the government/bank etc. I would not like to have a 1% risk that all m
       <h2 id="name-acknowledgements">
 <a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
       </h2>
-<p id="appendix-C-1">This draft would not be possible without the support of a great number of contributers.   We thank Stavros Kousidis, Robert Hulshof, Falko Strenzke and Orie Steele for allowing us to use their statements regarding composite signatures.
+<p id="appendix-C-1">This draft would not be possible without the support of a great number of contributors.   We thank Stavros Kousidis, Robert Hulshof, Falko Strenzke and Orie Steele for allowing us to use their statements regarding composite signatures.
 TBD.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 </section>
 </div>
