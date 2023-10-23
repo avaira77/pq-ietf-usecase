@@ -80,7 +80,6 @@ informative:
   RFC8391:
   RFC8554:
   RFC6071:
-  RFC8446:
   RFC8551:
   RFC5652:
   I-D.ounsworth-pq-composite-sigs:
@@ -192,7 +191,7 @@ This section is the core of this document. For each use case, we present a conci
 
 ## Industrial communication protocols (that rely on IETF RFCs)
 
-Several industrial communication protocols, traditionally orthogonal to IP network infrastructure, are progressively being updated to make use of standard IP network infrastructure hence rely on standard security mechanisms, like for example TLS 1.3 {{8446}}.
+Several industrial communication protocols, traditionally orthogonal to IP network infrastructure, are progressively being updated to make use of standard IP network infrastructure hence rely on standard security mechanisms, like for example TLS 1.3 {{RFC8446}}.
 
 The building automation industry makes use of the data communication protocol 'Building Automation and Control Networks / Secure Connect' (BACnet/SC) {{ANSI/ASHRAE.Standard.135-2016}}. BACnet was defined before 1995, when the TCP/IP protocol suite was expensive and not available for smaller devices common in building automation. BACnet/SC proposes a new datalink layer option that makes full use of TLS secured WebSocket connections. This new BACnet/SC datalink layer option uses a virtual hub-and-spoke topology where the spokes are WebSocket connections from the nodes to the hub.
 
