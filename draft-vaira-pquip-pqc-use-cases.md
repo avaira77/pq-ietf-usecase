@@ -94,7 +94,25 @@ informative:
     date: 2019
     seriesinfo:
       ITU-T: Recommendation X.509
-
+  ANSI/ASHRAE.Standard.135-2016:
+    target: https://webstore.ansi.org/standards/ashrae/ansiashraestandard1352016
+    title: >
+      BACnetTM A Data Communication Protocol For Building Automation And Control Network
+    author:
+      org: American National Standards Institute (ANSI)
+    date: 2016
+    seriesinfo:
+      ANSI: Standard 135-2016
+  Addendum.bj.to.ANSI/ASHRAE.Standard.135-2016:
+    target: https://www.ashrae.org/File%20Library/Technical%20Resources/Standards%20and%20Guidelines/Standards%20Addenda/135_2016_bj_20191118.pdf
+    title: >
+      Addendum bj to BACnetTM A Data Communication Protocol For Building Automation And Control Network
+    author:
+      org: American National Standards Institute (ANSI)
+    date: 2016
+    seriesinfo:
+      ANSI: Addendum bj to Standard 135-2016
+      
 --- abstract
 
 This document focuses on the critical challenge of migrating long-term security assertions with security requirements spanning over a decade, encompassing X.509 certificates, including those that serve as IDevID certificates, signed firmware/software, and other electronic artifacts. We investigate a range of migration strategies, specifically hybrid cryptography and the feasibility of stateful Hash-Based Signatures (HBS) schemes, including its pros and cons. To offer a comprehensive context, we present a list of use cases centered around long-lived security assertions, categorize them, and evaluate them against the various migration strategies identified. We also aim at listing pros and cons associated with each method.
@@ -113,7 +131,7 @@ The document is structured into the following sections: "Post-quantum migration 
 
 ## Problem Statement
 
-The transition to post-quantum cryptography poses a distinctive challenge in the domain of modern digital cryptography. This peculiarity stems from the absence of complete trust in both the outgoing and incoming cryptographic algorithms, crucial for ensuring data security throughout their required lifespans. This is of particular significance in guaranteeing the security of long-lived digital signatures, which are integral to secure software update workflows and manufacturer certificates, among other applications. Despite having NIST finalists for post-quantum cryptographic signature algorithms, concerns persist regarding their long-term security. At present, only stateful Hash-Based Signature schemes are considered secure.
+The transition to post-quantum cryptography poses a distinctive challenge in the domain of modern digital cryptography. This peculiarity stems from the absence of complete trust in both the outgoing and incoming cryptographic algorithms, crucial for ensuring data security throughout their required lifespans. This is of particular significance in guaranteeing the security of long-lived digital signatures, which are integral to secure software update workflows and manufacturer issued certificates, among other applications. Despite having NIST finalists for post-quantum cryptographic signature algorithms, concerns persist regarding their long-term security. At present, only stateful Hash-Based Signature schemes are considered secure.
 At the same time, regulatory bodies (TODO: add references) mandate the incorporation of post-quantum cryptographic techniques, and in some cases, hybrid cryptography, as a proactive response to the quantum threat. As of now, the most effective strategies for transitioning to protect long-lasting digital signatures across diverse usage scenarios remain uncertain.
 
 ## Scope
@@ -124,21 +142,21 @@ The scope of this document is to compile a list of real-life use cases character
 
 This document makes use of the terminology defined in {{RFC4949}}, {{RFC5280}}, {{RFC9019}},  {{I-D.ietf-pquip-pqc-engineers}}, {{I-D.ietf-pquip-pqt-hybrid-terminology}} and TODO: add ref to composite signature drafts.
 
-# Post-quantum Migration Mechanisms for Signing
+# Post-quantum Migration Strategies for Signing
 
 People are considering which technological concepts are suitable to solve the problem of a secure migration from classical cryptography to quantum computer safe cryptographic algorithms. A variety of approaches are being discussed. In the following, we would like to briefly introduce the approaches under discussion and refer to the respective relevant documents for further details.
 For a general introduction, we also refer to {{I-D.ietf-pquip-pqc-engineers}}.
 
-## Stateful Hash-based Signatures Schemes
+## Stateful Hash-based Signature Schemes
 
-The only algorithms that are considered safe against attacks with quantum computers are the stateful hash-bases signature (HBS) schemes {{NIST.SP.800-208}} {{NIST.FIPS.186-5}} XMSS {{RFC8391}} and LMS {{RFC8554}}.
+The only algorithms that can be considered safe against attacks with quantum computers with sufficient certainty today are the stateful hash-bases signature (HBS) schemes {{NIST.SP.800-208}} {{NIST.FIPS.186-5}} XMSS {{RFC8391}} and LMS {{RFC8554}}.
 According to NIST, these stateful HBS algorithms offer better performance than stateless HBS algorithms, and the underlying technology is considered well understood. More stateful HBS algorithms are considered safe against attacks by quantum computers but cannot be widely used due to the state management that is very important for the security of stateful HBS. Especially for the secure signing of data that can be signed repeatedly over a very long period of time and whose signatures must be able to be securely validated with the same public key, stateful HBS do not appear to be suitable. This is because there are currently insufficient solutions for the replacement of the hardware security modules used and for disaster recovery cases.
 
 ## Stateless Hash-based Signature Schemes
 
-NIST FIPS 205 specifies the ML-SLH (SPHINCS+) algorithm.  It is a stateless hashed based signature and is considered safe against attacks by quantum computers.  The advantage of this algorithm is that the state problem is resolved as part of the algorithm.  However, this tradeoff is that signature sizes are often an order of magnatude larger than XMSS or LMS.  This may make deploying these algorithms on constrained devices infeasible.
+{{NIST.FIPS.205}} specifies the ML-SLH (SPHINCS+) algorithm.  It is a stateless hashed-based signature algorithm and is considered safe against attacks by quantum computers.  The advantage of this algorithm is that the state problem is resolved as part of the algorithm.  However, this tradeoff is that signature sizes are often an order of magnatude larger than XMSS or LMS.  This may make deploying these algorithms on constrained devices infeasible.
 
-## Protocol Revision (Cryptographic Agility)
+## Protocol Revision (Cryptographic Agility) {#protocols}
 
 Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) {{RFC6071}}, Transport Layer Security (TLS){{RFC8446}}, Secure/Multipurpose Internet Mail Extensions (S/MIME){{RFC8551}}, is usually understood as the dynamic referencing of the algorithms to be used. A concrete migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period is usually not described in the respective standards.
 
@@ -146,9 +164,9 @@ An extension of the existing standards would be needed to integrate the required
 
 ## Multiple Signatures
 
-Several signatures have the approach of defining a second alternative signature in addition to the primary signature in the protocol or format, which can be transported in the protocol or format. In addition to the definition of the alternative signature, the associated signing algorithm and, if applicable, the associated public key or a reference to it must also be transferred. For X.509 PublicKey certificates, this is defined in {{X.509}}. Work is also underway for other protocols and formats. This approach overlaps with the protocol and format extension approach described in Section 3.1.
+Several signatures have the approach of defining a second alternative signature in addition to the primary signature in the protocol or format, which can be transported in the protocol or format. In addition to the definition of the alternative signature, the associated signing algorithm and, if applicable, the associated public key or a reference to it must also be transferred. For X.509 PublicKey certificates, this is defined in {{X.509}}. Work is also underway for other protocols and formats. This approach overlaps with the protocol and format extension approach described in {{protocols}}.
 
-An alternative approach is to encode a second signature in a second certificate and bind it to the first one by a reference. For example, an implementation can decide based on the policy whether only the first certificate or the second or both certificates should be used for authentication. Further descriptions of this approach can be found in A Mechanism for Encoding Differences in Paired Certificates {{I-D.bonnell-lamps-chameleon-certs}} and Related Certificates for Use in Multiple Authentications within a Protocol {{I-D.ietf-lamps-cert-binding-for-multi-auth}}.
+An alternative approach is to encode a second signature in a second certificate and bind it to the first one by a reference. For example, an implementation can decide based on its policy whether only the first certificate or the second or both certificates should be used for authentication. Further descriptions of this approach can be found in A Mechanism for Encoding Differences in Paired Certificates {{I-D.bonnell-lamps-chameleon-certs}} and Related Certificates for Use in Multiple Authentications within a Protocol {{I-D.ietf-lamps-cert-binding-for-multi-auth}}.
 
 ## Composite Signatures
 
@@ -160,18 +178,17 @@ This concept is described in Composite Signatures For Use In Internet PKI {{I-D.
 
 # Use cases collection {#sec-usecases}
 
-This section is the core this document. For each use case, we present a concise overview of the use case, the relevant categories it aligns with, and a list of potential migration methods. For each migration method, we highlight the advantages and disadvantages that stem from considering real-world deployment scenarios.
+This section is the core of this document. For each use case, we present a concise overview of the use case and a list of potential migration strategies. For each migration strategy, we highlight the advantages and disadvantages that stem from considering real-world deployment scenarios.
 
 ## Industrial communication protocols (that rely on IETF RFCs)
-EDNOTE2: the title is an attempt at generalizing what BACnet is and why it should be interesting to take it into account while discussing pqc migration approaches within the IETF.
 
 Several industrial communication protocols, traditionally orthogonal to IP network infrastructure, are progressively being updated to make use of standard IP network infrastructure hence rely standard security mechanisms, like for example TLS 1.3.
 
-An example of such protocol is BACnet/SC. BACnet is a data communication protocol for Building Automation and Control Networks. BACnet was defined before 1995, when the TCP/IP protocol suite was expensive and not available for smaller devices common in building automation. BACnet Secure Connect, known as BACnet/SC and defined in the addendum ANSI/ASHRAE Standard 135-2016, proposes a new datalink layer option that makes full use of TLS secured WebSocket connections. This new BACnet Secure Connect datalink layer option uses a virtual hub-and-spoke topology where the spokes are WebSocket connections from the nodes to the hub.
+The building automation industry makes use of the data communication protocol 'Building Automation and Control Networks / Secure Connect' (BACnet/SC) {{ANSI/ASHRAE.Standard.135-2016}}. BACnet was defined before 1995, when the TCP/IP protocol suite was expensive and not available for smaller devices common in building automation. BACnet/SC proposes a new datalink layer option that makes full use of TLS secured WebSocket connections. This new BACnet/SC datalink layer option uses a virtual hub-and-spoke topology where the spokes are WebSocket connections from the nodes to the hub.
 
 The main features of BACnet/SC are:
 
-- it makes use of WebSockets secured via TLS1.3,
+- it makes use of WebSockets secured via TLS 1.3,
 
 - it relies on X.509 certificates to authenticate the nodes in the network,
 
@@ -181,14 +198,15 @@ The main features of BACnet/SC are:
 
 - it can be NATted.
 
-BACnet/SC's implementation adheres to established industry standards defined in IETF RFCs. Specifically the Addendum bj to ANSI/ASHRAE Standard 135-2016 references RFC 7468, when defining the format in which operational certificates and signing CA should be installed onto the target device at configuration time.
+BACnet/SC's implementation adheres to established industry standards defined in IETF RFCs. Specifically the {{Addendum.bj.to.ANSI/ASHRAE.Standard.135-2016}} references to {{RFC7468}}, when defining the format in which operational certificates and signing CA should be installed onto the target device at configuration time.
 
-The security of the BACnet/SC protocol, as well as of similar industrial protocols, relies on TLS 1.3 (RFC 8446), therefore implications of post-quantum cryptography have to be considered in both the TLS handshake and in the X.509 certificates used for the authentication.
+The security of the BACnet/SC protocol, as well as of similar industrial protocols, relies on TLS 1.3 {{RFC8446}}, therefore implications of post-quantum cryptography have to be considered in both the TLS handshake and in the X.509 certificates used for the authentication.
 
-Furthermore, the geographical locations of the BACnet/SC-enabled devices in operation may necessitate the inclusion of extra considerations related to post-quantum cryptography, like for example the use of hybrid cryptography.
+Furthermore, the regulations applicable to the environment the BACnet/SC-enabled devices is operated in may necessitate the usage of a specific migration strategy, e.g., the use of hybrid cryptography.
 
 ### Suitable migration mechanisms
-TBD
+- Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints. This would require cryptographic library updates as well as protocol level changes to support multiple signatures. Additionally, it would require the introduction of security policy to allow to switch the validation from one signature to the other, if needed. These modifications to the protocols, and introduction of additional policies will not be easily attainable due to the interdependencies of protocols and might come at a detriment of interoperability especially cross-vendor interoperability.
+- Composite Signatures - Similar to multiple signatures but would only require updates to the cryptographic libraries as well as a signature algorithm update in protocols. It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically been used. In the use case at hand, this would be the best fit, because it would require no modifications of industrial protocol, which are usually harder to update.
 
 ## Software update
 TBD
