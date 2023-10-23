@@ -40,6 +40,15 @@ author:
   country: Germany
   email: hendrik.brockhaus@siemens.com
   uri: https://www.siemens.com
+- name: Alexander Railean
+  org: Siemens
+  abbrev: Siemens
+  street: Werner-von-Siemens-Strasse 1
+  code: '80333'
+  city: Munich
+  country: Germany
+  email: alexander.railean@siemens.com
+  uri: https://www.siemens.com
 - name: John Gray
   org: Entrust
   abbrev: Entrust
