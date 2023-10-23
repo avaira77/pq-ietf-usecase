@@ -221,12 +221,12 @@ Table of Contents
 2.2.  Stateless Hash-based Signature Schemes
 
    NIST FIPS 205 specifies the ML-SLH (SPHINCS+) algorithm.  It is a
-   stateless hashed based signature and is considered safe against
-   attacks by quantum computers.  The advantage of this algorithm is
-   that the state problem is resolved as part of the algorithm.
-   However, this tradeoff is that signature sizes are often an order of
-   magnatude larger than XMSS or LMS.  This may make deploying these
-   algorithms on constrained devices infeasible.
+   stateless hash based signature and is considered safe against attacks
+   by quantum computers.  The advantage of this algorithm is that the
+   state problem is resolved as part of the algorithm.  However, this
+   tradeoff is that signature sizes are often an order of magnitude
+   larger than XMSS or LMS.  This may make deploying these algorithms on
+   constrained devices infeasible.
 
 2.3.  Protocol Revision (Cryptographic Agility)
 
@@ -256,7 +256,7 @@ Table of Contents
    addition to the definition of the alternative signature, the
    associated signing algorithm and, if applicable, the associated
    public key or a reference to it must also be transferred.  For X.509
-   PublicKey certificates, this is defined in [X.509].  Work is also
+   Public Key certificates, this is defined in [X.509].  Work is also
    underway for other protocols and formats.  This approach overlaps
    with the protocol and format extension approach described in
    Section 3.1.
@@ -277,7 +277,7 @@ Table of Contents
    be used with any protocol or format.  It contains two signatures in a
    single atomic container that have been generated using two different
    cryptographic algorithms.  The goal of this approach is to define a
-   signature format which requires both contained signtures to be
+   signature format which requires both contained signatures to be
    verified.  In this way, the security properties of the classical
    signature and another signature that is secure when attacked by a
    quantum computer are used in the protocol or format without having to
@@ -307,11 +307,11 @@ Table of Contents
 
    EDNOTE2: the title is an attempt at generalizing what BACnet is and
    why it should be interesting to take it into account while discussing
-   pqc migration approaches within the IETF.
+   PQC migration approaches within the IETF.
 
    Several industrial communication protocols, traditionally orthogonal
    to IP network infrastructure, are progressively being updated to make
-   use of standard IP network infrastructure hence rely standard
+   use of standard IP network infrastructure hence rely on standard
    security mechanisms, like for example TLS 1.3.
 
    An example of such protocol is BACnet/SC.  BACnet is a data
@@ -393,7 +393,7 @@ Table of Contents
    environments like Hardware Security Modules (HSMs), returns the
    signature after authenticating the request.
 
-   Subsequently the firmware is distributed to target devices, which in
+   Subsequently, the firmware is distributed to target devices, which in
    turn must validate the firmware signature against a Trust Anchor
    (TA).  The TA can be an X.509 certificate, a public key, or a hash of
    a combination of both, depending on the OEM's security measures.
@@ -423,15 +423,15 @@ Table of Contents
    *  Smart cards – used for authenticating to workstations and
       buildings, or electronic document signing.
 
-   *  Security Tokens – such as FIDO2, cheap devices that users
-      typically will typically not patch.
+   *  Security Tokens – such as FIDO2, cheap devices that users will
+      typically not patch.
 
 3.3.1.  Suitable migration mechanisms
 
    Given the long term requirements of the signatures and physically
    constrained locations, a signature used in these environments must be
    able to withstand future cryptanalysis attacks as well as
-   technological advancements.  Therefore the following migration
+   technological advancements.  Therefore, the following migration
    mechanisms should be considered for these environments:
 
    *  Multiple Signatures - These can be used to give the environment
@@ -446,7 +446,7 @@ Table of Contents
       only require updates to the cryptographic libraries as well as a
       signature algorithm update in protocols.  It is likely composite
       signatures would be easier to deploy as single key and signature
-      objects are used which is similar to what has historically be
+      objects are used, which is similar to what has historically been
       used.
 
    *  Stateful hash based signatures - In constrained locations where
@@ -479,7 +479,7 @@ Table of Contents
       injection can occur during manufacturing or when a device is being
       resold, but it's critical to note that not all scenarios support
       this method, potentially requiring the return of the device to the
-      OEM for post-quantum Trust Anchor injection or it may be even not
+      OEM for post-quantum Trust Anchor injection, or it may be even not
       supported at all.
 
    *  injection via software and firmware updates: for devices where the
@@ -546,7 +546,7 @@ Table of Contents
    will support PQ algorithms quickly while others may take more time or
    never adopt them fully.  Suggestion to IETF: Study be put into
    RFC5652 the Cryptographic Message Syntax into signing messages with
-   multiple signatures in a way that un-supported signatures will be
+   multiple signatures in a way that unsupported signatures will be
    ignored (likely this already "just works").  Email encryption
    probably requires either a flag day (you simply cannot encrypt a
    message for a recipient if you do not understand their PQ
@@ -731,7 +731,7 @@ Table of Contents
 Appendix A.  Appendix 1 - post-quantum migration properties
 
    The purpose of this section is to define a set of properties that can
-   be used to classify each of the use-cases listed in Section 3 in a
+   be used to classify each of the use-cases listed in Section 3, in a
    consistent way.  The goal is to make the document a resource to help
    classify use cases which are not covered herein because, for example,
    implementors could classify their own use-case and then find one in
@@ -827,7 +827,7 @@ B.5.  MTG - Falko Strenzke
 
    "Without hybrid signatures, a decision to move away from traditional
    signatures to Dilithium (or other non-hash-based signatures) has a
-   certain risk to make things worse and I think many decision makers
+   certain risk to make things worse, and I think many decision makers
    will not be ready to take the responsibility for it until the quantum
    computer threat becomes imminent. - If composite signature is not
    standardised, non-composite hybrids would be left.  This implies
@@ -898,7 +898,7 @@ B.8.  Hybrid Post-Quantum Signatures in Hardware Security Keys
 Acknowledgements
 
    This draft would not be possible without the support of a great
-   number of contributers.  We thank Stavros Kousidis, Robert Hulshof,
+   number of contributors.  We thank Stavros Kousidis, Robert Hulshof,
    Falko Strenzke and Orie Steele for allowing us to use their
    statements regarding composite signatures.  TBD.
 
