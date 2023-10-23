@@ -121,7 +121,7 @@ informative:
     date: 2016
     seriesinfo:
       ANSI: Addendum bj to Standard 135-2016
-      
+
 --- abstract
 
 This document focuses on the critical challenge of migrating long-term security assertions with security requirements spanning over a decade, encompassing X.509 certificates, including those that serve as IDevID certificates, signed firmware/software, and other electronic artifacts. We investigate a range of migration strategies, specifically hybrid cryptography and the feasibility of stateful Hash-Based Signatures (HBS) schemes, including its pros and cons. To offer a comprehensive context, we present a list of use cases centered around long-lived security assertions, categorize them, and evaluate them against the various migration strategies identified. We also aim at listing pros and cons associated with each method.
