@@ -295,6 +295,8 @@ Table of Contents
 
 3.  Use cases collection
 
+   EDNOTE9: The collection of use cases requires further edit.
+
    This section is the core of this document.  For each use case, we
    present a concise overview of the use case and a list of potential
    migration strategies.  For each migration strategy, we highlight the
@@ -351,7 +353,7 @@ Table of Contents
 3.1.1.  Suitable migration mechanisms
 
    *  Multiple Signatures - These can be used to give the environment
-      resilience to crytanalysis attacks and technological advancements
+      resilience to cryptanalysis attacks and technological advancements
       because should a critical break happen, the secondary signature
       should allow for addition time for upgrade which will be welcome
       given the location constraints.  This would require cryptographic
@@ -379,11 +381,9 @@ Table of Contents
 
 3.3.  Firmware update
 
-   EDNOTE3: As a generic note "we should contribute short use cases that
-   we are familiar with", we could later on rephrase this use case to
-   "update distributed industrial systems" for example like here:
-   https://datatracker.ietf.org/doc/html/draft-ietf-anima-brski-async-
-   enroll-00#section-3.2
+   EDNOTE3: The firmware update use case, and the software update one,
+   have to be further defined and its differences have to be made more
+   clear.
 
    Firmware, defined in [RFC4949], refers to computer programs and data
    stored in hardware, typically in read-only memory (ROM) or
