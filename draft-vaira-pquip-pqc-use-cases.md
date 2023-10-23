@@ -87,6 +87,15 @@ informative:
   I-D.ounsworth-pq-composite-sigs:
   I-D.bonnell-lamps-chameleon-certs:
   I-D.ietf-lamps-cert-binding-for-multi-auth:
+  NIST.FIPS.205:
+    target: https://csrc.nist.gov/pubs/fips/205/ipd
+    title: >
+      Stateless Hash-Based Digital Signature Standard
+    author:
+      org: National Institute of Standards and Technology (NIST)
+    date: 2023
+    seriesinfo:
+      NIST: FIPS 205 (Initial Public Draft)
   X.509:
     title: >
       Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks
