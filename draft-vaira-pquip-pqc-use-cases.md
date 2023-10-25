@@ -94,6 +94,15 @@ informative:
   I-D.ounsworth-pq-composite-sigs:
   I-D.bonnell-lamps-chameleon-certs:
   I-D.ietf-lamps-cert-binding-for-multi-auth:
+  bsi.quantum-safe.crypto:
+    target: https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/Brochure/quantum-safe-cryptography.pdf?__blob=publicationFile&v=4
+    title: >
+      Quantum-safe cryptography – fundamentals, current developments and recommendations
+    author:
+      org: Bundesamt fuer Sicherheit in der Informationstechnik
+    date: 2021
+    seriesinfo:
+      BSI: Recommendations for action by the BSI
   NIST.FIPS.205:
     target: https://csrc.nist.gov/pubs/fips/205/ipd
     title: >
@@ -149,7 +158,7 @@ The document is structured into the following sections: "Post-quantum migration 
 ## Problem Statement
 
 The transition to post-quantum cryptography poses a distinctive challenge in the domain of modern digital cryptography. This peculiarity stems from the absence of complete trust in both the outgoing and incoming cryptographic algorithms, crucial for ensuring data security throughout their required lifespans. This is of particular significance in guaranteeing the security of long-lived digital signatures, which are integral to secure software update workflows and manufacturer issued certificates, among other applications. Despite having NIST finalists for post-quantum cryptographic signature algorithms, concerns persist regarding their long-term security. At present, only stateful Hash-Based Signature schemes are considered secure.
-At the same time, regulatory bodies (TODO: add references) mandate the incorporation of post-quantum cryptographic techniques, and in some cases, hybrid cryptography, as a proactive response to the quantum threat. As of now, the most effective strategies for transitioning to protect long-lasting digital signatures across diverse usage scenarios remain uncertain.
+At the same time, regulatory bodies, like for example {{bsi.quantum-safe.crypto}}, recommend the incorporation of post-quantum cryptographic techniques, and in some cases, hybrid cryptography, as a proactive response to the quantum threat. As of now, the most effective strategies for transitioning to protect long-lasting digital signatures across diverse usage scenarios remain uncertain.
 
 ## Scope
 
