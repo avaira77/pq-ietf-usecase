@@ -5,17 +5,20 @@
 Post-Quantum Use In Protocols                                   A. Vaira
 Internet-Draft                                              H. Brockhaus
 Intended status: Informational                                A. Railean
-Expires: 27 April 2024                                           Siemens
+Expires: 28 April 2024                                           Siemens
                                                                  J. Gray
                                                             M. Ounsworth
                                                                  Entrust
-                                                         25 October 2023
+                                                         26 October 2023
 
 
                   Post-quantum cryptography use cases
                  draft-vaira-pquip-pqc-use-cases-latest
 
 Abstract
+
+   EDNOTE10: the title should reflect that we focus on long-term use
+   cases and that we provide migration strategies as well.
 
    This document focuses on the critical challenge of migrating long-
    term security assertions with security requirements spanning over a
@@ -62,7 +65,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 April 2024.
+   This Internet-Draft will expire on 28 April 2024.
 
 Copyright Notice
 
@@ -217,6 +220,17 @@ Table of Contents
    HBS do not appear to be suitable.  This is because there are
    currently insufficient solutions for the replacement of the hardware
    security modules used and for disaster recovery cases.
+
+   EDNOTE11: feedback from PQUIP mailing list: "The question what is or
+   isn’t considered safe is a subjective one.  Not sure it should be
+   phrased in a RFC in such a way.  According to CNSA v2.0, the NSA is
+   not in agreement with that statement, for example.  Or you limit it
+   to standardized algorithms and update it as soon as ML-DSA and SLH-
+   DSA standards get approved."  EDNOTE12: feedback from PQUIP mailing
+   list: "Secondly, I think the whole section is understating the
+   security risks that a state mismanagement incurs.  I’d state more
+   clearly that state management is not just a matter of convenience but
+   a matter of security."
 
 2.2.  Stateless Hash-based Signature Schemes
 
