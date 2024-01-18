@@ -1,3 +1,145 @@
+---
+stand_alone: true
+ipr: trust200902
+cat: info
+submissiontype: IETF
+area: "Security"
+workgroup: "Post-Quantum Use In Protocols"
+venue:
+  group: "Post-Quantum Use In Protocols"
+  type: "Working Group"
+  mail: "pqc@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/pqc/"
+  github: "avaira77/pq-ietf-usecase"
+  latest: "https://avaira77.github.io/pq-ietf-usecase/draft-vaira-pquip-pq-use-cases.html"
+
+docname: draft-vaira-pquip-pqc-use-cases-latest
+
+title: Post-quantum cryptography use cases
+abbrev: PQC use cases
+lang: en
+kw:
+  - post-quantum cryptography
+  - PQC use cases
+author:
+- name: Antonio Vaira
+  org: Siemens
+  abbrev: Siemens
+  street: Werner-von-Siemens-Strasse 1
+  code: '80333'
+  city: Munich
+  country: Germany
+  email: antonio.vaira@siemens.com
+  uri: https://www.siemens.com
+- name: Hendrik Brockhaus
+  org: Siemens
+  abbrev: Siemens
+  street: Werner-von-Siemens-Strasse 1
+  code: '80333'
+  city: Munich
+  country: Germany
+  email: hendrik.brockhaus@siemens.com
+  uri: https://www.siemens.com
+- name: Alexander Railean
+  org: Siemens
+  abbrev: Siemens
+  street: Werner-von-Siemens-Strasse 1
+  code: '80333'
+  city: Munich
+  country: Germany
+  email: alexander.railean@siemens.com
+  uri: https://www.siemens.com
+- name: John Gray
+  org: Entrust
+  abbrev: Entrust
+  street: 1187 Park Place
+  region: MN
+  code: '55379'
+  city: Minneapolis
+  country: United States of America
+  email: john.gray@entrust.com
+  uri: https://www.entrust.com
+- name: Mike Ounsworth
+  org: Entrust
+  abbrev: Entrust
+  street: 1187 Park Place
+  region: MN
+  code: '55379'
+  city: Minneapolis
+  country: United States of America
+  email: mike.ounsworth@entrust.com
+  uri: https://www.entrust.com
+
+normative:
+
+informative:
+  IEEE.802.1AR-2018: DOI.10.1109/IEEESTD.2018.8423794
+  RFC3136:
+  RFC4949:
+  RFC4998:
+  RFC5280:
+  RFC5652:
+  RFC6421:
+  RFC7468:
+  RFC8446:
+  RFC9019:
+  I-D.ietf-pquip-pqc-engineers:
+  I-D.ietf-pquip-pqt-hybrid-terminology:
+  NIST.SP.800-208:
+  NIST.FIPS.186-5:
+  RFC8391:
+  RFC8554:
+  RFC6071:
+  RFC8551:
+  RFC5652:
+  I-D.ounsworth-pq-composite-sigs:
+  I-D.bonnell-lamps-chameleon-certs:
+  I-D.ietf-lamps-cert-binding-for-multi-auth:
+  bsi.quantum-safe.crypto:
+    target: https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/Brochure/quantum-safe-cryptography.pdf?__blob=publicationFile&v=4
+    title: >
+      Quantum-safe cryptography – fundamentals, current developments and recommendations
+    author:
+      org: Bundesamt fuer Sicherheit in der Informationstechnik
+    date: 2021
+    seriesinfo:
+      BSI: Recommendations for action by the BSI
+  NIST.FIPS.205:
+    target: https://csrc.nist.gov/pubs/fips/205/ipd
+    title: >
+      Stateless Hash-Based Digital Signature Standard
+    author:
+      org: National Institute of Standards and Technology (NIST)
+    date: 2023
+    seriesinfo:
+      NIST: FIPS 205 (Initial Public Draft)
+  X.509:
+    title: >
+      Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks
+    author:
+      org: International Telecommunications Union
+    date: 2019
+    seriesinfo:
+      ITU-T: Recommendation X.509
+  ANSI/ASHRAE.Standard.135-2016:
+    target: https://webstore.ansi.org/standards/ashrae/ansiashraestandard1352016
+    title: >
+      BACnetTM A Data Communication Protocol For Building Automation And Control Network
+    author:
+      org: American National Standards Institute (ANSI)
+    date: 2016
+    seriesinfo:
+      ANSI: Standard 135-2016
+  Addendum.bj.to.ANSI/ASHRAE.Standard.135-2016:
+    target: https://www.ashrae.org/File%20Library/Technical%20Resources/Standards%20and%20Guidelines/Standards%20Addenda/135_2016_bj_20191118.pdf
+    title: >
+      Addendum bj to BACnetTM A Data Communication Protocol For Building Automation And Control Network
+    author:
+      org: American National Standards Institute (ANSI)
+    date: 2016
+    seriesinfo:
+      ANSI: Addendum bj to Standard 135-2016
+
 --- abstract
 
 This document is meant to be continously updated, receiving periodic updates to incorporate emerging PQC migration use cases. Focused on real-world scenarios, it categorizes them based on a select set of distinctive features. The primary aim is to facilitate discussions on migration strategies by offering a systematic taxonomy, and a shared understanding among the parties involved.
@@ -20,16 +162,15 @@ We also explore the migration strategies that have appeard so far, proposing the
 
 An additional dimention of the problem space is represented by the requirements coming from regulatory bodies, which, in several cases will differ from state to state in regard to post-quantum algorithms and acceptable migration strategies. For example {{bsi.quantum-safe.crypto}}, recommends the incorporation of post-quantum cryptographic algorithms within hybrid cryptographic schemes, as a proactive response to the quantum threat.
 
+## Requirements Language
 
-## Terminology
-
-This document makes use of the terminology defined in {{RFC4949}}, {{RFC5280}}, {{RFC9019}},  {{I-D.ietf-pquip-pqc-engineers}}, {{I-D.ietf-pquip-pqt-hybrid-terminology}} and TODO: add ref to composite signature drafts.
+{::boilerplate bcp14-tagged}
 
 # Reference Use Cases {#sec-usecases}
 
 This section is the core of this document. For each use case, we present a concise overview and highlight the features that can help to categorize it. This list is not exhaustive, and if you think we have missed some important use case please consider contributing to it.
 
-## Industrial communication protocols (that use IETF RFCs)
+## Industrial communication protocols
 
 Several industrial communication protocols, traditionally orthogonal to IP network infrastructure, are progressively being updated to make use of standard IP network infrastructure hence rely on standard security mechanisms, like for example TLS 1.3 {{RFC8446}}.
 
@@ -113,7 +254,7 @@ Backward compatibility: needed due to non-uniform implementations.
 ## Additional use cases
 
 TO-DOs:
-- add additional post-quantum relevant use cases which cover aspects not covered so far, this could also include use cases that are not common in our line of work (e.g., FAA airworthiness certifications, medical records, etc.), call for action for IETF participants!
+- add additional post-quantum relevant use cases which cover aspects not covered so far, this could also include use cases that are not common in our line of work (e.g., FAA airworthiness certifications, medical records, etc.), call for action for IETF participants...
 
 # Post-quantum Migration Strategies for Signing
 
@@ -151,7 +292,6 @@ The goal of composite signatures is to define a signature object to be used with
 In order for this approach to be applicable in arbitrary protocols and formats, a composite key must be defined in addition to the composite signature. According to the definition of composite signatures, a composite public is a single atomic container composed of two public keys. The associated composite private key is a single atomic private key that is composed of the two private keys which correspond to the two public keys contained in the composite public key.
 
 This concept is described in Composite Signatures For Use In Internet PKI {{I-D.ounsworth-pq-composite-sigs}} in more detail.
-
 
 # IANA Considerations {#IANA}
 
