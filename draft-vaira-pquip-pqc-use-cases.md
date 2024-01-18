@@ -74,6 +74,7 @@ normative:
 
 informative:
   IEEE.802.1AR-2018: DOI.10.1109/IEEESTD.2018.8423794
+  RFC3136:
   RFC4949:
   RFC4998:
   RFC5280:
@@ -141,41 +142,126 @@ informative:
 
 --- abstract
 
-EDNOTE10: the title should reflect that we focus on long-term use cases and that we provide migration strategies as well.
-
-This document focuses on the critical challenge of migrating long-term security assertions with security requirements spanning over a decade, encompassing X.509 certificates, including those that serve as manufacturer issued certificates (IDevID), signed firmware/software, and other electronic artifacts. We investigate a range of migration strategies, specifically hybrid cryptography and the feasibility of stateful Hash-Based Signatures (HBS) schemes, including its pros and cons. To offer a comprehensive context, we present a list of use cases centered around long-lived security assertions, categorize them, and evaluate them against the various migration strategies identified. We also aim at listing pros and cons associated with each method.
+This document is meant to be continously updated, receiving periodic updates to incorporate emerging PQC migration use cases. Focused on real-world scenarios, it categorizes them based on a select set of distinctive features. The primary aim is to facilitate discussions on migration strategies by offering a systematic taxonomy, and a shared understanding among the parties involved.
 
 --- middle
 
 # Introduction
 
-The purpose of this document is to compile a list of real-world use cases, focusing on long-term security assertions. This document additionally aims at evaluating, for each use case, a set of migration strategies, like hybrid cryptography, including multiple and composite signatures, and the feasibility of using stateful Hash-Based Signature (HBS) schemes,  evaluating the pros and cons of each approach.
+How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. Clearly, there is no silver bullet, making it difficult to select the most suitable approach for any given use case.
 
-The document is structured into the following sections: "Post-quantum migration strategies", lists possible migration approaches; "Use case collection", describes, at a high level, the use cases at hand, including an analysis of the pros and cons for each of the migration strategies applicable.
+For example:
+
+- An Original Equipment Manufacturer (OEM) must issue its products today with a manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI. The choice of algorithms and the type of hybrid cryptography to support become quite critical.
+
+- A public PKI is must start today preparing its CAs for issuing S/MIME certificates, necessitating the inclusion of hybrid capabilities. The question arises: which path should be pursued?
+
+In this document, intended to be a dynamic resource, our main objective is to compile a list of use cases and categorize them based on prominent features. Examples include distinguishing between long-lived and short-lived scenarios, whether they include a negotiated protocol, or if backward compatibility is required.
+
+We also explore the migration strategies that have appeard so far, proposing the most suitable fit for each of the properties identified in each use case.
+
+An additional dimention of the problem space is represented by the requirements coming from regulatory bodies, which, in several cases will differ from state to state in regard to post-quantum algorithms and acceptable migration strategies. For example {{bsi.quantum-safe.crypto}}, recommends the incorporation of post-quantum cryptographic algorithms within hybrid cryptographic schemes, as a proactive response to the quantum threat.
 
 ## Requirements Language
 
 {::boilerplate bcp14-tagged}
 
-## Problem Statement
+# Reference Use Cases {#sec-usecases}
 
-The transition to post-quantum cryptography poses a distinctive challenge in the domain of modern digital cryptography. This peculiarity stems from the absence of complete trust in both the outgoing and incoming cryptographic algorithms, crucial for ensuring data security throughout their required lifespans. This is of particular significance in guaranteeing the security of long-lived digital signatures, which are integral to secure software update workflows and manufacturer issued certificates, among other applications. Despite having NIST finalists for post-quantum cryptographic signature algorithms, concerns persist regarding their long-term security. At present, only stateful Hash-Based Signature schemes are considered secure.
-At the same time, regulatory bodies, like for example {{bsi.quantum-safe.crypto}}, recommend the incorporation of post-quantum cryptographic techniques, and in some cases, hybrid cryptography, as a proactive response to the quantum threat. As of now, the most effective strategies for transitioning to protect long-lasting digital signatures across diverse usage scenarios remain uncertain.
+This section is the core of this document. For each use case, we present a concise overview and highlight the features that can help to categorize it. This list is not exhaustive, and if you think we have missed some important use case please consider contributing to it.
 
-## Scope
+## Industrial communication protocols (that rely on IETF RFCs)
 
-The scope of this document is to compile a list of real-life use cases characterized by long-term security requirements, which are typically challenging to update, for example no over the air update mechanisms are available. These scenarios necessitate an early implementation of post-quantum cryptography migration strategies. Consequently, mitigation mechanisms must be introduced, given the limited experience with post-quantum cryptography to date. Furthermore, it is essential to consider regional regulations that may mandate the use of hybrid cryptography in specific instances.
+Several industrial communication protocols, traditionally orthogonal to IP network infrastructure, are progressively being updated to make use of standard IP network infrastructure hence rely on standard security mechanisms, like for example TLS 1.3 {{RFC8446}}.
 
-## Terminology
+The protocol 'Building Automation and Control Networks / Secure Connect' (BACnet/SC) {{ANSI/ASHRAE.Standard.135-2016}} is a good example. BACnet was defined before 1995, when the TCP/IP protocol suite was expensive and not available for smaller devices common in building automation. BACnet/SC proposes a new datalink layer option that makes full use of TLS secured WebSocket connections. This new BACnet/SC datalink layer option uses a virtual hub-and-spoke topology where the spokes are WebSocket connections from the nodes to the hub.
 
-This document makes use of the terminology defined in {{RFC4949}}, {{RFC5280}}, {{RFC9019}},  {{I-D.ietf-pquip-pqc-engineers}}, {{I-D.ietf-pquip-pqt-hybrid-terminology}} and TODO: add ref to composite signature drafts.
+BACnet/SC's implementation adheres to established industry standards defined in IETF RFCs. Specifically the {{Addendum.bj.to.ANSI/ASHRAE.Standard.135-2016}} references to {{RFC7468}}, when defining the format in which operational certificates and signing CA should be installed onto the target device at configuration time.
+
+The security of the BACnet/SC protocol, as well as of similar industrial protocols, relies on TLS 1.3 {{RFC8446}}, therefore implications of post-quantum cryptography have to be considered in both the TLS handshake and in the X.509 certificates used for the authentication.
+
+Lifetime: long lived use case.
+
+Protocol(s): negotiated: TLS.
+
+Backward compatibility: is needed for the time window in which the upgrade will take place (e.g., 2-5 years).  
+
+## Software and Firmware update
+
+Secure firmware updates are crucial for ensuring device security and long-term operation, especially in industrial, and critical infrastructure fields, where devices can stay active for decades. Such updates encompass tasks like introducing new trust anchors and upgrading cryptographic algorithm capabilities. However, upgrading every device's security capabilities isn't always feasible due to resource, accessibility, and cost constraints. Some "simple" devices may not support secure firmware updates at all.
+
+Firmware updates are typically authenticated by the Original Equipment Manufacturer (OEM) by means of a digital signing process. An update is distributed to target devices, which will validate its signature against a Trust Anchor (TA). The TA can be an X.509 certificate, a public key, or a hash of a combination of both, depending on the OEM's security measures.
+
+These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifespan in mind, often spanning several decades. Notable examples of such devices encompass:
+
+- Vehicles - scale of deployment or vehicle recall difficulties
+- Satellites - no 'on-site' service reasonably possible
+- Servers and network devices - air-gapped, locked-down DCs, geographically distributed
+- Government infrastructure - power grids, nuclear power station equipment, etc.
+- Smart meters - device owned by the utility company, deployed in private homes.
+- Smart cards – used for authenticating to workstations and buildings, or electronic document signing.
+- Security Tokens – such as FIDO2, cheap devices that users will typically not patch.
+
+Lifetime: medium to long lived use cases.
+
+Protocol(s): non-negotiated: CMS, plain signatures.
+
+Backward compatibility: is needed for the time window in which the upgrade will take place (e.g., 2-5 years).
+
+## Trust Anchor deployment
+
+Trust Anchors, such as X.509 Root CA certificates and raw public keys, must be made accessible before they can be used for signature validation. In scenarios like remote software updates, a Trust Anchor X.509 certificate, for instance, must be installed on a target device to enable the validation of certificate chains. While deployment of Trust Anchors may be relatively straightforward for "corporate IT" and "public web" applications, it can still be a time-consuming process to ensure that a new Trust Anchor X.509 certificate is propagated throughout the entire ecosystem. Additionally, when dealing with post-quantum Trust Anchors, an extra layer of complexity arises as the desired underlying cryptography may not yet be supported by the target device or software.
+
+Two common variations of this use case are:
+
+- injection within a factory: in industrial contexts, Trust Anchors are typically injected into target devices during the manufacturing phase. Devices leaving the assembly line do not possess any credentials or Trusted Anchors initially. To bootstrap a Trust Anchor, the device is placed in a physically secure environment accessible only to trustworthy personnel. This injection can occur during manufacturing or when a device is being resold, but it's critical to note that not all scenarios support this method, potentially requiring the return of the device to the OEM for post-quantum Trust Anchor injection or it may be even not supported at all.
+- injection via software and firmware updates: for devices where the Trust Anchor is not burned onto the device, for example in less constrained devices and IT equipment, post-quantum Trust Anchors can be injected through software or firmware update mechanisms. The deployment of these Trust Anchors may leverage existing update mechanisms and traditional cryptography to minimize effort. However, this approach necessitates the distribution of the new Trust Anchors well in advance of any suspicion that traditional cryptography may become vulnerable. Given the lead time required to ensure widespread distribution, the time window where this mechanism is suitable is further reduced.
+
+Lifetime: long lived use cases.
+
+Protocol(s): non-negotiated.
+
+Backward compatibility: is needed when no update mechanism is supported. For other scenarios, it is needed for the time window in which the upgrade will take place (e.g., 2-5 years).
+
+## Timestamping
+
+A time-stamping service supports assertions of proof that a datum existed before a particular time, as defined in {{RFC3136}}.
+Timestamps, are particularly important in the following scenarios.
+- Electronic commerce, where the reliability of timestamps is key for maintaining the chronological order of transactions and establishing clear timelines with legal and financial implications.
+- Intellectual property protection, particularly when the timing of creation or discovery is central, as seen in patents, copyrights, or trade secrets. They provide trustworthy evidence of when digital content representing intellectual property was originated.
+- Digital signatures and cryptographic systems, timestamps enhance non-repudiation by preventing parties from later denying the authenticity or validity of their digital signatures. The inclusion of timestamps with digital signatures enables third parties to verify not only the integrity of the signature but also the precise time of its application.
+- Legal and regulatory compliance, often mandates or recommends the use of timestamps to establish the timing of digital events, contributing to the admissibility of digital evidence in court and ensuring adherence to laws related to electronic transactions.
+
+Lifetime: long lived use cases.
+
+Protocol(s): non-negotiated: RFC3136, CMS, 
+
+Backward compatibility: not needed, if data can be periodically re-timestamped, as proposed in {{RFC4998}}.
+
+## CMS (S/MIME)
+
+{{RFC5652}}, known as "Cryptographic Message Syntax (CMS)," establishes a standard syntax for creating secure messages, incorporating digital signatures, encryption, and authentication codes.
+In practical terms, CMS finds application in scenarios such as secure email communication, document signing, and PKI-based security services. Organizations use CMS for secure file transfers and end-to-end encryption of documents, ensuring confidentiality and integrity. 
+It is a key component in secure messaging protocols, contributing to the confidentiality, integrity, and authenticity of communication over networks. One of CMS's notable features is flexibility, allowing the choice of cryptographic algorithms based on specific security requirements. 
+An important consideration to be made is the non-uniform adoption and potential challenges in implementing CMS, particularly in the context of email clients. Varying levels of maturity and maintenance among email clients will slow down the adoption of Post-Quantum algorithms, which will not be uniform across different clients.
+
+Lifetime: large spectrum of short to long lived use cases.
+
+Protocol(s): non-negotiated.
+
+Backward compatibility: needed due to non-uniform implementations.
+
+## Additional use cases
+
+TO-DOs:
+- add additional post-quantum relevant use cases which cover aspects not covered so far, this could also include use cases that are not common in our line of work (e.g., FAA airworthiness certifications, medical records, etc.), call for action for IETF participants...
 
 # Post-quantum Migration Strategies for Signing
 
 People are considering which technological concepts are suitable to solve the problem of a secure migration from classical cryptography to quantum computer safe cryptographic algorithms. A variety of approaches are being discussed. In the following, we would like to briefly introduce the approaches under discussion and refer to the respective relevant documents for further details.
 For a general introduction, we also refer to {{I-D.ietf-pquip-pqc-engineers}}.
 
-## Stateful Hash-based Signature Schemes
+## Employing Stateful Hash-based Signature Schemes
 
 The only algorithms that can be considered safe against attacks with quantum computers with sufficient certainty today are the stateful hash-based signature (HBS) schemes {{NIST.SP.800-208}} {{NIST.FIPS.186-5}} XMSS {{RFC8391}} and LMS {{RFC8554}}.
 According to NIST, these stateful HBS algorithms offer better performance than stateless HBS algorithms, and the underlying technology is considered well understood.  Moreover stateful HBS algorithms are considered safe against attacks by quantum computers but the lack of standard operating procedures for how to manage state makes adoption harder. Especially for the secure signing of data that can be signed repeatedly over a very long period of time and whose signatures must be able to be securely validated with the same public key, stateful HBS do not appear to be suitable. This is because there are currently insufficient solutions for the replacement of the hardware security modules used and for disaster recovery cases.
@@ -183,12 +269,11 @@ According to NIST, these stateful HBS algorithms offer better performance than s
 EDNOTE11: feedback from PQUIP mailing list: "The question what is or isn’t considered safe is a subjective one. Not sure it should be phrased in a RFC in such a way. According to CNSA v2.0, the NSA is not in agreement with that statement, for example. Or you limit it to standardized algorithms and update it as soon as ML-DSA and SLH-DSA standards get approved."
 EDNOTE12: feedback from PQUIP mailing list: "Secondly, I think the whole section is understating the security risks that a state mismanagement incurs. I’d state more clearly that state management is not just a matter of convenience but a matter of security."
 
-
-## Stateless Hash-based Signature Schemes
+## Employing Stateless Hash-based Signature Schemes
 
 {{NIST.FIPS.205}} specifies the ML-SLH (SPHINCS+) algorithm.  It is a stateless hash-based signature algorithm and is considered safe against attacks by quantum computers.  The advantage of this algorithm is that the state problem is resolved as part of the algorithm.  However, the tradeoff is that signature sizes are often an order of magnitude larger than XMSS or LMS.  This may make deploying these algorithms on constrained devices infeasible.
 
-## Protocol Revision (Cryptographic Agility) {#protocols}
+## Protocol Revision (Cryptographic Agility)
 
 Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) {{RFC6071}}, Transport Layer Security (TLS){{RFC8446}}, Secure/Multipurpose Internet Mail Extensions (S/MIME){{RFC8551}}, is usually understood as the dynamic referencing of the algorithms to be used. A concrete migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period is usually not described in the respective standards.
 
@@ -207,113 +292,6 @@ The goal of composite signatures is to define a signature object to be used with
 In order for this approach to be applicable in arbitrary protocols and formats, a composite key must be defined in addition to the composite signature. According to the definition of composite signatures, a composite public is a single atomic container composed of two public keys. The associated composite private key is a single atomic private key that is composed of the two private keys which correspond to the two public keys contained in the composite public key.
 
 This concept is described in Composite Signatures For Use In Internet PKI {{I-D.ounsworth-pq-composite-sigs}} in more detail.
-
-# Use cases collection {#sec-usecases}
-
-EDNOTE9: The collection of use cases requires further edit.
-
-This section is the core of this document. For each use case, we present a concise overview of the use case and a list of potential migration strategies. For each migration strategy, we highlight the advantages and disadvantages that stem from considering real-world deployment scenarios.
-
-## Industrial communication protocols (that rely on IETF RFCs)
-
-Several industrial communication protocols, traditionally orthogonal to IP network infrastructure, are progressively being updated to make use of standard IP network infrastructure hence rely on standard security mechanisms, like for example TLS 1.3 {{RFC8446}}.
-
-The building automation industry makes use of the data communication protocol 'Building Automation and Control Networks / Secure Connect' (BACnet/SC) {{ANSI/ASHRAE.Standard.135-2016}}. BACnet was defined before 1995, when the TCP/IP protocol suite was expensive and not available for smaller devices common in building automation. BACnet/SC proposes a new datalink layer option that makes full use of TLS secured WebSocket connections. This new BACnet/SC datalink layer option uses a virtual hub-and-spoke topology where the spokes are WebSocket connections from the nodes to the hub.
-
-The main features of BACnet/SC are:
-
-- it makes use of WebSockets secured via TLS 1.3,
-
-- it relies on X.509 certificates to authenticate the nodes in the network,
-
-- DNS host name resolution and DHCP are supported,
-
-- it is agnostic to IP versions (IPv4 or IPv6),
-
-- it can be NATted.
-
-BACnet/SC's implementation adheres to established industry standards defined in IETF RFCs. Specifically the {{Addendum.bj.to.ANSI/ASHRAE.Standard.135-2016}} references to {{RFC7468}}, when defining the format in which operational certificates and signing CA should be installed onto the target device at configuration time.
-
-The security of the BACnet/SC protocol, as well as of similar industrial protocols, relies on TLS 1.3 {{RFC8446}}, therefore implications of post-quantum cryptography have to be considered in both the TLS handshake and in the X.509 certificates used for the authentication.
-
-Furthermore, the regulations applicable to the environment the BACnet/SC-enabled devices is operated in may necessitate the usage of a specific migration strategy, e.g., the use of hybrid cryptography.
-
-### Suitable migration mechanisms
-- Multiple Signatures - These can be used to give the environment resilience to cryptanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints. This would require cryptographic library updates as well as protocol level changes to support multiple signatures. Additionally, it would require the introduction of security policy to allow to switch the validation from one signature to the other, if needed. These modifications to the protocols, and introduction of additional policies will not be easily attainable due to the interdependencies of protocols and might come at a detriment of interoperability especially cross-vendor interoperability.
-- Composite Signatures - Similar to multiple signatures but may only require updates to the cryptographic libraries as well as a signature algorithm update in protocols. It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically been used. In the use case at hand, this would be the best fit, because it would require no modifications of industrial protocol, which are usually harder to update.
-
-## Software update
-TBD
-
-## Firmware update
-
-EDNOTE3: The firmware update use case, and the software update one, have to be further defined and its differences have to be made more clear.
-
-Firmware, defined in {{RFC4949}}, refers to computer programs and data stored in hardware, typically in read-only memory (ROM) or programmable read-only memory (PROM). These programs and data are non-modifiable during execution, offering low-level hardware control.
-
-Secure firmware updates are crucial for ensuring device security and long-term operation, especially in industrial, and critical infrastructure fields, where devices can stay active for decades. Such updates encompass tasks like introducing new trust anchors and upgrading cryptographic algorithm capabilities. However, upgrading every device's security capabilities isn't always feasible due to resource, accessibility, and cost constraints. Some "simple" devices may not support secure firmware updates at all.
-
-Firmware updates are typically authenticated by the Original Equipment Manufacturer (OEM) by means of a digital signing process. At a high level, a usual process involves, a firmware build server, which requests a signature from a signing service. The signing service, often safeguarding the signing private key in secure environments like Hardware Security Modules (HSMs), returns the signature after authenticating the request.
-
-Subsequently, the firmware is distributed to target devices, which in turn must validate the firmware signature against a Trust Anchor (TA). The TA can be an X.509 certificate, a public key, or a hash of a combination of both, depending on the OEM's security measures.
-
-These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifespan in mind, often spanning several decades. Notable examples of such devices encompass:
-
-- Vehicles - scale of deployment or vehicle recall difficulties
-- Satellites - no 'on-site' service reasonably possible
-- Servers and network devices - air-gapped, locked-down DCs, geographically distributed
-- Government infrastructure - power grids, nuclear power station equipment, etc.
-- Smart meters - device owned by the utility company, deployed in private homes.
-- Smart cards – used for authenticating to workstations and buildings, or electronic document signing.
-- Security Tokens – such as FIDO2, cheap devices that users will typically not patch.
-
-### Suitable migration mechanisms
-Given the long term requirements of the signatures and physically contrained locations, a signature used in these environments must be able to withstand future crytanalysis attacks as well as technological advancements.  Therefore the following migration mechanisms should be considerd for these enviornments:
-
-- Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.
-- Composite Signatures - Similar to multiple signatures but may only require updates to the cryptographic libraries as well as a signature algorithm update in protocols.  It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically be used.
-- Stateless hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateless hash based signature may be sufficient.
-
-## Trust Anchor deployment
-
-Trust Anchors, such as X.509 Root CA certificates and raw public keys, must be made accessible before they can be used for signature validation. In scenarios like remote software updates, a Trust Anchor X.509 certificate, for instance, must be installed on a target device to enable the validation of certificate chains. While deployment of Trust Anchors may be relatively straightforward for "corporate IT" and "public web" applications, it can still be a time-consuming process to ensure that a new Trust Anchor X.509 certificate is propagated throughout the entire ecosystem. Additionally, when dealing with post-quantum Trust Anchors, an extra layer of complexity arises as the desired underlying cryptography may not yet be supported by the target device or software.
-
-Two common variations of this use case are:
-
-- injection within a factory: in industrial contexts, Trust Anchors are typically injected into target devices during the manufacturing phase. Devices leaving the assembly line do not possess any credentials or Trusted Anchors initially. To bootstrap a Trust Anchor, the device is placed in a physically secure environment accessible only to trustworthy personnel. This injection can occur during manufacturing or when a device is being resold, but it's critical to note that not all scenarios support this method, potentially requiring the return of the device to the OEM for post-quantum Trust Anchor injection or it may be even not supported at all.
-- injection via software and firmware updates: for devices where the Trust Anchor is not burned onto the device, for example in less constrained devices and IT equipment, post-quantum Trust Anchors can be injected through software or firmware update mechanisms. The deployment of these Trust Anchors may leverage existing update mechanisms and traditional cryptography to minimize effort. However, this approach necessitates the distribution of the new Trust Anchors well in advance of any suspicion that traditional cryptography may become vulnerable. Given the lead time required to ensure widespread distribution, the time window where this mechanism is suitable is further reduced.
-
-### Suitable migration mechanisms
-Trust anchors that have limited to no ability to be upgraded but which must be able to be trusted for a long time will require the use of signatures which must be able to withstand future crytanalysis attacks as well as technological advancements.  The following migration mechanisms should be considered for these environments:
-
-- Multiple Signatures - These can be used to give the environment resilience to crytanalysis attacks and technological advancements because should a critical break happen, the secondary signature should allow for addition time for upgrade which will be welcome given the location constraints.  This would require cryptographic library updates as well as protocol level changes to support multiple signatures.
-- Composite Signatures - Similar to multiple signatures but may only require updates to the cryptographic libraries as well as a signature algorithm update in protocols.  It is likely composite signatures would be easier to deploy as single key and signature objects are used which is similar to what has historically be used.
-- Stateless hash based signatures - In constrained locations where larger signature sizes are acceptable, direct upgrade to a stateless hash based signature may be sufficient.
-
-## Timestamping
-
-EDNOTE5: RFC 4998 - we could study this to understand how to re-sign old timestamp messages. Question: does re-signing give protection against a full break of the original algorithm.
-AV: an example is provided by "ETSI EN 319 142-1" (and "ETSI EN 319 142-2"), the standards define PDF advanced electronic signatures which have legal value EU. I assume that this concept may be extended to similar use cases, i.e., wherever long term validation is required new time-stamps may be added using post-quantum cryptography
-
-### Suitable migration mechanisms
-TBD
-
-## CMS (S/MIME)
-
-EDNOTE6: You can do infinite nesting in CMS.
-
-EDNOTE7: The difficulty here will be non-uniform adoption: there are many many many email clients in the world at varying levels of maturity and maintenance. It is expected that some email clients will support PQ algorithms quickly while others may take more time or never adopt them fully. Suggestion to IETF: Study be put into RFC5652 the Cryptographic Message Syntax into signing messages with multiple signatures in a way that unsupported signatures will be ignored (likely this already "just works"). Email encryption probably requires either a flag day (you simply cannot encrypt a message for a recipient if you do not understand their PQ certificate)
-
-### Suitable migration mechanisms
-TBD
-
-## Additional use cases
-
-EDNOTE8: TO-DOs:
-
-- add additional post-quantum relevant use cases which cover aspects not covered so far, this could also include use cases that are not common in our line of work (e.g., FAA airworthiness certifications, medical records, etc.), maybe contributed by other participants,
-- any party that would be interested in contributing in this work may add additional post-quantum relevant use cases that are closer to her experience/field,
-- the goal is to cover as much ground as possible in terms of use cases and to be able to define categories of use cases,
 
 # IANA Considerations {#IANA}
 
