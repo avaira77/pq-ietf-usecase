@@ -327,22 +327,19 @@ The purpose of this section is to define a set of properties that can be used to
 ##Lifetime
 TBD
 
-##Protocol(s)
-TBD
-
-### Active Negotiation
+##Protocol(s) - Active Negotiation
 Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
 
-### Passive Negotiation
+##Protocol(s) - Passive Negotiation
 Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
 
-### Non Agile
+##Protocol(s) - Non Agile
 Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
 
 ##Backward compatibility
 TBD
 
-# Appendix 2 - Composite Signature individual and organization position statements
+# Composite Signature individual and organization position statements
 
 ## BSI - Stavros Kousidis
 "from a strategic point of view we don’t want to replace our current RSA algorithm with standalone Dilithium since: If Dilithium does not withstand cryptanalysis in the future then all our efforts are for nothing. With a composite signature Dilithium+ECDSA in AND-mode we can buy ourselves some time in case the Dilithium security guarantees do not withstand future cryptanalysis."
