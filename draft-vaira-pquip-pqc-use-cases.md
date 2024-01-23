@@ -110,7 +110,7 @@ informative:
       Announcing the Commercial National Security Algorithm Suite 2.0
     author:
       org: National Security Agency (NSA)
-    date: 2022  
+    date: 2022
   NIST.FIPS.205:
     target: https://csrc.nist.gov/pubs/fips/205/ipd
     title: >
