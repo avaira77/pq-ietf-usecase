@@ -74,7 +74,7 @@ normative:
 
 informative:
   IEEE.802.1AR-2018: DOI.10.1109/IEEESTD.2018.8423794
-  RFC3136:
+  RFC3161:
   RFC4949:
   RFC4998:
   RFC5280:
@@ -191,7 +191,7 @@ The security of the BACnet/SC protocol, as well as of similar industrial protoco
 
 Lifetime: long lived use case.
 
-Protocol(s): negotiated: TLS.
+Protocol: negotiated: TLS.
 
 Backward compatibility: is needed for the time window in which the upgrade will take place (e.g., 2-5 years).
 
@@ -213,7 +213,7 @@ These devices are typically deployed in highly regulated environments, in remote
 
 Lifetime: medium to long lived use cases.
 
-Protocol(s): non-negotiated: CMS, plain signatures.
+Protocol: non-negotiated: CMS, plain signatures.
 
 Backward compatibility: required until the device in the field will be upgraded (e.g., 2-5 years).
 
@@ -228,44 +228,43 @@ There are two common variations of this use case.
 
 Lifetime: long lived use cases.
 
-Protocol(s): non-negotiated.
+Protocol: non-negotiated.
 
 Backward compatibility: is needed when no update mechanism is supported. For other scenarios, it is needed for the time window in which the upgrade will take place (e.g., 2-5 years).
 
-## Timestamping
-
-NOTE: add code and document signing use cases to motivate that the signature needs to be properly validated also after the signature certificate is out of validity. You can also point to Section 2.5 for further details. Generally speaking, this section is very high-level and not concrete.
-
-A time-stamping service supports assertions of proof that a datum existed before a particular time, as defined in {{RFC3136}}.
-Timestamps, are particularly important in the following scenarios.
-
-- Electronic commerce, where the reliability of timestamps is key for maintaining the chronological order of transactions and establishing clear timelines with legal and financial implications.
-- Intellectual property protection, particularly when the timing of creation or discovery is central, as seen in patents, copyrights, or trade secrets. They provide trustworthy evidence of when digital content representing intellectual property was originated.
-- Digital signatures and cryptographic systems, timestamps enhance non-repudiation by preventing parties from later denying the authenticity or validity of their digital signatures. The inclusion of timestamps with digital signatures enables third parties to verify not only the integrity of the signature but also the precise time of its application.
-- Legal and regulatory compliance, often mandates or recommends the use of timestamps to establish the timing of digital events, contributing to the admissibility of digital evidence in court and ensuring adherence to laws related to electronic transactions.
-
-Lifetime: long lived use cases.
-
-Protocol(s): non-negotiated: RFC3136, CMS,
-
-Backward compatibility: not needed, if data can be periodically re-timestamped, as proposed in {{RFC4998}}.
-
-## CMS (S/MIME)
+## CMS (S/MIME) {#cms}
 
 The Cryptographic Message Syntax (CMS) {{RFC5652}} establishes a standard syntax for creating secure messages, incorporating digital signatures, encryption, and authentication codes.
 In practical terms, CMS finds application in scenarios such as secure email communication, document signing, and PKI-based security services. Organizations use CMS for secure file transfers and end-to-end encryption of documents, ensuring confidentiality and integrity.
 It is a key component in secure messaging protocols, contributing to the confidentiality, integrity, and authenticity of communication over networks. One of CMS's notable features is flexibility, allowing the choice of cryptographic algorithms based on specific security requirements.
 An important consideration to be made is the non-uniform adoption and potential challenges in implementing CMS, particularly in the context of email clients. Varying levels of maturity and maintenance among email clients will slow down the adoption of post-quantum algorithms, which will not be uniform across different clients.
 
-NOTE: Add JOSE and COSE in the text
+It is worth noting that, similarly to CMS, JOSE and (JSON Object Signing and Encryption) and COSE (CBOR Object Signing and Encryption) are data structures used to support signing and encryption of data, respectively, in JSON and CBOR format. Therefore several considerations that are applicable for CMS will extend to JOSE and COSE as well.
 
 Lifetime: large spectrum of short to long lived use cases.
 
-Protocol(s): non-negotiated.
+Protocol: non-negotiated.
 
 Backward compatibility: needed due to non-uniform implementations.
 
+## Timestamping
+
+A time-stamping service supports assertions of proof that a datum existed before a particular time, as defined in {{RFC3161}}.
+Timestamps, are particularly important in the following scenarios.
+
+- Code and Document Signing: In code and document signing use cases, timestamps play a critical role in ensuring the ongoing validity of digital signatures. It is not sufficient to validate the signature at the time of creation; it must be verifiable even after the signature certificate has expired. This is particularly important for long-term archival and verification purposes, where the historical integrity of the signed code or document needs to be maintained over time. The timestamp is stored in a CMS data structure, cf. {{cms}}.
+- Non-repudiation: timestamps enhance non-repudiation by preventing parties from later denying the authenticity or validity of their digital signatures. Non-repudiation plays a major role in Legal and regulatory compliance, Intellectual property protection and Electronic commerce, where the reliability of timestamps is key for establishing clear timelines with legal and financial implications.
+
+Lifetime: long lived use cases.
+
+Protocol: non-negotiated: RFC3161, CMS,
+
+Backward compatibility: not needed, if data can be periodically re-timestamped, as proposed in {{RFC4998}}.
+
 ## OAuth
+TBD
+
+## SUIT Manifest
 TBD
 
 ## Additional use cases
@@ -322,19 +321,17 @@ This document should not affect the security of the Internet.
 
 # Post-Quantum Migration Properties
 
-The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in a consistent way {{sec-usecases}}. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
+The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in {{sec-usecases}}. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
 
 ##Lifetime
 TBD
 
-##Protocol(s) - Active Negotiation
-Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
+##Protocol
+TBD
 
-##Protocol(s) - Passive Negotiation
-Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
-
-##Protocol(s) - Non Agile
-Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
+1. Active Negotiation - Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
+2. Passive Negotiation - Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
+3. Non Agile - Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
 
 ##Backward compatibility
 TBD
