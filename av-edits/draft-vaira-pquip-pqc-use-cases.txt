@@ -5,11 +5,11 @@
 Post-Quantum Use In Protocols                                   A. Vaira
 Internet-Draft                                              H. Brockhaus
 Intended status: Informational                                A. Railean
-Expires: 26 July 2024                                            Siemens
+Expires: 27 July 2024                                            Siemens
                                                                  J. Gray
                                                             M. Ounsworth
                                                                  Entrust
-                                                         23 January 2024
+                                                         24 January 2024
 
 
                   Post-quantum cryptography use cases
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 July 2024.
+   This Internet-Draft will expire on 27 July 2024.
 
 Copyright Notice
 
@@ -83,10 +83,11 @@ Table of Contents
      2.1.  Industrial communication protocols
      2.2.  Software and Firmware update
      2.3.  Trust Anchor deployment
-     2.4.  Timestamping
-     2.5.  CMS (S/MIME)
+     2.4.  CMS (S/MIME)
+     2.5.  Timestamping
      2.6.  OAuth
-     2.7.  Additional use cases
+     2.7.  SUIT Manifest
+     2.8.  Additional use cases
    3.  Post-quantum Migration Strategies for Signing
      3.1.  Employing Stateful Hash-based Signature Schemes
      3.2.  Employing Stateless Hash-based Signature Schemes
@@ -100,10 +101,8 @@ Table of Contents
      6.2.  Informative References
    Appendix A.  Post-Quantum Migration Properties
      A.1.  Lifetime
-     A.2.  Protocol(s) - Active Negotiation
-     A.3.  Protocol(s) - Passive Negotiation
-     A.4.  Protocol(s) - Non Agile
-     A.5.  Backward compatibility
+     A.2.  Protocol
+     A.3.  Backward compatibility
    Appendix B.  Composite Signature individual and organization
            position statements
      B.1.  BSI - Stavros Kousidis
@@ -216,7 +215,7 @@ Table of Contents
 
    Lifetime: long lived use case.
 
-   Protocol(s): negotiated: TLS.
+   Protocol: negotiated: TLS.
 
    Backward compatibility: is needed for the time window in which the
    upgrade will take place (e.g., 2-5 years).
@@ -269,7 +268,7 @@ Table of Contents
 
    Lifetime: medium to long lived use cases.
 
-   Protocol(s): non-negotiated: CMS, plain signatures.
+   Protocol: non-negotiated: CMS, plain signatures.
 
    Backward compatibility: required until the device in the field will
    be upgraded (e.g., 2-5 years).
@@ -317,54 +316,13 @@ Table of Contents
 
    Lifetime: long lived use cases.
 
-   Protocol(s): non-negotiated.
+   Protocol: non-negotiated.
 
    Backward compatibility: is needed when no update mechanism is
    supported.  For other scenarios, it is needed for the time window in
    which the upgrade will take place (e.g., 2-5 years).
 
-2.4.  Timestamping
-
-   NOTE: add code and document signing use cases to motivate that the
-   signature needs to be properly validated also after the signature
-   certificate is out of validity.  You can also point to Section 2.5
-   for further details.  Generally speaking, this section is very high-
-   level and not concrete.
-
-   A time-stamping service supports assertions of proof that a datum
-   existed before a particular time, as defined in [RFC3136].
-   Timestamps, are particularly important in the following scenarios.
-
-   *  Electronic commerce, where the reliability of timestamps is key
-      for maintaining the chronological order of transactions and
-      establishing clear timelines with legal and financial
-      implications.
-
-   *  Intellectual property protection, particularly when the timing of
-      creation or discovery is central, as seen in patents, copyrights,
-      or trade secrets.  They provide trustworthy evidence of when
-      digital content representing intellectual property was originated.
-
-   *  Digital signatures and cryptographic systems, timestamps enhance
-      non-repudiation by preventing parties from later denying the
-      authenticity or validity of their digital signatures.  The
-      inclusion of timestamps with digital signatures enables third
-      parties to verify not only the integrity of the signature but also
-      the precise time of its application.
-
-   *  Legal and regulatory compliance, often mandates or recommends the
-      use of timestamps to establish the timing of digital events,
-      contributing to the admissibility of digital evidence in court and
-      ensuring adherence to laws related to electronic transactions.
-
-   Lifetime: long lived use cases.
-
-   Protocol(s): non-negotiated: RFC3136, CMS,
-
-   Backward compatibility: not needed, if data can be periodically re-
-   timestamped, as proposed in [RFC4998].
-
-2.5.  CMS (S/MIME)
+2.4.  CMS (S/MIME)
 
    The Cryptographic Message Syntax (CMS) [RFC5652] establishes a
    standard syntax for creating secure messages, incorporating digital
@@ -384,19 +342,59 @@ Table of Contents
    adoption of post-quantum algorithms, which will not be uniform across
    different clients.
 
-   NOTE: Add JOSE and COSE in the text
+   It is worth noting that, similarly to CMS, JOSE and (JSON Object
+   Signing and Encryption) and COSE (CBOR Object Signing and Encryption)
+   are data structures used to support signing and encryption of data,
+   respectively, in JSON and CBOR format.  Therefore several
+   considerations that are applicable for CMS will extend to JOSE and
+   COSE as well.
 
    Lifetime: large spectrum of short to long lived use cases.
 
-   Protocol(s): non-negotiated.
+   Protocol: non-negotiated.
 
    Backward compatibility: needed due to non-uniform implementations.
+
+2.5.  Timestamping
+
+   A time-stamping service supports assertions of proof that a datum
+   existed before a particular time, as defined in [RFC3161].
+   Timestamps, are particularly important in the following scenarios.
+
+   *  Code and Document Signing: In code and document signing use cases,
+      timestamps play a critical role in ensuring the ongoing validity
+      of digital signatures.  It is not sufficient to validate the
+      signature at the time of creation; it must be verifiable even
+      after the signature certificate has expired.  This is particularly
+      important for long-term archival and verification purposes, where
+      the historical integrity of the signed code or document needs to
+      be maintained over time.  The timestamp is stored in a CMS data
+      structure, cf. Section 2.4.
+
+   *  Non-repudiation: timestamps enhance non-repudiation by preventing
+      parties from later denying the authenticity or validity of their
+      digital signatures.  Non-repudiation plays a major role in Legal
+      and regulatory compliance, Intellectual property protection and
+      Electronic commerce, where the reliability of timestamps is key
+      for establishing clear timelines with legal and financial
+      implications.
+
+   Lifetime: long lived use cases.
+
+   Protocol: non-negotiated: RFC3161, CMS,
+
+   Backward compatibility: not needed, if data can be periodically re-
+   timestamped, as proposed in [RFC4998].
 
 2.6.  OAuth
 
    TBD
 
-2.7.  Additional use cases
+2.7.  SUIT Manifest
+
+   TBD
+
+2.8.  Additional use cases
 
    TO-DOs: - add additional post-quantum relevant use cases which cover
    aspects not covered so far, this could also include use cases that
@@ -549,10 +547,10 @@ Table of Contents
               DOI 10.1109/ieeestd.2018.8423794, ISBN ["9781504450195"],
               July 2018, <https://doi.org/10.1109/ieeestd.2018.8423794>.
 
-   [RFC3136]  Slutsman, L., Ed., Faynberg, I., Lu, H., and M. Weissman,
-              "The SPIRITS Architecture", RFC 3136,
-              DOI 10.17487/RFC3136, June 2001,
-              <https://www.rfc-editor.org/rfc/rfc3136>.
+   [RFC3161]  Adams, C., Cain, P., Pinkas, D., and R. Zuccherato,
+              "Internet X.509 Public Key Infrastructure Time-Stamp
+              Protocol (TSP)", RFC 3161, DOI 10.17487/RFC3161, August
+              2001, <https://www.rfc-editor.org/rfc/rfc3161>.
 
    [RFC4949]  Shirey, R., "Internet Security Glossary, Version 2",
               FYI 36, RFC 4949, DOI 10.17487/RFC4949, August 2007,
@@ -709,40 +707,41 @@ Table of Contents
 Appendix A.  Post-Quantum Migration Properties
 
    The purpose of this section is to define a set of properties that can
-   be used to classify each of the use-cases listed in a consistent way
-   Section 2.  The goal is to make the document a resource to help
-   classify use cases which are not covered herein because, for example,
-   implementors could classify their own use-case and then find one in
-   this document with the same properties / classification.
+   be used to classify each of the use-cases listed in Section 2.  The
+   goal is to make the document a resource to help classify use cases
+   which are not covered herein because, for example, implementors could
+   classify their own use-case and then find one in this document with
+   the same properties / classification.
 
 A.1.  Lifetime
 
    TBD
 
-A.2.  Protocol(s) - Active Negotiation
+A.2.  Protocol
 
-   Protocols with existing mechanisms for real-time cryptographic
-   negotiation such as TLS and IKE already contain mechanisms for
-   upgraded clients to downgrade the cryptography in a given session in
-   order to communicate with a legacy peer.  These protocols provide the
-   easiest migration path as these mechanisms should be used to bridge
-   across traditional and post-quantum cryptography.
+   TBD
 
-A.3.  Protocol(s) - Passive Negotiation
+   1.  Active Negotiation - Protocols with existing mechanisms for real-
+       time cryptographic negotiation such as TLS and IKE already
+       contain mechanisms for upgraded clients to downgrade the
+       cryptography in a given session in order to communicate with a
+       legacy peer.  These protocols provide the easiest migration path
+       as these mechanisms should be used to bridge across traditional
+       and post-quantum cryptography.
 
-   Protocols with existing mechanisms for non-real-time or asynchronous
-   cryptographic negotiation.  For example a PKI end entity who
-   publishes multiple encryption certificates for themselves, each
-   containing a public key for a different algorithm, or code signing
-   object carrying multiple signatures on different algorithms.
+   2.  Passive Negotiation - Protocols with existing mechanisms for non-
+       real-time or asynchronous cryptographic negotiation.  For example
+       a PKI end entity who publishes multiple encryption certificates
+       for themselves, each containing a public key for a different
+       algorithm, or code signing object carrying multiple signatures on
+       different algorithms.
 
-A.4.  Protocol(s) - Non Agile
+   3.  Non Agile - Non-agile or flag day implies no graceful migration
+       is possible; the community decides that as of a certain date
+       legacy clients will no longer be able to interoperate with
+       upgraded clients.
 
-   Non-agile or flag day implies no graceful migration is possible; the
-   community decides that as of a certain date legacy clients will no
-   longer be able to interoperate with upgraded clients.
-
-A.5.  Backward compatibility
+A.3.  Backward compatibility
 
    TBD
 
