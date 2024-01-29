@@ -1034,7 +1034,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Vaira, et al.</td>
-<td class="center">Expires 27 July 2024</td>
+<td class="center">Expires 1 August 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1047,12 +1047,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-vaira-pquip-pqc-use-cases-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-01-24" class="published">24 January 2024</time>
+<time datetime="2024-01-29" class="published">29 January 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-07-27">27 July 2024</time></dd>
+<dd class="expires"><time datetime="2024-08-01">1 August 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1118,7 +1118,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 July 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1639,6 +1639,10 @@ EDNOTE12: feedback from PQUIP mailing list: "Secondly, I think the whole section
         <dd>
 <span class="refAuthor">National Institute of Standards and Technology (NIST)</span>, <span class="refTitle">"Stateless Hash-Based Digital Signature Standard"</span>, <span class="seriesInfo">NIST FIPS 205 (Initial Public Draft)</span>, <time datetime="2023" class="refDate">2023</time>, <span>&lt;<a href="https://csrc.nist.gov/pubs/fips/205/ipd">https://csrc.nist.gov/pubs/fips/205/ipd</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="NIST.SP.800-57.P1R5">[NIST.SP.800-57.P1R5]</dt>
+        <dd>
+<span class="refAuthor">National Institute of Standards and Technology (NIST)</span>, <span class="refTitle">"Recommendation for Key Management: Part 1 – General"</span>, <span class="seriesInfo">NIST Special Publication 800-57</span>, <time datetime="2020" class="refDate">2020</time>, <span>&lt;<a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="X.509">[X.509]</dt>
         <dd>
 <span class="refAuthor">International Telecommunications Union</span>, <span class="refTitle">"Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks"</span>, <span class="seriesInfo">ITU-T Recommendation X.509</span>, <time datetime="2019" class="refDate">2019</time>. </dd>
@@ -1660,13 +1664,15 @@ EDNOTE12: feedback from PQUIP mailing list: "Secondly, I think the whole section
       <h2 id="name-post-quantum-migration-prop">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-post-quantum-migration-prop" class="section-name selfRef">Post-Quantum Migration Properties</a>
       </h2>
-<p id="appendix-A-1">The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in <a href="#sec-usecases" class="auto internal xref">Section 2</a>. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">This section aims to establish a collection of characteristics for categorizing the use cases outlined in <a href="#sec-usecases" class="auto internal xref">Section 2</a>. The objective is to enhance the document's utility by providing a framework for classifying use cases not explicitly addressed here. For instance, implementors can categorize their own use case and subsequently identify a similar one in this document based on shared properties/classification.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <div id="lifetime">
 <section id="appendix-A.1">
         <h3 id="name-lifetime">
 <a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-lifetime" class="section-name selfRef">Lifetime</a>
         </h3>
-<p id="appendix-A.1-1">TBD<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-1">This classification distinguishes between short-lived and long-lived use cases. However, in practical terms, this distinction is challenging due to the nature of each use case's lifespan, which can be on a spectrum.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-2">Short-lived: In this context, a short-lived use case is characterized by a duration of less than 5 years. This timeframe aligns with common organizational practices, where hardware, for example servers in a data center, is typically replaced within a 5-year cycle.<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-3">Long-lived: In the context of this document, a long-lived use case spans more than 10 years. While there isn't a specific rationale for this timeframe, it is noteworthy that cryptographic recommendations, for example <span>[<a href="#NIST.SP.800-57.P1R5" class="cite xref">NIST.SP.800-57.P1R5</a>]</span>, often provide guidance for a duration of up to ten years from the time of their publication.<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="protocol">
@@ -1674,7 +1680,7 @@ EDNOTE12: feedback from PQUIP mailing list: "Secondly, I think the whole section
         <h3 id="name-protocol">
 <a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-protocol" class="section-name selfRef">Protocol</a>
         </h3>
-<p id="appendix-A.2-1">TBD<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-1">Cryptographic protocols can be diveded in Active Negotiation (real-time cryptography), Passive Negotiation (asynchronous cryptography), and Non Agile (no graceful migration).<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="appendix-A.2-2">
 <li id="appendix-A.2-2.1">
             <p id="appendix-A.2-2.1.1">Active Negotiation - Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.<a href="#appendix-A.2-2.1.1" class="pilcrow">¶</a></p>
@@ -1693,7 +1699,18 @@ EDNOTE12: feedback from PQUIP mailing list: "Secondly, I think the whole section
         <h3 id="name-backward-compatibility">
 <a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-backward-compatibility" class="section-name selfRef">Backward compatibility</a>
         </h3>
-<p id="appendix-A.3-1">TBD<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.3-1">The following scenarios may arise:<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="appendix-A.3-2">
+<li id="appendix-A.3-2.1">
+            <p id="appendix-A.3-2.1.1">Optional: Backward compatibility isn't needed, either because post-quantum migration is unnecessary or already addressed within a specific protocol.<a href="#appendix-A.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="appendix-A.3-2.2">
+            <p id="appendix-A.3-2.2.1">Limited: Backward compatibility is necessary for a defined period, such as during a migration time window.<a href="#appendix-A.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="appendix-A.3-2.3">
+            <p id="appendix-A.3-2.3.1">Mandatory: Backward compatibility is essential throughout the use case's entire lifespan due to the absence of identifiable migration strategies.<a href="#appendix-A.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
 </section>
 </div>
 </section>
