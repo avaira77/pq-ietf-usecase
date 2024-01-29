@@ -120,6 +120,15 @@ informative:
     date: 2023
     seriesinfo:
       NIST: FIPS 205 (Initial Public Draft)
+  NIST.SP.800-57.P1R5:
+    target: https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf
+    title: >
+      Recommendation for Key Management: Part 1 – General
+    author:
+      org: National Institute of Standards and Technology (NIST)
+    date: 2020
+    seriesinfo:
+      NIST: Special Publication 800-57
   X.509:
     title: >
       Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks
@@ -321,20 +330,28 @@ This document should not affect the security of the Internet.
 
 # Post-Quantum Migration Properties
 
-The purpose of this section is to define a set of properties that can be used to classify each of the use-cases listed in {{sec-usecases}}. The goal is to make the document a resource to help classify use cases which are not covered herein because, for example, implementors could classify their own use-case and then find one in this document with the same properties / classification.
+This section aims to establish a collection of characteristics for categorizing the use cases outlined in {{sec-usecases}}. The objective is to enhance the document's utility by providing a framework for classifying use cases not explicitly addressed here. For instance, implementors can categorize their own use case and subsequently identify a similar one in this document based on shared properties/classification.
 
 ##Lifetime
-TBD
+This classification distinguishes between short-lived and long-lived use cases. However, in practical terms, this distinction is challenging due to the nature of each use case's lifespan, which can be on a spectrum.
+
+Short-lived: In this context, a short-lived use case is characterized by a duration of less than 5 years. This timeframe aligns with common organizational practices, where hardware, for example servers in a data center, is typically replaced within a 5-year cycle.
+
+Long-lived: In the context of this document, a long-lived use case spans more than 10 years. While there isn't a specific rationale for this timeframe, it is noteworthy that cryptographic recommendations, for example {{NIST.SP.800-57.P1R5}}, often provide guidance for a duration of up to ten years from the time of their publication.
 
 ##Protocol
-TBD
+Cryptographic protocols can be diveded in Active Negotiation (real-time cryptography), Passive Negotiation (asynchronous cryptography), and Non Agile (no graceful migration).
 
 1. Active Negotiation - Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
 2. Passive Negotiation - Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
 3. Non Agile - Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
 
 ##Backward compatibility
-TBD
+The following scenarios may arise:
+
+1. Optional: Backward compatibility isn't needed, either because post-quantum migration is unnecessary or already addressed within a specific protocol.
+2. Limited: Backward compatibility is necessary for a defined period, such as during a migration time window.
+3. Mandatory: Backward compatibility is essential throughout the use case's entire lifespan due to the absence of identifiable migration strategies.
 
 # Composite Signature individual and organization position statements
 
