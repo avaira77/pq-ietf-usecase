@@ -111,6 +111,15 @@ informative:
     author:
       org: National Security Agency (NSA)
     date: 2022
+  NIST.FIPS.204:
+    target: https://csrc.nist.gov/pubs/fips/204/ipd
+    title: >
+      Module-Lattice-Based Digital Signature Standard
+    author:
+      org: National Institute of Standards and Technology (NIST)
+    date: 2023
+    seriesinfo:
+      NIST: FIPS 204 (Initial Public Draft)
   NIST.FIPS.205:
     target: https://csrc.nist.gov/pubs/fips/205/ipd
     title: >
@@ -198,11 +207,11 @@ BACnet/SC's implementation adheres to established industry standards defined in 
 
 The security of the BACnet/SC protocol, as well as of similar industrial protocols, relies on TLS 1.3 {{RFC8446}}, therefore implications of post-quantum cryptography have to be considered in both the TLS handshake and in the X.509 certificates used for the authentication.
 
-Lifetime: long lived use case.
+Lifetime: Long-lived.
 
-Protocol: negotiated: TLS.
+Protocol: Active Negotiation.
 
-Backward compatibility: is needed for the time window in which the upgrade will take place (e.g., 2-5 years).
+Backward compatibility: Limited.
 
 ## Software and Firmware update
 
@@ -220,11 +229,11 @@ These devices are typically deployed in highly regulated environments, in remote
 - Smart cards – used for authenticating to workstations and buildings, or electronic document signing.
 - Security Tokens – such as FIDO2, cheap devices that users will typically not patch.
 
-Lifetime: medium to long lived use cases.
+Lifetime: Long-lived.
 
-Protocol: non-negotiated: CMS, plain signatures.
+Protocol: Passive Negotiation.
 
-Backward compatibility: required until the device in the field will be upgraded (e.g., 2-5 years).
+Backward compatibility: Limited.
 
 ## Trust Anchor deployment
 
@@ -235,11 +244,11 @@ There are two common variations of this use case.
 - Injection within a factory: in industrial contexts, Trust Anchors are typically injected into target devices during the manufacturing phase. To bootstrap a Trust Anchor, the device is placed in a physically secure environment accessible only to trustworthy personnel. This injection can occur during manufacturing or when a device is being resold. It is important to note that some devices might not support updating the Trust Anchor in the field, requiring the return of the device to the OEM for post-quantum Trust Anchor injection or, in some cases, it may be even not supported at all, because, for example, the Trust Anchor is burnt onto the device at manufacturing time.
 - Injection via software and firmware updates: for devices where the Trust Anchor is not burned onto the device, for example in less constrained devices and IT equipment, post-quantum Trust Anchors can be injected through software or firmware update mechanisms. The deployment of these Trust Anchors may leverage existing update mechanisms and traditional cryptography to minimize effort. However, this approach necessitates the distribution of the new Trust Anchors well in advance of any suspicion that traditional cryptography may become vulnerable. Given the lead time required to ensure widespread distribution, the time window where this mechanism is suitable is further reduced.
 
-Lifetime: long lived use cases.
+Lifetime: Long-lived.
 
-Protocol: non-negotiated.
+Protocol: Passive Negotiation.
 
-Backward compatibility: is needed when no update mechanism is supported. For other scenarios, it is needed for the time window in which the upgrade will take place (e.g., 2-5 years).
+Backward compatibility: Limited.
 
 ## CMS (S/MIME) {#cms}
 
@@ -250,11 +259,11 @@ An important consideration to be made is the non-uniform adoption and potential 
 
 It is worth noting that, similarly to CMS, JOSE and (JSON Object Signing and Encryption) and COSE (CBOR Object Signing and Encryption) are data structures used to support signing and encryption of data, respectively, in JSON and CBOR format. Therefore several considerations that are applicable for CMS will extend to JOSE and COSE as well.
 
-Lifetime: large spectrum of short to long lived use cases.
+Lifetime: Short-lived and long-lived.
 
-Protocol: non-negotiated.
+Protocol: Passive Negotiation.
 
-Backward compatibility: needed due to non-uniform implementations.
+Backward compatibility: Mandatory.
 
 ## Timestamping
 
@@ -264,17 +273,17 @@ Timestamps, are particularly important in the following scenarios.
 - Code and Document Signing: In code and document signing use cases, timestamps play a critical role in ensuring the ongoing validity of digital signatures. It is not sufficient to validate the signature at the time of creation; it must be verifiable even after the signature certificate has expired. This is particularly important for long-term archival and verification purposes, where the historical integrity of the signed code or document needs to be maintained over time. The timestamp is stored in a CMS data structure, cf. {{cms}}.
 - Non-repudiation: timestamps enhance non-repudiation by preventing parties from later denying the authenticity or validity of their digital signatures. Non-repudiation plays a major role in Legal and regulatory compliance, Intellectual property protection and Electronic commerce, where the reliability of timestamps is key for establishing clear timelines with legal and financial implications.
 
-Lifetime: long lived use cases.
+Lifetime: Long-lived.
 
-Protocol: non-negotiated: RFC3161, CMS,
+Protocol: Passive Negotiation.
 
-Backward compatibility: not needed, if data can be periodically re-timestamped, as proposed in {{RFC4998}}.
+Backward compatibility: Optional.
 
 ## OAuth
-TBD
+TODO
 
 ## SUIT Manifest
-TBD
+TODO
 
 ## Additional use cases
 
@@ -285,24 +294,6 @@ TO-DOs:
 
 People are considering which technological concepts are suitable to solve the problem of a secure migration from classical cryptography to quantum computer safe cryptographic algorithms. A variety of approaches are being discussed. In the following, we would like to briefly introduce the approaches under discussion and refer to the respective relevant documents for further details.
 For a general introduction, we also refer to {{I-D.ietf-pquip-pqc-engineers}}.
-
-## Employing Stateful Hash-based Signature Schemes
-
-The only algorithms that can be considered safe against attacks with quantum computers with sufficient certainty today are the stateful hash-based signature (HBS) schemes {{NIST.SP.800-208}} {{NIST.FIPS.186-5}} XMSS {{RFC8391}} and LMS {{RFC8554}}.
-According to NIST, these stateful HBS algorithms offer better performance than stateless HBS algorithms, and the underlying technology is considered well understood.  Moreover stateful HBS algorithms are considered safe against attacks by quantum computers but the lack of standard operating procedures for how to manage state makes adoption harder. Especially for the secure signing of data that can be signed repeatedly over a very long period of time and whose signatures must be able to be securely validated with the same public key, stateful HBS do not appear to be suitable. This is because there are currently insufficient solutions for the replacement of the hardware security modules used and for disaster recovery cases.
-
-EDNOTE11: feedback from PQUIP mailing list: "The question what is or isn’t considered safe is a subjective one. Not sure it should be phrased in a RFC in such a way. According to CNSA v2.0, the NSA is not in agreement with that statement, for example. Or you limit it to standardized algorithms and update it as soon as ML-DSA and SLH-DSA standards get approved."
-EDNOTE12: feedback from PQUIP mailing list: "Secondly, I think the whole section is understating the security risks that a state mismanagement incurs. I’d state more clearly that state management is not just a matter of convenience but a matter of security."
-
-## Employing Stateless Hash-based Signature Schemes
-
-{{NIST.FIPS.205}} specifies the ML-SLH (SPHINCS+) algorithm.  It is a stateless hash-based signature algorithm and is considered safe against attacks by quantum computers.  The advantage of this algorithm is that the state problem is resolved as part of the algorithm.  However, the tradeoff is that signature sizes are often an order of magnitude larger than XMSS or LMS.  This may make deploying these algorithms on constrained devices infeasible.
-
-## Protocol Revision (Cryptographic Agility) {#protocols}
-
-Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) {{RFC6071}}, Transport Layer Security (TLS){{RFC8446}}, Secure/Multipurpose Internet Mail Extensions (S/MIME){{RFC8551}}, is usually understood as the dynamic referencing of the algorithms to be used. A concrete migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period is usually not described in the respective standards.
-
-An extension of the existing standards would be needed to integrate the required agility into the existing protocols and formats. This is a lot of effort for standardization and implementations if a basic functionality, such as multiple signatures, e.g., in Cryptographic Message Syntax (CMS) {{RFC5652}}, is not already available. But even in the case of S/MIME and CMS, a corresponding profiling is still necessary to describe how the multiple signatures are to be used specifically for the migration.
 
 ## Multiple Signatures
 
@@ -317,6 +308,30 @@ The goal of composite signatures is to define a signature object to be used with
 In order for this approach to be applicable in arbitrary protocols and formats, a composite key must be defined in addition to the composite signature. According to the definition of composite signatures, a composite public is a single atomic container composed of two public keys. The associated composite private key is a single atomic private key that is composed of the two private keys which correspond to the two public keys contained in the composite public key.
 
 This concept is described in Composite Signatures For Use In Internet PKI {{I-D.ounsworth-pq-composite-sigs}} in more detail.
+
+## Employing Stateful Hash-based Signature Schemes
+
+The only algorithms that can be considered safe against attacks with quantum computers with sufficient certainty today are the stateful hash-based signature (HBS) schemes {{NIST.SP.800-208}} {{NIST.FIPS.186-5}} XMSS {{RFC8391}} and LMS {{RFC8554}}.
+According to NIST, these stateful HBS algorithms offer better performance than stateless HBS algorithms, and the underlying technology is considered well understood.  Moreover stateful HBS algorithms are considered safe against attacks by quantum computers but the lack of standard operating procedures for how to manage state makes adoption harder. Especially for the secure signing of data that can be signed repeatedly over a very long period of time and whose signatures must be able to be securely validated with the same public key, stateful HBS do not appear to be suitable. This is because there are currently insufficient solutions for the replacement of the hardware security modules used and for disaster recovery cases.
+
+EDNOTE11: feedback from PQUIP mailing list: "The question what is or isn’t considered safe is a subjective one. Not sure it should be phrased in a RFC in such a way. According to CNSA v2.0, the NSA is not in agreement with that statement, for example. Or you limit it to standardized algorithms and update it as soon as ML-DSA and SLH-DSA standards get approved."
+EDNOTE12: feedback from PQUIP mailing list: "Secondly, I think the whole section is understating the security risks that a state mismanagement incurs. I’d state more clearly that state management is not just a matter of convenience but a matter of security."
+
+## Employing Stateless Hash-based Signature Schemes
+
+{{NIST.FIPS.205}} specifies the SLH-DSA (SPHINCS+) algorithm.  It is a stateless hash-based signature algorithm and is considered safe against attacks by quantum computers.  The advantage of this algorithm is that the state problem is resolved as part of the algorithm.  However, the tradeoff is that signature sizes are often an order of magnitude larger than XMSS or LMS.  This may make deploying these algorithms on constrained devices infeasible.
+
+## Employing Module-Lattice-Based Digital Signature Schemes
+{{NIST.FIPS.204}} specifies the ML-DSA (Dilithium) algorithm, a digital signature algorithm based on the hardness of lattice problems over module lattices. It serves as a general purpose post-quantum signature algorithm, offering smaller key sizes in comparison to SLH-DSA and fast signature generation. For more details, refer to {{I-D.ietf-pquip-pqc-engineers}}.
+
+## Protocol Revision (Cryptographic Agility) {#protocols}
+
+Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) {{RFC6071}}, Transport Layer Security (TLS){{RFC8446}}, Secure/Multipurpose Internet Mail Extensions (S/MIME){{RFC8551}}, is usually understood as the dynamic referencing of the algorithms to be used. A concrete migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period is usually not described in the respective standards.
+
+An extension of the existing standards would be needed to integrate the required agility into the existing protocols and formats. This is a lot of effort for standardization and implementations if a basic functionality, such as multiple signatures, e.g., in Cryptographic Message Syntax (CMS) {{RFC5652}}, is not already available. But even in the case of S/MIME and CMS, a corresponding profiling is still necessary to describe how the multiple signatures are to be used specifically for the migration.
+
+# Map of Migration Strategies to Reference Use Cases
+TODO
 
 # IANA Considerations {#IANA}
 
@@ -335,16 +350,15 @@ This section aims to establish a collection of characteristics for categorizing 
 ##Lifetime
 This classification distinguishes between short-lived and long-lived use cases. However, in practical terms, this distinction is challenging due to the nature of each use case's lifespan, which can be on a spectrum.
 
-Short-lived: In this context, a short-lived use case is characterized by a duration of less than 5 years. This timeframe aligns with common organizational practices, where hardware, for example servers in a data center, is typically replaced within a 5-year cycle.
-
-Long-lived: In the context of this document, a long-lived use case spans more than 10 years. While there isn't a specific rationale for this timeframe, it is noteworthy that cryptographic recommendations, for example {{NIST.SP.800-57.P1R5}}, often provide guidance for a duration of up to ten years from the time of their publication.
+1. Short-lived: In this context, a short-lived use case is characterized by a duration of less than 5 years. This timeframe aligns with common organizational practices, where hardware, for example servers in a data center, is typically replaced within a 5-year cycle.
+2. Long-lived: In the context of this document, a long-lived use case spans more than 10 years. While there isn't a specific rationale for this timeframe, it is noteworthy that cryptographic recommendations, for example {{NIST.SP.800-57.P1R5}}, often provide guidance for a duration of up to ten years from the time of their publication.
 
 ##Protocol
 Cryptographic protocols can be diveded in Active Negotiation (real-time cryptography), Passive Negotiation (asynchronous cryptography), and Non Agile (no graceful migration).
 
-1. Active Negotiation - Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
-2. Passive Negotiation - Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
-3. Non Agile - Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
+1. Active Negotiation: Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
+2. Passive Negotiation: Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
+3. Non-agile: Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
 
 ##Backward compatibility
 The following scenarios may arise:
@@ -409,4 +423,4 @@ We can now discuss the informal requirements a hybrid scheme H should satisfy:
 {: numbered="false"}
 
 This draft would not be possible without the support of a great number of contributors.   We thank Stavros Kousidis, Robert Hulshof, Falko Strenzke and Orie Steele for allowing us to use their statements regarding composite signatures.
-TBD.
+TODO
