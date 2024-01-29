@@ -89,16 +89,18 @@ Table of Contents
      2.7.  SUIT Manifest
      2.8.  Additional use cases
    3.  Post-quantum Migration Strategies for Signing
-     3.1.  Employing Stateful Hash-based Signature Schemes
-     3.2.  Employing Stateless Hash-based Signature Schemes
-     3.3.  Protocol Revision (Cryptographic Agility)
-     3.4.  Multiple Signatures
-     3.5.  Composite Signatures
-   4.  IANA Considerations
-   5.  Security Considerations
-   6.  References
-     6.1.  Normative References
-     6.2.  Informative References
+     3.1.  Multiple Signatures
+     3.2.  Composite Signatures
+     3.3.  Employing Stateful Hash-based Signature Schemes
+     3.4.  Employing Stateless Hash-based Signature Schemes
+     3.5.  Employing Module-Lattice-Based Digital Signature Schemes
+     3.6.  Protocol Revision (Cryptographic Agility)
+   4.  Map of Migration Strategies to Reference Use Cases
+   5.  IANA Considerations
+   6.  Security Considerations
+   7.  References
+     7.1.  Normative References
+     7.2.  Informative References
    Appendix A.  Post-Quantum Migration Properties
      A.1.  Lifetime
      A.2.  Protocol
@@ -213,12 +215,11 @@ Table of Contents
    both the TLS handshake and in the X.509 certificates used for the
    authentication.
 
-   Lifetime: long lived use case.
+   Lifetime: Long-lived.
 
-   Protocol: negotiated: TLS.
+   Protocol: Active Negotiation.
 
-   Backward compatibility: is needed for the time window in which the
-   upgrade will take place (e.g., 2-5 years).
+   Backward compatibility: Limited.
 
 2.2.  Software and Firmware update
 
@@ -266,12 +267,11 @@ Table of Contents
    *  Security Tokens – such as FIDO2, cheap devices that users will
       typically not patch.
 
-   Lifetime: medium to long lived use cases.
+   Lifetime: Long-lived.
 
-   Protocol: non-negotiated: CMS, plain signatures.
+   Protocol: Passive Negotiation.
 
-   Backward compatibility: required until the device in the field will
-   be upgraded (e.g., 2-5 years).
+   Backward compatibility: Limited.
 
 2.3.  Trust Anchor deployment
 
@@ -314,13 +314,11 @@ Table of Contents
       to ensure widespread distribution, the time window where this
       mechanism is suitable is further reduced.
 
-   Lifetime: long lived use cases.
+   Lifetime: Long-lived.
 
-   Protocol: non-negotiated.
+   Protocol: Passive Negotiation.
 
-   Backward compatibility: is needed when no update mechanism is
-   supported.  For other scenarios, it is needed for the time window in
-   which the upgrade will take place (e.g., 2-5 years).
+   Backward compatibility: Limited.
 
 2.4.  CMS (S/MIME)
 
@@ -349,11 +347,11 @@ Table of Contents
    considerations that are applicable for CMS will extend to JOSE and
    COSE as well.
 
-   Lifetime: large spectrum of short to long lived use cases.
+   Lifetime: Short-lived and long-lived.
 
-   Protocol: non-negotiated.
+   Protocol: Passive Negotiation.
 
-   Backward compatibility: needed due to non-uniform implementations.
+   Backward compatibility: Mandatory.
 
 2.5.  Timestamping
 
@@ -379,20 +377,19 @@ Table of Contents
       for establishing clear timelines with legal and financial
       implications.
 
-   Lifetime: long lived use cases.
+   Lifetime: Long-lived.
 
-   Protocol: non-negotiated: RFC3161, CMS,
+   Protocol: Passive Negotiation.
 
-   Backward compatibility: not needed, if data can be periodically re-
-   timestamped, as proposed in [RFC4998].
+   Backward compatibility: Optional.
 
 2.6.  OAuth
 
-   TBD
+   TODO
 
 2.7.  SUIT Manifest
 
-   TBD
+   TODO
 
 2.8.  Additional use cases
 
@@ -412,7 +409,54 @@ Table of Contents
    respective relevant documents for further details.  For a general
    introduction, we also refer to [I-D.ietf-pquip-pqc-engineers].
 
-3.1.  Employing Stateful Hash-based Signature Schemes
+3.1.  Multiple Signatures
+
+   Several signatures have the approach of defining a second alternative
+   signature in addition to the primary signature in the protocol or
+   format, which can be transported in the protocol or format.  In
+   addition to the definition of the alternative signature, the
+   associated signing algorithm and, if applicable, the associated
+   public key or a reference to it must also be transferred.  For X.509
+   public key certificates, this is defined in [X.509].  Work is also
+   underway for other protocols and formats.  This approach overlaps
+   with the protocol and format extension approach described in
+   Section 3.6.
+
+   An alternative approach is to encode a second signature in a second
+   certificate and bind it to the first one by a reference.  For
+   example, an implementation can decide based on its policy whether
+   only the first certificate or the second or both certificates should
+   be used for authentication.  Further descriptions of this approach
+   can be found in A Mechanism for Encoding Differences in Paired
+   Certificates [I-D.bonnell-lamps-chameleon-certs] and Related
+   Certificates for Use in Multiple Authentications within a Protocol
+   [I-D.ietf-lamps-cert-binding-for-multi-auth].
+
+3.2.  Composite Signatures
+
+   The goal of composite signatures is to define a signature object to
+   be used with any protocol or format.  It contains two signatures in a
+   single atomic container that have been generated using two different
+   cryptographic algorithms.  The goal of this approach is to define a
+   signature format which requires both contained signatures to be
+   verified.  In this way, the security properties of the classical
+   signature and another signature that is secure when attacked by a
+   quantum computer are used in the protocol or format without having to
+   adapt them.
+
+   In order for this approach to be applicable in arbitrary protocols
+   and formats, a composite key must be defined in addition to the
+   composite signature.  According to the definition of composite
+   signatures, a composite public is a single atomic container composed
+   of two public keys.  The associated composite private key is a single
+   atomic private key that is composed of the two private keys which
+   correspond to the two public keys contained in the composite public
+   key.
+
+   This concept is described in Composite Signatures For Use In Internet
+   PKI [I-D.ounsworth-pq-composite-sigs] in more detail.
+
+3.3.  Employing Stateful Hash-based Signature Schemes
 
    The only algorithms that can be considered safe against attacks with
    quantum computers with sufficient certainty today are the stateful
@@ -441,9 +485,9 @@ Table of Contents
    clearly that state management is not just a matter of convenience but
    a matter of security."
 
-3.2.  Employing Stateless Hash-based Signature Schemes
+3.4.  Employing Stateless Hash-based Signature Schemes
 
-   [NIST.FIPS.205] specifies the ML-SLH (SPHINCS+) algorithm.  It is a
+   [NIST.FIPS.205] specifies the SLH-DSA (SPHINCS+) algorithm.  It is a
    stateless hash-based signature algorithm and is considered safe
    against attacks by quantum computers.  The advantage of this
    algorithm is that the state problem is resolved as part of the
@@ -451,7 +495,16 @@ Table of Contents
    an order of magnitude larger than XMSS or LMS.  This may make
    deploying these algorithms on constrained devices infeasible.
 
-3.3.  Protocol Revision (Cryptographic Agility)
+3.5.  Employing Module-Lattice-Based Digital Signature Schemes
+
+   [NIST.FIPS.204] specifies the ML-DSA (Dilithium) algorithm, a digital
+   signature algorithm based on the hardness of lattice problems over
+   module lattices.  It serves as a general purpose post-quantum
+   signature algorithm, offering smaller key sizes in comparison to SLH-
+   DSA and fast signature generation.  For more details, refer to
+   [I-D.ietf-pquip-pqc-engineers].
+
+3.6.  Protocol Revision (Cryptographic Agility)
 
    Agility in security protocols and message formats, such as IP
    Security (IPsec) and Internet Key Exchange (IKE) [RFC6071], Transport
@@ -471,64 +524,21 @@ Table of Contents
    necessary to describe how the multiple signatures are to be used
    specifically for the migration.
 
-3.4.  Multiple Signatures
+4.  Map of Migration Strategies to Reference Use Cases
 
-   Several signatures have the approach of defining a second alternative
-   signature in addition to the primary signature in the protocol or
-   format, which can be transported in the protocol or format.  In
-   addition to the definition of the alternative signature, the
-   associated signing algorithm and, if applicable, the associated
-   public key or a reference to it must also be transferred.  For X.509
-   public key certificates, this is defined in [X.509].  Work is also
-   underway for other protocols and formats.  This approach overlaps
-   with the protocol and format extension approach described in
-   Section 3.3.
+   TODO
 
-   An alternative approach is to encode a second signature in a second
-   certificate and bind it to the first one by a reference.  For
-   example, an implementation can decide based on its policy whether
-   only the first certificate or the second or both certificates should
-   be used for authentication.  Further descriptions of this approach
-   can be found in A Mechanism for Encoding Differences in Paired
-   Certificates [I-D.bonnell-lamps-chameleon-certs] and Related
-   Certificates for Use in Multiple Authentications within a Protocol
-   [I-D.ietf-lamps-cert-binding-for-multi-auth].
-
-3.5.  Composite Signatures
-
-   The goal of composite signatures is to define a signature object to
-   be used with any protocol or format.  It contains two signatures in a
-   single atomic container that have been generated using two different
-   cryptographic algorithms.  The goal of this approach is to define a
-   signature format which requires both contained signatures to be
-   verified.  In this way, the security properties of the classical
-   signature and another signature that is secure when attacked by a
-   quantum computer are used in the protocol or format without having to
-   adapt them.
-
-   In order for this approach to be applicable in arbitrary protocols
-   and formats, a composite key must be defined in addition to the
-   composite signature.  According to the definition of composite
-   signatures, a composite public is a single atomic container composed
-   of two public keys.  The associated composite private key is a single
-   atomic private key that is composed of the two private keys which
-   correspond to the two public keys contained in the composite public
-   key.
-
-   This concept is described in Composite Signatures For Use In Internet
-   PKI [I-D.ounsworth-pq-composite-sigs] in more detail.
-
-4.  IANA Considerations
+5.  IANA Considerations
 
    This memo includes no request to IANA.
 
-5.  Security Considerations
+6.  Security Considerations
 
    This document should not affect the security of the Internet.
 
-6.  References
+7.  References
 
-6.1.  Normative References
+7.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -539,7 +549,7 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
-6.2.  Informative References
+7.2.  Informative References
 
    [IEEE.802.1AR-2018]
               "IEEE Standard for Local and Metropolitan Area Networks -
@@ -677,6 +687,12 @@ Table of Contents
               <https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/
               CSA_CNSA_2.0_ALGORITHMS_.PDF>.
 
+   [NIST.FIPS.204]
+              National Institute of Standards and Technology (NIST),
+              "Module-Lattice-Based Digital Signature Standard",
+              NIST FIPS 204 (Initial Public Draft), 2023,
+              <https://csrc.nist.gov/pubs/fips/204/ipd>.
+
    [NIST.FIPS.205]
               National Institute of Standards and Technology (NIST),
               "Stateless Hash-Based Digital Signature Standard",
@@ -728,16 +744,18 @@ A.1.  Lifetime
    challenging due to the nature of each use case's lifespan, which can
    be on a spectrum.
 
-   Short-lived: In this context, a short-lived use case is characterized
-   by a duration of less than 5 years.  This timeframe aligns with
-   common organizational practices, where hardware, for example servers
-   in a data center, is typically replaced within a 5-year cycle.
+   1.  Short-lived: In this context, a short-lived use case is
+       characterized by a duration of less than 5 years.  This timeframe
+       aligns with common organizational practices, where hardware, for
+       example servers in a data center, is typically replaced within a
+       5-year cycle.
 
-   Long-lived: In the context of this document, a long-lived use case
-   spans more than 10 years.  While there isn't a specific rationale for
-   this timeframe, it is noteworthy that cryptographic recommendations,
-   for example [NIST.SP.800-57.P1R5], often provide guidance for a
-   duration of up to ten years from the time of their publication.
+   2.  Long-lived: In the context of this document, a long-lived use
+       case spans more than 10 years.  While there isn't a specific
+       rationale for this timeframe, it is noteworthy that cryptographic
+       recommendations, for example [NIST.SP.800-57.P1R5], often provide
+       guidance for a duration of up to ten years from the time of their
+       publication.
 
 A.2.  Protocol
 
@@ -745,7 +763,7 @@ A.2.  Protocol
    time cryptography), Passive Negotiation (asynchronous cryptography),
    and Non Agile (no graceful migration).
 
-   1.  Active Negotiation - Protocols with existing mechanisms for real-
+   1.  Active Negotiation: Protocols with existing mechanisms for real-
        time cryptographic negotiation such as TLS and IKE already
        contain mechanisms for upgraded clients to downgrade the
        cryptography in a given session in order to communicate with a
@@ -753,17 +771,17 @@ A.2.  Protocol
        as these mechanisms should be used to bridge across traditional
        and post-quantum cryptography.
 
-   2.  Passive Negotiation - Protocols with existing mechanisms for non-
+   2.  Passive Negotiation: Protocols with existing mechanisms for non-
        real-time or asynchronous cryptographic negotiation.  For example
        a PKI end entity who publishes multiple encryption certificates
        for themselves, each containing a public key for a different
        algorithm, or code signing object carrying multiple signatures on
        different algorithms.
 
-   3.  Non Agile - Non-agile or flag day implies no graceful migration
-       is possible; the community decides that as of a certain date
-       legacy clients will no longer be able to interoperate with
-       upgraded clients.
+   3.  Non-agile: Non-agile or flag day implies no graceful migration is
+       possible; the community decides that as of a certain date legacy
+       clients will no longer be able to interoperate with upgraded
+       clients.
 
 A.3.  Backward compatibility
 
@@ -914,7 +932,7 @@ Acknowledgements
    This draft would not be possible without the support of a great
    number of contributors.  We thank Stavros Kousidis, Robert Hulshof,
    Falko Strenzke and Orie Steele for allowing us to use their
-   statements regarding composite signatures.  TBD.
+   statements regarding composite signatures.  TODO
 
 Authors' Addresses
 
