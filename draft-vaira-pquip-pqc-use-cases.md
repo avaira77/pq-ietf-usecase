@@ -419,7 +419,7 @@ TODO: add reference
 
 7. CRYSTALS-Dilithium design team states in {{Dilithium.des.team}} that: “For users who are interested in using Dilithium, we recommend the following: Use Dilithium in a so-called hybrid mode in combination with an established "pre-quantum" signature scheme.”
 
-8. Hybrid Post-Quantum Signatures in Hardware Security Keys: the paper {{hybrid.pqc.sig.hsk}} describes a hybrid signature scheme. Below an excerpt from it:
+8. Hybrid Post-Quantum Signatures in Hardware Security Keys: the paper {{Hybrid.pqc.sig.hsk}} describes a hybrid signature scheme. Below an excerpt from it:
 
 “A hybrid signature scheme combines a classical signature algorithm with a post-quantum secure signature algorithm. Before discussing the design of our hybrid scheme, we explain why such an approach is relevant instead of simply replacing classically secure schemes with post-quantum secure schemes. We present the assumptions below:
 
