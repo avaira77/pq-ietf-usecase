@@ -864,12 +864,21 @@ Appendix B.  Composite Signature individual and organization position
        composite hybrids would be left.  This implies protocol changes
        which will:
 
-   a. need more discussion, b. need more changes to existing
-   applications, c. and thus be more bug prone. d.  Not having hybrid
-   signatures at all will likely cause many decision makers to e. use
-   hash-based schemes where possible / affordable f. and elsewhere stick
-   to traditional schemes as long as possible, thus effectively delaying
-   the migration to PQC."  TODO: add reference
+       1.  need more discussion,
+
+       2.  need more changes to existing applications,
+
+       3.  and thus be more bug prone.
+
+       4.  Not having hybrid signatures at all will likely cause many
+           decision makers to
+
+       5.  use hash-based schemes where possible / affordable
+
+       6.  and elsewhere stick to traditional schemes as long as
+           possible, thus effectively delaying the migration to PQC."
+
+   TODO: add reference
 
    1.  Transmute - Orie Steele: "There are use cases for long lived
        verifiable credentials, and attribute cert like stuff we work on
