@@ -406,12 +406,13 @@ TODO:add reference
 
 5. MTG - Falko Strenzke: "Without hybrid signatures, a decision to move away from traditional signatures to Dilithium (or other non-hash-based signatures) has a certain risk to make things worse and I think many decision makers will not be ready to take the responsibility for it until the quantum computer threat becomes imminent. If composite signature is not standardised, non-composite hybrids would be left. This implies protocol changes which will:
 
-a. need more discussion,
-b. need more changes to existing applications,
-c. and thus be more bug prone.
-d. Not having hybrid signatures at all will likely cause many decision makers to
-e. use hash-based schemes where possible / affordable
-f. and elsewhere stick to traditional schemes as long as possible, thus effectively delaying the migration to PQC."
+    1. need more discussion,
+    2. need more changes to existing applications,
+    3. and thus be more bug prone.
+    4. Not having hybrid signatures at all will likely cause many decision makers to
+    5. use hash-based schemes where possible / affordable
+    6. and elsewhere stick to traditional schemes as long as possible, thus effectively delaying the migration to PQC."
+
 TODO: add reference
 
 6. Transmute - Orie Steele: "There are use cases for long lived verifiable credentials, and attribute cert like stuff we work on in supply chain, with DHS / CBP."
