@@ -1776,44 +1776,40 @@ TODO:add reference<a href="#appendix-B-1.4.1" class="pilcrow">¶</a></p>
               <p id="appendix-B-1.5.2.5.1">use hash-based schemes where possible / affordable<a href="#appendix-B-1.5.2.5.1" class="pilcrow">¶</a></p>
 </li>
             <li id="appendix-B-1.5.2.6">
-              <p id="appendix-B-1.5.2.6.1">and elsewhere stick to traditional schemes as long as possible, thus effectively delaying the migration to PQC."<a href="#appendix-B-1.5.2.6.1" class="pilcrow">¶</a></p>
+              <p id="appendix-B-1.5.2.6.1">and elsewhere stick to traditional schemes as long as possible, thus effectively delaying the migration to PQC."
+TODO: add reference<a href="#appendix-B-1.5.2.6.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
 </li>
-      </ol>
-<p id="appendix-B-2">TODO: add reference<a href="#appendix-B-2" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="appendix-B-3">
-<li id="appendix-B-3.1">
-          <p id="appendix-B-3.1.1">Transmute - Orie Steele: "There are use cases for long lived verifiable credentials, and attribute cert like stuff we work on in supply chain, with DHS / CBP."
-TODO: add reference<a href="#appendix-B-3.1.1" class="pilcrow">¶</a></p>
+        <li id="appendix-B-1.6">
+          <p id="appendix-B-1.6.1">Transmute - Orie Steele: "There are use cases for long lived verifiable credentials, and attribute cert like stuff we work on in supply chain, with DHS / CBP."
+TODO: add reference<a href="#appendix-B-1.6.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="appendix-B-3.2">
-          <p id="appendix-B-3.2.1">CRYSTALS-Dilithium design team states in <span>[<a href="#Dilithium.des.team" class="cite xref">Dilithium.des.team</a>]</span> that: “For users who are interested in using Dilithium, we recommend the following: Use Dilithium in a so-called hybrid mode in combination with an established "pre-quantum" signature scheme.”<a href="#appendix-B-3.2.1" class="pilcrow">¶</a></p>
+        <li id="appendix-B-1.7">
+          <p id="appendix-B-1.7.1">CRYSTALS-Dilithium design team states in <span>[<a href="#Dilithium.des.team" class="cite xref">Dilithium.des.team</a>]</span> that: “For users who are interested in using Dilithium, we recommend the following: Use Dilithium in a so-called hybrid mode in combination with an established "pre-quantum" signature scheme.”<a href="#appendix-B-1.7.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="appendix-B-3.3">
-          <p id="appendix-B-3.3.1">Hybrid Post-Quantum Signatures in Hardware Security Keys: the paper <span>[<a href="#Hybrid.pqc.sig.hsk" class="cite xref">Hybrid.pqc.sig.hsk</a>]</span> describes a hybrid signature scheme. Below an excerpt from it:<a href="#appendix-B-3.3.1" class="pilcrow">¶</a></p>
+        <li id="appendix-B-1.8">
+          <p id="appendix-B-1.8.1">Hybrid Post-Quantum Signatures in Hardware Security Keys: the paper <span>[<a href="#Hybrid.pqc.sig.hsk" class="cite xref">Hybrid.pqc.sig.hsk</a>]</span> describes a hybrid signature scheme. Below an excerpt from it:
+“A hybrid signature scheme combines a classical signature algorithm with a post-quantum secure signature algorithm. Before discussing the design of our hybrid scheme, we explain why such an approach is relevant instead of simply replacing classically secure schemes with post-quantum secure schemes. We present the assumptions below:<a href="#appendix-B-1.8.1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="appendix-B-1.8.2">
+<li id="appendix-B-1.8.2.1">
+              <p id="appendix-B-1.8.2.1.1">Cryptographically-Relevant Quantum Computers (i.e. with enough qubits to break ECDSA) are not available yet.<a href="#appendix-B-1.8.2.1.1" class="pilcrow">¶</a></p>
 </li>
-      </ol>
-<p id="appendix-B-4">“A hybrid signature scheme combines a classical signature algorithm with a post-quantum secure signature algorithm. Before discussing the design of our hybrid scheme, we explain why such an approach is relevant instead of simply replacing classically secure schemes with post-quantum secure schemes. We present the assumptions below:<a href="#appendix-B-4" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="appendix-B-5">
-<li id="appendix-B-5.1">
-          <p id="appendix-B-5.1.1">Cryptographically-Relevant Quantum Computers (i.e. with enough qubits to break ECDSA) are not available yet.<a href="#appendix-B-5.1.1" class="pilcrow">¶</a></p>
+            <li id="appendix-B-1.8.2.2">
+              <p id="appendix-B-1.8.2.2.1">Classical signature algorithms withstands attacks from classical computers.<a href="#appendix-B-1.8.2.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="appendix-B-5.2">
-          <p id="appendix-B-5.2.1">Classical signature algorithms withstands attacks from classical computers.<a href="#appendix-B-5.2.1" class="pilcrow">¶</a></p>
+            <li id="appendix-B-1.8.2.3">
+              <p id="appendix-B-1.8.2.3.1">The post-quantum secure signature algorithm might be breakable by classical computers due to design or implementation bugs.
+If any of these assumptions fails, using a hybrid approach instead of replacing classical schemes with post-quantum schemes indeed does not add any security. We believe that all of these assumptions are currently correct. The third assumption is motivated by a newly discovered attack against Rainbow, one of the NIST standardization finalists.
+We can now discuss the informal requirements a hybrid scheme H should satisfy:<a href="#appendix-B-1.8.2.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="appendix-B-5.3">
-          <p id="appendix-B-5.3.1">The post-quantum secure signature algorithm might be breakable by classical computers due to design or implementation bugs.<a href="#appendix-B-5.3.1" class="pilcrow">¶</a></p>
+            <li id="appendix-B-1.8.2.4">
+              <p id="appendix-B-1.8.2.4.1">If a quantum computer becomes available, and hence H’s underlying classical scheme is broken, H should maintain the security of its underlying post-quantum scheme.<a href="#appendix-B-1.8.2.4.1" class="pilcrow">¶</a></p>
 </li>
-      </ol>
-<p id="appendix-B-6">If any of these assumptions fails, using a hybrid approach instead of replacing classical schemes with post-quantum schemes indeed does not add any security. We believe that all of these assumptions are currently correct. The third assumption is motivated by a newly discovered attack against Rainbow, one of the NIST standardization finalists.<a href="#appendix-B-6" class="pilcrow">¶</a></p>
-<p id="appendix-B-7">We can now discuss the informal requirements a hybrid scheme H should satisfy:<a href="#appendix-B-7" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="appendix-B-8">
-<li id="appendix-B-8.1">
-          <p id="appendix-B-8.1.1">If a quantum computer becomes available, and hence H’s underlying classical scheme is broken, H should maintain the security of its underlying post-quantum scheme.<a href="#appendix-B-8.1.1" class="pilcrow">¶</a></p>
+            <li id="appendix-B-1.8.2.5">
+              <p id="appendix-B-1.8.2.5.1">If a classical attack for H’s underlying post-quantum secure scheme is discovered, H should maintain the security of its underlying classical scheme."<a href="#appendix-B-1.8.2.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="appendix-B-8.2">
-          <p id="appendix-B-8.2.1">If a classical attack for H’s underlying post-quantum secure scheme is discovered, H should maintain the security of its underlying classical scheme."<a href="#appendix-B-8.2.1" class="pilcrow">¶</a></p>
+          </ol>
 </li>
       </ol>
 </section>

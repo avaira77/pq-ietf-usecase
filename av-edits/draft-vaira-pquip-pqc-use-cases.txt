@@ -877,55 +877,51 @@ Appendix B.  Composite Signature individual and organization position
 
        6.  and elsewhere stick to traditional schemes as long as
            possible, thus effectively delaying the migration to PQC."
+           TODO: add reference
 
-   TODO: add reference
-
-   1.  Transmute - Orie Steele: "There are use cases for long lived
+   6.  Transmute - Orie Steele: "There are use cases for long lived
        verifiable credentials, and attribute cert like stuff we work on
        in supply chain, with DHS / CBP."  TODO: add reference
 
-   2.  CRYSTALS-Dilithium design team states in [Dilithium.des.team]
+   7.  CRYSTALS-Dilithium design team states in [Dilithium.des.team]
        that: “For users who are interested in using Dilithium, we
        recommend the following: Use Dilithium in a so-called hybrid mode
        in combination with an established "pre-quantum" signature
        scheme.”
 
-   3.  Hybrid Post-Quantum Signatures in Hardware Security Keys: the
+   8.  Hybrid Post-Quantum Signatures in Hardware Security Keys: the
        paper [Hybrid.pqc.sig.hsk] describes a hybrid signature scheme.
-       Below an excerpt from it:
+       Below an excerpt from it: “A hybrid signature scheme combines a
+       classical signature algorithm with a post-quantum secure
+       signature algorithm.  Before discussing the design of our hybrid
+       scheme, we explain why such an approach is relevant instead of
+       simply replacing classically secure schemes with post-quantum
+       secure schemes.  We present the assumptions below:
 
-   “A hybrid signature scheme combines a classical signature algorithm
-   with a post-quantum secure signature algorithm.  Before discussing
-   the design of our hybrid scheme, we explain why such an approach is
-   relevant instead of simply replacing classically secure schemes with
-   post-quantum secure schemes.  We present the assumptions below:
+       1.  Cryptographically-Relevant Quantum Computers (i.e. with
+           enough qubits to break ECDSA) are not available yet.
 
-   1.  Cryptographically-Relevant Quantum Computers (i.e. with enough
-       qubits to break ECDSA) are not available yet.
+       2.  Classical signature algorithms withstands attacks from
+           classical computers.
 
-   2.  Classical signature algorithms withstands attacks from classical
-       computers.
+       3.  The post-quantum secure signature algorithm might be
+           breakable by classical computers due to design or
+           implementation bugs.  If any of these assumptions fails,
+           using a hybrid approach instead of replacing classical
+           schemes with post-quantum schemes indeed does not add any
+           security.  We believe that all of these assumptions are
+           currently correct.  The third assumption is motivated by a
+           newly discovered attack against Rainbow, one of the NIST
+           standardization finalists.  We can now discuss the informal
+           requirements a hybrid scheme H should satisfy:
 
-   3.  The post-quantum secure signature algorithm might be breakable by
-       classical computers due to design or implementation bugs.
+       4.  If a quantum computer becomes available, and hence H’s
+           underlying classical scheme is broken, H should maintain the
+           security of its underlying post-quantum scheme.
 
-   If any of these assumptions fails, using a hybrid approach instead of
-   replacing classical schemes with post-quantum schemes indeed does not
-   add any security.  We believe that all of these assumptions are
-   currently correct.  The third assumption is motivated by a newly
-   discovered attack against Rainbow, one of the NIST standardization
-   finalists.
-
-   We can now discuss the informal requirements a hybrid scheme H should
-   satisfy:
-
-   1.  If a quantum computer becomes available, and hence H’s underlying
-       classical scheme is broken, H should maintain the security of its
-       underlying post-quantum scheme.
-
-   2.  If a classical attack for H’s underlying post-quantum secure
-       scheme is discovered, H should maintain the security of its
-       underlying classical scheme."
+       5.  If a classical attack for H’s underlying post-quantum secure
+           scheme is discovered, H should maintain the security of its
+           underlying classical scheme."
 
 Acknowledgements
 
