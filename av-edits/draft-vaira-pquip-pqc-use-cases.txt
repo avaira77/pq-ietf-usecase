@@ -5,11 +5,11 @@
 Post-Quantum Use In Protocols                                   A. Vaira
 Internet-Draft                                              H. Brockhaus
 Intended status: Informational                                A. Railean
-Expires: 1 August 2024                                           Siemens
+Expires: 2 August 2024                                           Siemens
                                                                  J. Gray
                                                             M. Ounsworth
                                                                  Entrust
-                                                         29 January 2024
+                                                         30 January 2024
 
 
                   Post-quantum cryptography use cases
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 August 2024.
+   This Internet-Draft will expire on 2 August 2024.
 
 Copyright Notice
 
@@ -107,14 +107,6 @@ Table of Contents
      A.3.  Backward compatibility
    Appendix B.  Composite Signature individual and organization
            position statements
-     B.1.  BSI - Stavros Kousidis
-     B.2.  Google
-     B.3.  Entrust
-     B.4.  Charter - Robert Hulshof
-     B.5.  MTG - Falko Strenzke
-     B.6.  Transmute - Orie Steele
-     B.7.  CRYSTALS-Dilithium design team
-     B.8.  Hybrid Post-Quantum Signatures in Hardware Security Keys
    Acknowledgements
    Authors' Addresses
 
@@ -673,6 +665,22 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-lamps-
               cert-binding-for-multi-auth-03>.
 
+   [ANSI_ASHRAE.Standard.135-2016]
+              American National Standards Institute (ANSI), "BACnetTM A
+              Data Communication Protocol For Building Automation And
+              Control Network", ANSI Standard 135-2016, 2016,
+              <https://webstore.ansi.org/standards/ashrae/
+              ansiashraestandard1352016>.
+
+   [Addendum.bj.to.ANSI_ASHRAE.Standard.135-2016]
+              American National Standards Institute (ANSI), "Addendum bj
+              to BACnetTM A Data Communication Protocol For Building
+              Automation And Control Network", ANSI Addendum bj to
+              Standard 135-2016, 2016,
+              <https://www.ashrae.org/File%20Library/
+              Technical%20Resources/Standards%20and%20Guidelines/
+              Standards%20Addenda/135_2016_bj_20191118.pdf>.
+
    [bsi.quantum-safe.crypto]
               Bundesamt fuer Sicherheit in der Informationstechnik,
               "Quantum-safe cryptography – fundamentals, current
@@ -686,6 +694,21 @@ Table of Contents
               National Security Algorithm Suite 2.0", 2022,
               <https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/
               CSA_CNSA_2.0_ALGORITHMS_.PDF>.
+
+   [Dilithium.des.team]
+              CRYSTALS-Dilithium design team, "CRYSTALS-Dilithium design
+              team web page", 2023,
+              <https://pq-crystals.org/dilithium/>.
+
+   [Google.Sec.Blog]
+              Google, "Toward Quantum Resilient Security Keys", 2023,
+              <https://security.googleblog.com/2023/08/toward-quantum-
+              resilient-security-keys.html?m=1>.
+
+   [Hybrid.pqc.sig.hsk]
+              al., G. D. et., "Hybrid Post-quantum Signatures in
+              Hardware Security Keys", 2023,
+              <https://doi.org/10.1007/978-3-031-41181-6_26>.
 
    [NIST.FIPS.204]
               National Institute of Standards and Technology (NIST),
@@ -710,22 +733,6 @@ Table of Contents
               technology – Open Systems Interconnection – The Directory:
               Public-key and attribute certificate frameworks",
               ITU-T Recommendation X.509, 2019.
-
-   [ANSI_ASHRAE.Standard.135-2016]
-              American National Standards Institute (ANSI), "BACnetTM A
-              Data Communication Protocol For Building Automation And
-              Control Network", ANSI Standard 135-2016, 2016,
-              <https://webstore.ansi.org/standards/ashrae/
-              ansiashraestandard1352016>.
-
-   [Addendum.bj.to.ANSI_ASHRAE.Standard.135-2016]
-              American National Standards Institute (ANSI), "Addendum bj
-              to BACnetTM A Data Communication Protocol For Building
-              Automation And Control Network", ANSI Addendum bj to
-              Standard 135-2016, 2016,
-              <https://www.ashrae.org/File%20Library/
-              Technical%20Resources/Standards%20and%20Guidelines/
-              Standards%20Addenda/135_2016_bj_20191118.pdf>.
 
 Appendix A.  Post-Quantum Migration Properties
 
@@ -801,69 +808,61 @@ A.3.  Backward compatibility
 Appendix B.  Composite Signature individual and organization position
              statements
 
-B.1.  BSI - Stavros Kousidis
+   1.  BSI - Stavros Kousidis: "from a strategic point of view we don’t
+       want to replace our current RSA algorithm with standalone
+       Dilithium since: If Dilithium does not withstand cryptanalysis in
+       the future then all our efforts are for nothing.  With a
+       composite signature Dilithium+ECDSA in AND-mode we can buy
+       ourselves some time in case the Dilithium security guarantees do
+       not withstand future cryptanalysis."  TODO: add reference
 
-   "from a strategic point of view we don’t want to replace our current
-   RSA algorithm with standalone Dilithium since: If Dilithium does not
-   withstand cryptanalysis in the future then all our efforts are for
-   nothing.  With a composite signature Dilithium+ECDSA in AND-mode we
-   can buy ourselves some time in case the Dilithium security guarantees
-   do not withstand future cryptanalysis."
+   2.  Google: according to [Google.Sec.Blog]: "Relying on a hybrid
+       signature is critical as the security of Dilithium and other
+       recently standardized quantum resistant algorithms haven’t yet
+       stood the test of time and recent attacks on Rainbow (another
+       quantum resilient algorithm) demonstrate the need for caution.
+       This cautiousness is particularly warranted for security keys as
+       most can’t be upgraded – although we are working toward it for
+       OpenSK.  The hybrid approach is also used in other post-quantum
+       efforts like Chrome’s support for TLS".
 
-B.2.  Google
+   3.  Entrust: During the transition to post-quantum cryptography,
+       there will be uncertainty as to the strength of cryptographic
+       algorithms; we will no longer fully trust traditional
+       cryptography such as RSA, Diffie-Hellman, DSA and their elliptic
+       curve variants, but we will also not fully trust their post-
+       quantum replacements until they have had sufficient scrutiny and
+       time to discover and fix implementation bugs.  Unlike previous
+       cryptographic algorithm migrations, the choice of when to migrate
+       and which algorithms to migrate to, is not so clear.  Even after
+       the migration period, it may be advantageous for an entity's
+       cryptographic identity to be composed of multiple public-key
+       algorithms.  Entrust will support composite signatures in PKI
+       infrastructure.  TODO: add reference
 
-   Relying on a hybrid signature is critical as the security of
-   Dilithium and other recently standardized quantum resistant
-   algorithms haven’t yet stood the test of time and recent attacks on
-   Rainbow (another quantum resilient algorithm) demonstrate the need
-   for caution.  This cautiousness is particularly warranted for
-   security keys as most can’t be upgraded – although we are working
-   toward it for OpenSK.  The hybrid approach is also used in other
-   post-quantum efforts like Chrome’s support for TLS.  TODO: How to
-   reference this page: https://security.googleblog.com/2023/08/toward-
-   quantum-resilient-security-keys.html?m=1
+   4.  Robert Hulshof: "The rationale behind combined keys is that I can
+       see an important use-case for very sensitive data (government,
+       financial or other high value data) to combine multiple (PQ) key
+       algorithms, and that this migration to PQ is a good time to start
+       supporting that by default in the crypto libraries.  Trying to
+       estimate the probability that a NIST standardized Crypto
+       algorithm gets broken in the next 5-10 years is very difficult.
+       However I assume that everybody agrees that this probability is
+       definitely not zero.  Personally I would put that probability
+       somewhere in the range of 0.1% – 1%. If I were the government/
+       bank etc.  I would not like to have a 1% risk that all my secrets
+       get exposed.  Adding one or two more PQ algorithms would reduce
+       that probability to 1 in a million or 1 in a Billion would be
+       much more acceptable."  TODO:add reference
 
-B.3.  Entrust
-
-   During the transition to post-quantum cryptography, there will be
-   uncertainty as to the strength of cryptographic algorithms; we will
-   no longer fully trust traditional cryptography such as RSA, Diffie-
-   Hellman, DSA and their elliptic curve variants, but we will also not
-   fully trust their post-quantum replacements until they have had
-   sufficient scrutiny and time to discover and fix implementation bugs.
-   Unlike previous cryptographic algorithm migrations, the choice of
-   when to migrate and which algorithms to migrate to, is not so clear.
-   Even after the migration period, it may be advantageous for an
-   entity's cryptographic identity to be composed of multiple public-key
-   algorithms.
-
-   Entrust will support composite signatures in PKI infrastructure.
-
-B.4.  Charter - Robert Hulshof
-
-   "The rationale behind combined keys is that I can see an important
-   use-case for very sensitive data (government, financial or other high
-   value data) to combine multiple (PQ) key algorithms, and that this
-   migration to PQ is a good time to start supporting that by default in
-   the crypto libraries.  Trying to estimate the probability that a NIST
-   standardized Crypto algorithm gets broken in the next 5-10 years is
-   very difficult.  However I assume that everybody agrees that this
-   probability is definitely not zero.  Personally I would put that
-   probability somewhere in the range of 0.1% – 1%. If I were the
-   government/bank etc.  I would not like to have a 1% risk that all my
-   secrets get exposed.  Adding one or two more PQ algorithms would
-   reduce that probability to 1 in a million or 1 in a Billion would be
-   much more acceptable."
-
-B.5.  MTG - Falko Strenzke
-
-   "Without hybrid signatures, a decision to move away from traditional
-   signatures to Dilithium (or other non-hash-based signatures) has a
-   certain risk to make things worse and I think many decision makers
-   will not be ready to take the responsibility for it until the quantum
-   computer threat becomes imminent. - If composite signature is not
-   standardised, non-composite hybrids would be left.  This implies
-   protocol changes which will:
+   5.  MTG - Falko Strenzke: "Without hybrid signatures, a decision to
+       move away from traditional signatures to Dilithium (or other non-
+       hash-based signatures) has a certain risk to make things worse
+       and I think many decision makers will not be ready to take the
+       responsibility for it until the quantum computer threat becomes
+       imminent.  If composite signature is not standardised, non-
+       composite hybrids would be left.  This implies protocol changes
+       which will:
 
    *  need more discussion,
 
@@ -874,30 +873,25 @@ B.5.  MTG - Falko Strenzke
    *  Not having hybrid signatures at all will likely cause many
       decision makers to
 
-      -  use hash-based schemes where possible / affordable
+   *  use hash-based schemes where possible / affordable
 
-      -  and elsewhere stick to traditional schemes as long as possible,
-         thus effectively delaying the migration to PQC."
+   *  and elsewhere stick to traditional schemes as long as possible,
+      thus effectively delaying the migration to PQC."  TODO: add
+      reference
 
-B.6.  Transmute - Orie Steele
+   1.  Transmute - Orie Steele: "There are use cases for long lived
+       verifiable credentials, and attribute cert like stuff we work on
+       in supply chain, with DHS / CBP."  TODO: add reference
 
-   TODO but something about this: There are use cases for long lived
-   verifiable credentials, and attribute cert like stuff we work on in
-   supply chain, with DHS / CBP.
+   2.  CRYSTALS-Dilithium design team states in [Dilithium.des.team]
+       that: “For users who are interested in using Dilithium, we
+       recommend the following: Use Dilithium in a so-called hybrid mode
+       in combination with an established "pre-quantum" signature
+       scheme.”
 
-B.7.  CRYSTALS-Dilithium design team
-
-   *  https://pq-crystals.org/dilithium/ (accessed: 2023-08-21): “For
-      users who are interested in using Dilithium, we recommend the
-      following:
-
-   *  Use Dilithium in a so-called hybrid mode in combination with an
-      established "pre-quantum" signature scheme.”
-
-B.8.  Hybrid Post-Quantum Signatures in Hardware Security Keys
-
-   https://storage.googleapis.com/pub-tools-public-publication-data/
-   pdf/8becef5ac3da51c3b2e36d2dbcd18a4bd3d220d9.pdf
+   3.  Hybrid Post-Quantum Signatures in Hardware Security Keys: the
+       paper [Hybrid.pqc.sig.hsk] describes a hybrid signature scheme.
+       Below an excerpt from it:
 
    “A hybrid signature scheme combines a classical signature algorithm
    with a post-quantum secure signature algorithm.  Before discussing
@@ -912,20 +906,25 @@ B.8.  Hybrid Post-Quantum Signatures in Hardware Security Keys
        computers.
 
    3.  The post-quantum secure signature algorithm might be breakable by
-       classical computers due to design or implementation bugs.  If any
-       of these assumptions fails, using a hybrid approach instead of
-       replacing classical schemes with post-quantum schemes indeed does
-       not add any security.  We believe that all of these assumptions
-       are currently correct.  The third assumption is motivated by a
-       newly discovered attack against Rainbow, one of the NIST
-       standardization finalists.
+       classical computers due to design or implementation bugs.
+
+   If any of these assumptions fails, using a hybrid approach instead of
+   replacing classical schemes with post-quantum schemes indeed does not
+   add any security.  We believe that all of these assumptions are
+   currently correct.  The third assumption is motivated by a newly
+   discovered attack against Rainbow, one of the NIST standardization
+   finalists.
 
    We can now discuss the informal requirements a hybrid scheme H should
-   satisfy: 1.  If a quantum computer becomes available, and hence H’s
-   underlying classical scheme is broken, H should maintain the security
-   of its underlying post-quantum scheme. 2.  If a classical attack for
-   H’s underlying post-quantum secure scheme is discovered, H should
-   maintain the security of its underlying classical scheme."
+   satisfy:
+
+   1.  If a quantum computer becomes available, and hence H’s underlying
+       classical scheme is broken, H should maintain the security of its
+       underlying post-quantum scheme.
+
+   2.  If a classical attack for H’s underlying post-quantum secure
+       scheme is discovered, H should maintain the security of its
+       underlying classical scheme."
 
 Acknowledgements
 
