@@ -147,7 +147,7 @@ informative:
     target: https://doi.org/10.1007/978-3-031-41181-6_26
     title: >
       Hybrid Post-quantum Signatures in Hardware Security Keys
-    author: Ghinea, D. et al.
+    author: Ghinea D. et al.
     date: 2023
   NIST.FIPS.204:
     target: https://csrc.nist.gov/pubs/fips/204/ipd
