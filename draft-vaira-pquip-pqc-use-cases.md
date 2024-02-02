@@ -332,11 +332,9 @@ This concept is described in Composite Signatures For Use In Internet PKI {{I-D.
 
 ## Employing Stateful Hash-based Signature Schemes
 
-The only algorithms that can be considered safe against attacks with quantum computers with sufficient certainty today are the stateful hash-based signature (HBS) schemes {{NIST.SP.800-208}} {{NIST.FIPS.186-5}} XMSS {{RFC8391}} and LMS {{RFC8554}}.
-According to NIST, these stateful HBS algorithms offer better performance than stateless HBS algorithms, and the underlying technology is considered well understood.  Moreover stateful HBS algorithms are considered safe against attacks by quantum computers but the lack of standard operating procedures for how to manage state makes adoption harder. Especially for the secure signing of data that can be signed repeatedly over a very long period of time and whose signatures must be able to be securely validated with the same public key, stateful HBS do not appear to be suitable. This is because there are currently insufficient solutions for the replacement of the hardware security modules used and for disaster recovery cases.
-
-EDNOTE11: feedback from PQUIP mailing list: "The question what is or isn’t considered safe is a subjective one. Not sure it should be phrased in a RFC in such a way. According to CNSA v2.0, the NSA is not in agreement with that statement, for example. Or you limit it to standardized algorithms and update it as soon as ML-DSA and SLH-DSA standards get approved."
-EDNOTE12: feedback from PQUIP mailing list: "Secondly, I think the whole section is understating the security risks that a state mismanagement incurs. I’d state more clearly that state management is not just a matter of convenience but a matter of security."
+Stateful hash-based signature (HBS) schemes, such as XMSS {{RFC8391}} and LMS {{RFC8554}}, including their multi-tree variants, have been the first post-quantum algorithms to be standardized by NIST in {{NIST.SP.800-208}}.
+Stateful HBS algorithms offer better key and signature sizes than stateless HBS algorithms, and the underlying cryptographic building blocks are generally considered well-understood. However, a critical consideration is the management of state, which is a fundamental aspect of security. The absence of standardized operating procedures for state management poses challenges to the adoption of stateful HBS. This is especially critical when signing data over extended periods using the same key pair; i.e., the resulting signatures will be validated with the same public key over a long period of time.
+Another aspect worth considering is that, without solutions for hardware security module replacements and disaster recovery scenarios, using stateful HBS might lead to a solution with limited resilience.
 
 ## Employing Stateless Hash-based Signature Schemes
 
