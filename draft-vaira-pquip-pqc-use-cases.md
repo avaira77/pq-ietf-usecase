@@ -350,7 +350,19 @@ Agility in security protocols and message formats, such as IP Security (IPsec) a
 An extension of the existing standards would be needed to integrate the required agility into the existing protocols and formats. This is a lot of effort for standardization and implementations if a basic functionality, such as multiple signatures, e.g., in Cryptographic Message Syntax (CMS) {{RFC5652}}, is not already available. But even in the case of S/MIME and CMS, a corresponding profiling is still necessary to describe how the multiple signatures are to be used specifically for the migration.
 
 # Map of Migration Strategies to Reference Use Cases
-TODO
+
+In this section, we establish a mapping between the reference use cases and their primary features, as summarized in the table below, and the digital signature migration strategies identified in the preceding section.
+
+| Use Case                           | Lifetime                   | Protocol            | Backward Compatibility |
+|------------------------------------|----------------------------|---------------------|------------------------|
+| Industrial communication protocols | Long-lived                 | Active Negotiation  | Limited                |
+| Software and Firmware update       | Long-lived                 | Passive Negotiation | Limited                |
+| Trust Anchor deployment            | Long-lived                 | Passive Negotiation | Limited                |
+| CMS (S/MIME)                       | Short-lived and Long-lived | Passive Negotiation | Mandatory              |
+| Timestamping                       | Long-lived                 | Passive Negotiation | Optional               |
+{: title="Summary of use cases and main features"}
+
+The map is constructed as a decision tree, which is available here: [TODO add URL].
 
 # IANA Considerations {#IANA}
 
