@@ -11,7 +11,7 @@
 <meta content="John Gray" name="author">
 <meta content="Mike Ounsworth" name="author">
 <meta content="
-       This document is meant to be continuously updated, receiving periodic updates to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (e.g., RSA, DSA, ECDSA) to PQC signature algorithms (e.g., LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a select set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among the parties involved. 
+       This document is meant to be continuously updated, to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (e.g., RSA, DSA, ECDSA) to PQC signature algorithms (e.g., LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among stakeholders. 
     " name="description">
 <meta content="xml2rfc 3.19.4" name="generator">
 <meta content="post-quantum cryptography" name="keyword">
@@ -1081,7 +1081,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Post-quantum cryptography use cases</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document is meant to be continuously updated, receiving periodic updates to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (e.g., RSA, DSA, ECDSA) to PQC signature algorithms (e.g., LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a select set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among the parties involved.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document is meant to be continuously updated, to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (e.g., RSA, DSA, ECDSA) to PQC signature algorithms (e.g., LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among stakeholders.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1259,7 +1259,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. Clearly, there is no silver bullet, making it difficult to select the most suitable approach for any given use case.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. Clearly, there is no silver bullet, making it difficult to select the most suitable approach for any given use cases.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">For example:<a href="#section-1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-3.1">
@@ -1270,7 +1270,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </li>
       </ul>
 <p id="section-1-4">In this document, intended to be a dynamic resource, our main objective is to compile a list of digital signature use cases and categorize them based on prominent features. Examples include distinguishing between long-lived and short-lived scenarios, whether they include a negotiated protocol, or if backward compatibility is required.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration stategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography. There are several concepts for hybrid cryptography.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-5">We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration strategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography. There are several concepts for hybrid cryptography.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">The motivation to take into account hybrid cryptography during the migration phase arises from the requirement of having long-lived assertions, i.e., digital signatures that require long term validation, as well as the uncertainty surrounding the longevity of traditional cryptographic methods and lack of complete trust in emerging PQC algorithms.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">An additional factor to consider is represented by the requirements coming from regulatory bodies, which, in several cases will differ among legislations, in regard to post-quantum algorithms and acceptable migration strategies. For example <span>[<a href="#bsi.quantum-safe.crypto" class="cite xref">bsi.quantum-safe.crypto</a>]</span>, recommends the incorporation of post-quantum cryptographic algorithms within hybrid cryptographic schemes, as a proactive response to the quantum threat. On the contrary, <span>[<a href="#CNSA2-0" class="cite xref">CNSA2-0</a>]</span> recommends specific post-quantum cryptographic algorithms for each use case.<a href="#section-1-7" class="pilcrow">¶</a></p>
 <div id="requirements-language">
@@ -1371,7 +1371,7 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 In practical terms, CMS finds application in scenarios such as secure email communication, document signing, and PKI-based security services. Organizations use CMS for secure file transfers and end-to-end encryption of documents, ensuring confidentiality and integrity.
 It is a key component in secure messaging protocols, contributing to the confidentiality, integrity, and authenticity of communication over networks. One of the notable features of CMS is flexibility, allowing the choice of cryptographic algorithms based on specific security requirements.
 An important consideration to be made is the non-uniform adoption and potential challenges in implementing CMS, particularly in the context of email clients. Varying levels of maturity and maintenance among email clients will slow down the adoption of post-quantum algorithms, which will not be uniform across different clients.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.4-2">It is worth noting that, similarly to CMS, JOSE and (JSON Object Signing and Encryption) and COSE (CBOR Object Signing and Encryption) are data structures used to support signing and encryption of data, respectively, in JSON and CBOR format. Therefore several considerations that are applicable for CMS will extend to JOSE and COSE as well.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+<p id="section-2.4-2">It is worth noting that, similarly to CMS, JOSE and (JSON Object Signing and Encryption) and COSE (CBOR Object Signing and Encryption) are data structures used to support signing and encryption of data, respectively, in JSON and CBOR format. Therefore, several considerations that are applicable for CMS will extend to JOSE and COSE as well.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
 <p id="section-2.4-3">Lifetime: Short-lived and long-lived.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
 <p id="section-2.4-4">Protocol: Passive Negotiation.<a href="#section-2.4-4" class="pilcrow">¶</a></p>
 <p id="section-2.4-5">Backward compatibility: Mandatory.<a href="#section-2.4-5" class="pilcrow">¶</a></p>
@@ -1744,7 +1744,7 @@ Another aspect worth considering is that, without solutions for hardware securit
         <h3 id="name-protocol">
 <a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-protocol" class="section-name selfRef">Protocol</a>
         </h3>
-<p id="appendix-A.2-1">Cryptographic protocols can be diveded in Active Negotiation (real-time cryptography), Passive Negotiation (asynchronous cryptography), and Non Agile (no graceful migration).<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-1">Cryptographic protocols can be divided in Active Negotiation (real-time cryptography), Passive Negotiation (asynchronous cryptography), and Non Agile (no graceful migration).<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="appendix-A.2-2">
 <li id="appendix-A.2-2.1">
             <p id="appendix-A.2-2.1.1">Active Negotiation: Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.<a href="#appendix-A.2-2.1.1" class="pilcrow">¶</a></p>
