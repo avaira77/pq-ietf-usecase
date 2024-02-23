@@ -5,11 +5,11 @@
 Post-Quantum Use In Protocols                                   A. Vaira
 Internet-Draft                                              H. Brockhaus
 Intended status: Informational                                A. Railean
-Expires: 5 August 2024                                           Siemens
+Expires: 26 August 2024                                          Siemens
                                                                  J. Gray
                                                             M. Ounsworth
                                                                  Entrust
-                                                         2 February 2024
+                                                        23 February 2024
 
 
                   Post-quantum cryptography use cases
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 August 2024.
+   This Internet-Draft will expire on 26 August 2024.
 
 Copyright Notice
 
@@ -508,7 +508,38 @@ Table of Contents
 
 4.  Map of Migration Strategies to Reference Use Cases
 
-   TODO
+   In this section, we establish a mapping between the reference use
+   cases and their primary features, as summarized in the table below,
+   and the digital signature migration strategies identified in the
+   preceding section.
+
+       +===============+=============+=============+===============+
+       | Use Case      | Lifetime    | Protocol    | Backward      |
+       |               |             |             | Compatibility |
+       +===============+=============+=============+===============+
+       | Industrial    | Long-lived  | Active      | Limited       |
+       | communication |             | Negotiation |               |
+       | protocols     |             |             |               |
+       +---------------+-------------+-------------+---------------+
+       | Software and  | Long-lived  | Passive     | Limited       |
+       | Firmware      |             | Negotiation |               |
+       | update        |             |             |               |
+       +---------------+-------------+-------------+---------------+
+       | Trust Anchor  | Long-lived  | Passive     | Limited       |
+       | deployment    |             | Negotiation |               |
+       +---------------+-------------+-------------+---------------+
+       | CMS (S/MIME)  | Short-lived | Passive     | Mandatory     |
+       |               | and Long-   | Negotiation |               |
+       |               | lived       |             |               |
+       +---------------+-------------+-------------+---------------+
+       | Timestamping  | Long-lived  | Passive     | Optional      |
+       |               |             | Negotiation |               |
+       +---------------+-------------+-------------+---------------+
+
+              Table 1: Summary of use cases and main features
+
+   The map is constructed as a decision tree, which is available here:
+   [TODO add URL].
 
 5.  IANA Considerations
 
@@ -584,16 +615,16 @@ Table of Contents
               Banerjee, A., Reddy.K, T., Schoinianakis, D., and T.
               Hollebeek, "Post-Quantum Cryptography for Engineers", Work
               in Progress, Internet-Draft, draft-ietf-pquip-pqc-
-              engineers-02, 20 October 2023,
+              engineers-03, 22 February 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-pquip-
-              pqc-engineers-02>.
+              pqc-engineers-03>.
 
    [I-D.ietf-pquip-pqt-hybrid-terminology]
               D, F., "Terminology for Post-Quantum Traditional Hybrid
               Schemes", Work in Progress, Internet-Draft, draft-ietf-
-              pquip-pqt-hybrid-terminology-01, 20 October 2023,
+              pquip-pqt-hybrid-terminology-02, 2 February 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-pquip-
-              pqt-hybrid-terminology-01>.
+              pqt-hybrid-terminology-02>.
 
    [NIST.SP.800-208]
               Cooper, D. A., Apon, D. C., Dang, Q. H., Davidson, M. S.,
@@ -635,9 +666,9 @@ Table of Contents
               Ounsworth, M., Gray, J., Pala, M., and J. Klaußner,
               "Composite Signatures For Use In Internet PKI", Work in
               Progress, Internet-Draft, draft-ounsworth-pq-composite-
-              sigs-11, 20 December 2023,
+              sigs-12, 11 February 2024,
               <https://datatracker.ietf.org/doc/html/draft-ounsworth-pq-
-              composite-sigs-11>.
+              composite-sigs-12>.
 
    [I-D.bonnell-lamps-chameleon-certs]
               Bonnell, C., Gray, J., Hook, D., Okubo, T., and M.
