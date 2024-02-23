@@ -188,23 +188,23 @@ informative:
 
 --- abstract
 
-This document is meant to be continuously updated, receiving periodic updates to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (RSA, DSA, ECDSA) to PQC signature algorithms (LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a select set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among the parties involved.
+This document is meant to be continuously updated, to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (e.g., RSA, DSA, ECDSA) to PQC signature algorithms (e.g., LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among stakeholders.
 
 --- middle
 
 # Introduction
 
-How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. Clearly, there is no silver bullet, making it difficult to select the most suitable approach for any given use case.
+How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. Clearly, there is no silver bullet, making it difficult to select the most suitable approach for any given use cases.
 
 For example:
 
-- An Original Equipment Manufacturer (OEM) must issue its products today with a manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI. The choice of algorithms and the type of hybrid cryptography to support become quite critical.
+- An Original Equipment Manufacturer (OEM) must issue its products today with a manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI (Public Key Infrastructure). The choice of algorithms and the type of hybrid cryptography to support become critical.
 
-- A public PKI is must start today preparing its CAs for issuing S/MIME certificates, necessitating the inclusion of hybrid capabilities. The question arises: which path should be pursued?
+- A public PKI must start preparing its CAs today for issuing S/MIME certificates, necessitating the inclusion of hybrid capabilities. The question arises: which path should be pursued?
 
 In this document, intended to be a dynamic resource, our main objective is to compile a list of digital signature use cases and categorize them based on prominent features. Examples include distinguishing between long-lived and short-lived scenarios, whether they include a negotiated protocol, or if backward compatibility is required.
 
-We also explore the migration strategies that have appeard so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration stategies make use of hybrid cryptography, i.e., use both tranditional and post-quantum cryptography. There are several concepts for hybrid cryptography.
+We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration strategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography. There are several concepts for hybrid cryptography.
 
 The motivation to take into account hybrid cryptography during the migration phase arises from the requirement of having long-lived assertions, i.e., digital signatures that require long term validation, as well as the uncertainty surrounding the longevity of traditional cryptographic methods and lack of complete trust in emerging PQC algorithms.
 
@@ -258,11 +258,11 @@ Backward compatibility: Limited.
 
 ## Trust Anchor deployment
 
-Trust Anchors, such as X.509 Root CA certificates and raw public keys, must be made accessible before they can be used for signature validation. In scenarios like remote software updates, a Trust Anchor X.509 certificate, for instance, must be installed on a target device to enable the validation of certificate chains. While deployment of Trust Anchors may be relatively straightforward for "corporate IT" and "public web" applications, it can still be a time-consuming process to ensure that a new Trust Anchor X.509 certificate is propagated throughout the entire ecosystem. Additionally, when dealing with post-quantum Trust Anchors, an extra layer of complexity arises as the desired underlying cryptography may not yet be supported by the target device or software.
+Trust Anchors, such as X.509 Root CA certificates and raw public keys, must be made accessible before they can be used for signature validation. In scenarios like remote software updates, a Trust Anchor X.509 certificate, for instance, must be installed on a target device to enable the validation of certificate chains. While deployment of Trust Anchors may be relatively straightforward for "corporate IT" and "public web" applications, it can still be a time-consuming process to ensure that a new Trust Anchor X.509 certificate is propagated throughout the entire ecosystem. Additionally, when dealing with post-quantum Trust Anchors, an extra layer of complexity arises as the desired underlying cryptography may not yet be supported by the target platform.
 
 There are two common variations of this use case.
 
-- Injection within a factory: in industrial contexts, Trust Anchors are typically injected into target devices during the manufacturing phase. To bootstrap a Trust Anchor, the device is placed in a physically secure environment accessible only to trustworthy personnel. This injection can occur during manufacturing or when a device is being resold. It is important to note that some devices might not support updating the Trust Anchor in the field, requiring the return of the device to the OEM for post-quantum Trust Anchor injection or, in some cases, it may be even not supported at all, because, for example, the Trust Anchor is burnt onto the device at manufacturing time.
+- Injection within a factory: in industrial contexts, Trust Anchors are typically injected into target devices during the manufacturing phase. To bootstrap a Trust Anchor, the device is placed in a physically secure environment accessible only to trusted personnel. This injection can occur during manufacturing or when a device is being resold. It is important to note that some devices might not support updating the Trust Anchor in the field, requiring the return of the device to the OEM for post-quantum Trust Anchor injection or, in some cases, it may be even not supported at all, because, for example, the Trust Anchor is burnt onto the device at manufacturing time.
 - Injection via software and firmware updates: for devices where the Trust Anchor is not burned onto the device, for example in less constrained devices and IT equipment, post-quantum Trust Anchors can be injected through software or firmware update mechanisms. The deployment of these Trust Anchors may leverage existing update mechanisms and traditional cryptography to minimize effort. However, this approach necessitates the distribution of the new Trust Anchors well in advance of any suspicion that traditional cryptography may become vulnerable. Given the lead time required to ensure widespread distribution, the time window where this mechanism is suitable is further reduced.
 
 Lifetime: Long-lived.
@@ -275,10 +275,10 @@ Backward compatibility: Limited.
 
 The Cryptographic Message Syntax (CMS) {{RFC5652}} establishes a standard syntax for creating secure messages, incorporating digital signatures, encryption, and authentication codes.
 In practical terms, CMS finds application in scenarios such as secure email communication, document signing, and PKI-based security services. Organizations use CMS for secure file transfers and end-to-end encryption of documents, ensuring confidentiality and integrity.
-It is a key component in secure messaging protocols, contributing to the confidentiality, integrity, and authenticity of communication over networks. One of CMS's notable features is flexibility, allowing the choice of cryptographic algorithms based on specific security requirements.
+It is a key component in secure messaging protocols, contributing to the confidentiality, integrity, and authenticity of communication over networks. One of the notable features of CMS is flexibility, allowing the choice of cryptographic algorithms based on specific security requirements.
 An important consideration to be made is the non-uniform adoption and potential challenges in implementing CMS, particularly in the context of email clients. Varying levels of maturity and maintenance among email clients will slow down the adoption of post-quantum algorithms, which will not be uniform across different clients.
 
-It is worth noting that, similarly to CMS, JOSE and (JSON Object Signing and Encryption) and COSE (CBOR Object Signing and Encryption) are data structures used to support signing and encryption of data, respectively, in JSON and CBOR format. Therefore several considerations that are applicable for CMS will extend to JOSE and COSE as well.
+It is worth noting that, similarly to CMS, JOSE and (JSON Object Signing and Encryption) and COSE (CBOR Object Signing and Encryption) are data structures used to support signing and encryption of data, respectively, in JSON and CBOR format. Therefore, several considerations that are applicable for CMS will extend to JOSE and COSE as well.
 
 Lifetime: Short-lived and long-lived.
 
@@ -385,7 +385,7 @@ This classification distinguishes between short-lived and long-lived use cases. 
 2. Long-lived: In the context of this document, a long-lived use case spans more than 10 years. While there isn't a specific rationale for this timeframe, it is noteworthy that cryptographic recommendations, for example {{NIST.SP.800-57.P1R5}}, often provide guidance for a duration of up to ten years from the time of their publication.
 
 ##Protocol
-Cryptographic protocols can be diveded in Active Negotiation (real-time cryptography), Passive Negotiation (asynchronous cryptography), and Non Agile (no graceful migration).
+Cryptographic protocols can be divided in Active Negotiation (real-time cryptography), Passive Negotiation (asynchronous cryptography), and Non Agile (no graceful migration).
 
 1. Active Negotiation: Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
 2. Passive Negotiation: Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
