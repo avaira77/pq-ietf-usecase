@@ -506,9 +506,9 @@ Table of Contents
    Security (IPsec) and Internet Key Exchange (IKE) [RFC6071], Transport
    Layer Security (TLS)[RFC8446], Secure/Multipurpose Internet Mail
    Extensions (S/MIME)[RFC8551], is understood as the dynamic
-   referencing of the algorithms to be used - the "select" part of the
-   definition above.  A migration strategy that allows the existing and
-   future cryptographic algorithms to be used simultaneously during a
+   referencing of the algorithms to be used - the "select" component
+   above.  A migration strategy that allows the existing and future
+   cryptographic algorithms to be used simultaneously during a
    transition period (the "add" part) is not described in the respective
    standards.
 
