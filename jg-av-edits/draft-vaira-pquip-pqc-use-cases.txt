@@ -858,22 +858,22 @@ Appendix B.  Composite Signature individual and organization position
    1.  BSI - The document [bsi.quantum-safe.crypto] recommends requiring
        that PQC lattice schemes only be used within a PQ/T hybrid.  More
        specifically this document includes the following recommendation:
+       > "Therefore, quantum computer-resistant methods should not be
+       used alone - at least in a transitional period - but only in
+       hybrid mode, i.e. in combination with a classical method.  For
+       this purpose, protocols must be modified or supplemented
+       accordingly.  In addition, public key infrastructures, for
+       example, must also be adapted"
 
-   "Therefore, quantum computer-resistant methods should not be used
-   alone - at least in a transitional period - but only in hybrid mode,
-   i.e. in combination with a classical method.  For this purpose,
-   protocols must be modified or supplemented accordingly.  In addition,
-   public key infrastructures, for example, must also be adapted"
+       Also Stavros Kousidis from BSI says: "from a strategic point of
+       view we don’t want to replace our current RSA algorithm with
+       standalone Dilithium since: If Dilithium does not withstand
+       cryptanalysis in the future then all our efforts are for nothing.
+       With a composite signature Dilithium+ECDSA in AND-mode we can buy
+       ourselves some time in case the Dilithium security guarantees do
+       not withstand future cryptanalysis."
 
-   Also Stavros Kousidis from BSI says: "from a strategic point of view
-   we don’t want to replace our current RSA algorithm with standalone
-   Dilithium since: If Dilithium does not withstand cryptanalysis in the
-   future then all our efforts are for nothing.  With a composite
-   signature Dilithium+ECDSA in AND-mode we can buy ourselves some time
-   in case the Dilithium security guarantees do not withstand future
-   cryptanalysis."
-
-   1.  Google: according to [Google.Sec.Blog]: "Relying on a hybrid
+   2.  Google: according to [Google.Sec.Blog]: "Relying on a hybrid
        signature is critical as the security of Dilithium and other
        recently standardized quantum resistant algorithms haven’t yet
        stood the test of time and recent attacks on Rainbow (another
@@ -883,7 +883,7 @@ Appendix B.  Composite Signature individual and organization position
        OpenSK.  The hybrid approach is also used in other post-quantum
        efforts like Chrome’s support for TLS".
 
-   2.  Entrust: During the transition to post-quantum cryptography,
+   3.  Entrust: During the transition to post-quantum cryptography,
        there will be uncertainty as to the strength of cryptographic
        algorithms; we will no longer fully trust traditional
        cryptography such as RSA, Diffie-Hellman, DSA and their elliptic
@@ -895,15 +895,13 @@ Appendix B.  Composite Signature individual and organization position
        the migration period, it may be advantageous for an entity's
        cryptographic identity to be composed of multiple public-key
        algorithms.  In 2024 Entrust added support for composite
-       signatures in PKI infrastructure:
+       signatures in PKI infrastructure ([entrust.composite-pki]): >
+       "With this launch, the company’s cloud-based PKI as a Service
+       offering now can provide both composite and pure quantum-safe
+       certificate authority hierarchies, enabling customers to test or
+       implement quantum-safe scenarios and infrastructure."
 
-   "With this launch, the company’s cloud-based PKI as a Service
-   offering now can provide both composite and pure quantum-safe
-   certificate authority hierarchies, enabling customers to test or
-   implement quantum-safe scenarios and infrastructure."
-   [entrust.composite-pki]
-
-   1.  Robert Hulshof: "The rationale behind combined keys is that I can
+   4.  Robert Hulshof: "The rationale behind combined keys is that I can
        see an important use-case for very sensitive data (government,
        financial or other high value data) to combine multiple (PQ) key
        algorithms, and that this migration to PQ is a good time to start
@@ -918,7 +916,7 @@ Appendix B.  Composite Signature individual and organization position
        that probability to 1 in 5 million or 1 in a Billion would be
        much more acceptable."  TODO:add reference
 
-   2.  MTG - Falko Strenzke: "Without hybrid signatures, a decision to
+   5.  MTG - Falko Strenzke: "Without hybrid signatures, a decision to
        move away from traditional signatures to Dilithium (or other non-
        hash-based signatures) has a certain risk to make things worse
        and I think many decision makers will not be ready to take the
@@ -942,17 +940,17 @@ Appendix B.  Composite Signature individual and organization position
            possible, thus effectively delaying the migration to PQC."
            TODO: add reference
 
-   3.  Transmute - Orie Steele: "There are use cases for long lived
+   6.  Transmute - Orie Steele: "There are use cases for long lived
        verifiable credentials, and attribute cert like stuff we work on
        in supply chain, with DHS / CBP."  TODO: add reference
 
-   4.  CRYSTALS-Dilithium design team states in [Dilithium.des.team]
+   7.  CRYSTALS-Dilithium design team states in [Dilithium.des.team]
        that: “For users who are interested in using Dilithium, we
        recommend the following: Use Dilithium in a so-called hybrid mode
        in combination with an established "pre-quantum" signature
        scheme.”
 
-   5.  Hybrid Post-Quantum Signatures in Hardware Security Keys: the
+   8.  Hybrid Post-Quantum Signatures in Hardware Security Keys: the
        paper [Hybrid.pqc.sig.hsk] describes a hybrid signature scheme.
        Below an excerpt from it: “A hybrid signature scheme combines a
        classical signature algorithm with a post-quantum secure
