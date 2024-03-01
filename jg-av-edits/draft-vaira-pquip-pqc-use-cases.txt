@@ -858,12 +858,13 @@ Appendix B.  Composite Signature individual and organization position
    1.  BSI - The document [bsi.quantum-safe.crypto] recommends requiring
        that PQC lattice schemes only be used within a PQ/T hybrid.  More
        specifically this document includes the following recommendation:
-       > "Therefore, quantum computer-resistant methods should not be
-       used alone - at least in a transitional period - but only in
-       hybrid mode, i.e. in combination with a classical method.  For
-       this purpose, protocols must be modified or supplemented
-       accordingly.  In addition, public key infrastructures, for
-       example, must also be adapted"
+
+       "Therefore, quantum computer-resistant methods should not be used
+       alone - at least in a transitional period - but only in hybrid
+       mode, i.e. in combination with a classical method.  For this
+       purpose, protocols must be modified or supplemented accordingly.
+       In addition, public key infrastructures, for example, must also
+       be adapted"
 
        Also Stavros Kousidis from BSI says: "from a strategic point of
        view we don’t want to replace our current RSA algorithm with
@@ -895,7 +896,8 @@ Appendix B.  Composite Signature individual and organization position
        the migration period, it may be advantageous for an entity's
        cryptographic identity to be composed of multiple public-key
        algorithms.  In 2024 Entrust added support for composite
-       signatures in PKI infrastructure ([entrust.composite-pki]): >
+       signatures in PKI infrastructure ([entrust.composite-pki]):
+
        "With this launch, the company’s cloud-based PKI as a Service
        offering now can provide both composite and pure quantum-safe
        certificate authority hierarchies, enabling customers to test or
