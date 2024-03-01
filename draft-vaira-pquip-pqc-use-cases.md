@@ -362,13 +362,13 @@ Another aspect worth considering is that, without solutions for hardware securit
 
 Migration to post-quantum cryptographic algorithms can be regarded as an instance of the general pattern of *cryptographic agility*, rather than be viewed as a special, one-off event. A system that approaches migration this way can undergo multiple transitions without requiring major architectural changes. Thus, when planning the transition to post-quantum cryptography, consider that when future cryptanalysis will trigger a transition to *post-post-quantum* cryptography, it is better to be agile than to start from scratch.
 
-Hohm et al. identified circa 30 interpretations of the term "cryptographic agility" in their literature survey {{CAMM}}, therefore referring to agility without defining it brings the potential of being misunderstood. In this document, we define cryptographic agility as the ability to:
+Hohm et al. identified circa 30 interpretations of the term "cryptographic agility" in their literature survey {{CAMM}}, therefore referring to agility without defining it brings the potential of being misunderstood. In this document, we encourage readers to reason about agility by relying on these guiding questions:
 
-1. **Select** algorithms based on a specific context.
-2. **Add** new cryptographic primitives or parameters.
-3. **Retire** obsolete crypto.
+1. Can one **select** algorithms based on a specific context?
+2. Can one **add** new cryptographic primitives or parameters?
+3. Can obsolete crypto be **retired**?
 
-System and protocol designers can adjust the definition for their particular context, but they have to ensure that the adjusted definition is clearly stated, to avoid ambiguities.
+System and protocol designers can adjust the definition for their particular context, while ensuring that the adjusted definition is clearly stated, to avoid ambiguities.
 
 
 Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) {{RFC6071}}, Transport Layer Security (TLS){{RFC8446}}, Secure/Multipurpose Internet Mail Extensions (S/MIME){{RFC8551}}, is understood as the dynamic referencing of the algorithms to be used - the "select" part of the definition above. A migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period (the "add" part) is not described in the respective standards.
