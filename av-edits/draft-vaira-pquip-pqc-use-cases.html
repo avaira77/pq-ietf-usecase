@@ -1396,8 +1396,12 @@ Timestamps, are particularly important in the following scenarios.<a href="#sect
         <h3 id="name-additional-use-cases">
 <a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-additional-use-cases" class="section-name selfRef">Additional use cases</a>
         </h3>
-<p id="section-2.6-1">Future work:
-- add post-quantum relevant use cases which cover additional aspects, this could also include use cases like FAA airworthiness certifications, medical records, etc.<a href="#section-2.6-1" class="pilcrow">¶</a></p>
+<p id="section-2.6-1">Future work:<a href="#section-2.6-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.6-2.1">
+            <p id="section-2.6-2.1.1">add post-quantum relevant use cases which cover additional aspects, such as FAA airworthiness certifications, medical records, etc.<a href="#section-2.6-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 </section>
@@ -1459,8 +1463,22 @@ Another aspect worth considering is that, without solutions for hardware securit
         <h3 id="name-cryptographic-agility">
 <a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-cryptographic-agility" class="section-name selfRef">Cryptographic Agility</a>
         </h3>
-<p id="section-3.6-1">Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) <span>[<a href="#RFC6071" class="cite xref">RFC6071</a>]</span>, Transport Layer Security (TLS)<span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>, Secure/Multipurpose Internet Mail Extensions (S/MIME)<span>[<a href="#RFC8551" class="cite xref">RFC8551</a>]</span>, is usually understood as the dynamic referencing of the algorithms to be used. A concrete migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period is usually not described in the respective standards.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
-<p id="section-3.6-2">An extension of the existing standards would be needed to integrate the required agility into the existing protocols and formats. This requires effort for standardization and implementations if a basic functionality, such as multiple signatures, e.g., in Cryptographic Message Syntax (CMS) <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>, is not already available. But even in the case of S/MIME and CMS, a corresponding profiling is still necessary to describe how the multiple signatures are to be used specifically for the migration.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+<p id="section-3.6-1">Migration to post-quantum cryptographic algorithms can be regarded as an instance of the general pattern of <em>cryptographic agility</em>, rather than be viewed as a special, one-off event. A system that approaches migration this way can undergo multiple transitions without requiring major architectural changes. Thus, when planning the transition to post-quantum cryptography, consider that when future cryptanalysis will trigger a transition to <em>post-post-quantum</em> cryptography, it is better to be agile than to start from scratch.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
+<p id="section-3.6-2">Hohm et al. identified circa 30 interpretations of the term "cryptographic agility" in their literature survey <span>[<a href="#CAMM" class="cite xref">CAMM</a>]</span>, therefore referring to agility without defining it brings the potential of being misunderstood. In this document, we encourage readers to reason about agility by relying on these guiding questions:<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3.6-3">
+<li id="section-3.6-3.1">
+            <p id="section-3.6-3.1.1">Can one <strong>select</strong> algorithms based on a specific context?<a href="#section-3.6-3.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-3.6-3.2">
+            <p id="section-3.6-3.2.1">Can one <strong>add</strong> new cryptographic primitives or parameters?<a href="#section-3.6-3.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-3.6-3.3">
+            <p id="section-3.6-3.3.1">Can obsolete crypto be <strong>retired</strong>?<a href="#section-3.6-3.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+<p id="section-3.6-4">System and protocol designers can adjust the definition for their particular context, while ensuring that the adjusted definition is clearly stated, to avoid ambiguities.<a href="#section-3.6-4" class="pilcrow">¶</a></p>
+<p id="section-3.6-5">Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) <span>[<a href="#RFC6071" class="cite xref">RFC6071</a>]</span>, Transport Layer Security (TLS)<span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>, Secure/Multipurpose Internet Mail Extensions (S/MIME)<span>[<a href="#RFC8551" class="cite xref">RFC8551</a>]</span>, is understood as the dynamic referencing of the algorithms to be used - the "select" component above. A migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period (the "add" part) is not described in the respective standards.<a href="#section-3.6-5" class="pilcrow">¶</a></p>
+<p id="section-3.6-6">Revised versions of standards would be needed to integrate agility into protocols and formats. This requires effort for standardization and implementation if a basic functionality, such as multiple signatures, e.g., in Cryptographic Message Syntax (CMS) <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>, is not already available. But even in the case of S/MIME and CMS, profiling is still necessary to describe how the multiple signatures are to be used specifically for the migration.<a href="#section-3.6-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1517,7 +1535,7 @@ Another aspect worth considering is that, without solutions for hardware securit
           </tr>
         </tbody>
       </table>
-<p id="section-4-3">The map is constructed as a decision tree, which is available at: https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-3">The map is constructed as a decision tree, which is available at: <a href="https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart">https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart</a>.<a href="#section-4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="IANA">
@@ -1688,8 +1706,12 @@ Another aspect worth considering is that, without solutions for hardware securit
 <span class="refAuthor">National Institute of Standards and Technology (NIST)</span>, <span class="refTitle">"Recommendation for Key Management: Part 1 – General"</span>, <span class="seriesInfo">NIST Special Publication 800-57</span>, <time datetime="2020" class="refDate">2020</time>, <span>&lt;<a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="X.509">[X.509]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">International Telecommunications Union</span>, <span class="refTitle">"Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks"</span>, <span class="seriesInfo">ITU-T Recommendation X.509</span>, <time datetime="2019" class="refDate">2019</time>. </dd>
+<dd class="break"></dd>
+<dt id="CAMM">[CAMM]</dt>
+      <dd>
+<span class="refAuthor">al., H. J. et.</span>, <span class="refTitle">"Towards a maturity model for crypto-agility assessment"</span>, <time datetime="2022" class="refDate">2022</time>, <span>&lt;<a href="http://arxiv.org/abs/2202.07645">http://arxiv.org/abs/2202.07645</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
