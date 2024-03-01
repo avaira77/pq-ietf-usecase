@@ -12,7 +12,7 @@ Expires: 2 September 2024                                        Siemens
                                                             1 March 2024
 
 
-                  Post-quantum cryptography use cases
+             Post-quantum cryptography migration use cases
                  draft-vaira-pquip-pqc-use-cases-latest
 
 Abstract
@@ -84,16 +84,14 @@ Table of Contents
      2.3.  Trust Anchor deployment
      2.4.  CMS (S/MIME)
      2.5.  Timestamping
-     2.6.  OAuth
-     2.7.  SUIT Manifest
-     2.8.  Additional use cases
+     2.6.  Additional use cases
    3.  Post-quantum Migration Strategies for Signing
      3.1.  Multiple Signatures
      3.2.  Composite Signatures
      3.3.  Employing Stateful Hash-based Signature Schemes
      3.4.  Employing Stateless Hash-based Signature Schemes
      3.5.  Employing Module-Lattice-Based Digital Signature Schemes
-     3.6.  Protocol Revision (Cryptographic Agility)
+     3.6.  Cryptographic Agility
    4.  Map of Migration Strategies to Reference Use Cases
    5.  IANA Considerations
    6.  Security Considerations
@@ -374,21 +372,11 @@ Table of Contents
 
    Backward compatibility: Optional.
 
-2.6.  OAuth
+2.6.  Additional use cases
 
-   TODO
-
-2.7.  SUIT Manifest
-
-   TODO
-
-2.8.  Additional use cases
-
-   TO-DOs: - add additional post-quantum relevant use cases which cover
-   aspects not covered so far, this could also include use cases that
-   are not common in our line of work (e.g., FAA airworthiness
-   certifications, medical records, etc.), call for action for IETF
-   participants...
+   Future work: - add post-quantum relevant use cases which cover
+   additional aspects, this could also include use cases like FAA
+   airworthiness certifications, medical records, etc.
 
 3.  Post-quantum Migration Strategies for Signing
 
@@ -485,7 +473,7 @@ Table of Contents
    DSA and fast signature generation.  For more details, refer to
    [I-D.ietf-pquip-pqc-engineers].
 
-3.6.  Protocol Revision (Cryptographic Agility)
+3.6.  Cryptographic Agility
 
    Agility in security protocols and message formats, such as IP
    Security (IPsec) and Internet Key Exchange (IKE) [RFC6071], Transport
@@ -498,7 +486,7 @@ Table of Contents
 
    An extension of the existing standards would be needed to integrate
    the required agility into the existing protocols and formats.  This
-   is a lot of effort for standardization and implementations if a basic
+   requires effort for standardization and implementations if a basic
    functionality, such as multiple signatures, e.g., in Cryptographic
    Message Syntax (CMS) [RFC5652], is not already available.  But even
    in the case of S/MIME and CMS, a corresponding profiling is still
