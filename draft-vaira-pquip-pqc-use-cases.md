@@ -311,7 +311,8 @@ TODO
 ## Additional use cases
 
 Future work:
-- add post-quantum relevant use cases which cover additional aspects, this could also include use cases like FAA airworthiness certifications, medical records, etc.
+
+- add post-quantum relevant use cases which cover additional aspects, such as FAA airworthiness certifications, medical records, etc.
 
 # Post-quantum Migration Strategies for Signing
 
@@ -365,7 +366,7 @@ In this section, we establish a mapping between the reference use cases and thei
 | Timestamping                       | Long-lived                 | Passive Negotiation | Optional               |
 {: title="Summary of use cases and main features"}
 
-The map is constructed as a decision tree, which is available at: https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart.
+The map is constructed as a decision tree, which is available at: <https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart>.
 
 # IANA Considerations {#IANA}
 
