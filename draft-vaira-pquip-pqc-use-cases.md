@@ -190,7 +190,7 @@ informative:
     title: >
       Towards a maturity model for crypto-agility assessment
     author:
-      name: Hohm et al.
+      name: Hohm, Julian et al.
     date: 2022
 
 
