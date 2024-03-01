@@ -365,7 +365,7 @@ In this section, we establish a mapping between the reference use cases and thei
 | Timestamping                       | Long-lived                 | Passive Negotiation | Optional               |
 {: title="Summary of use cases and main features"}
 
-The map is constructed as a decision tree, which is available here: [TODO add URL].
+The map is constructed as a decision tree, which is available at: https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart.
 
 # IANA Considerations {#IANA}
 
