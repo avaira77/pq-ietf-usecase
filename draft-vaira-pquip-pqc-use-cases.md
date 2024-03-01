@@ -461,4 +461,3 @@ We can now discuss the informal requirements a hybrid scheme H should satisfy:
 {: numbered="false"}
 
 This draft would not be possible without the support of a great number of contributors.   We thank Stavros Kousidis, Robert Hulshof, Falko Strenzke and Orie Steele for allowing us to use their statements regarding composite signatures.
-TODO
