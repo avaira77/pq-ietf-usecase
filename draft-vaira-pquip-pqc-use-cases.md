@@ -15,7 +15,7 @@ venue:
 
 docname: draft-vaira-pquip-pqc-use-cases-latest
 
-title: Post-quantum cryptography use cases
+title: Post-quantum cryptography migration use cases
 abbrev: PQC use cases
 lang: en
 kw:
@@ -300,16 +300,18 @@ Protocol: Passive Negotiation.
 
 Backward compatibility: Optional.
 
+<!--
 ## OAuth
 TODO
 
 ## SUIT Manifest
 TODO
+-->
 
 ## Additional use cases
 
-TO-DOs:
-- add additional post-quantum relevant use cases which cover aspects not covered so far, this could also include use cases that are not common in our line of work (e.g., FAA airworthiness certifications, medical records, etc.), call for action for IETF participants...
+Future work:
+- add post-quantum relevant use cases which cover additional aspects, this could also include use cases like FAA airworthiness certifications, medical records, etc.
 
 # Post-quantum Migration Strategies for Signing
 
@@ -341,13 +343,14 @@ Another aspect worth considering is that, without solutions for hardware securit
 {{NIST.FIPS.205}} specifies the SLH-DSA (SPHINCS+) algorithm.  It is a stateless hash-based signature algorithm and is considered safe against attacks by quantum computers.  The advantage of this algorithm is that the state problem is resolved as part of the algorithm.  However, the tradeoff is that signature sizes are often an order of magnitude larger than XMSS or LMS.  This may make deploying these algorithms on constrained devices infeasible.
 
 ## Employing Module-Lattice-Based Digital Signature Schemes
+
 {{NIST.FIPS.204}} specifies the ML-DSA (Dilithium) algorithm, a digital signature algorithm based on the hardness of lattice problems over module lattices. It serves as a general purpose post-quantum signature algorithm, offering smaller key sizes in comparison to SLH-DSA and fast signature generation. For more details, refer to {{I-D.ietf-pquip-pqc-engineers}}.
 
-## Protocol Revision (Cryptographic Agility) {#protocols}
+## Cryptographic Agility {#protocols}
 
 Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) {{RFC6071}}, Transport Layer Security (TLS){{RFC8446}}, Secure/Multipurpose Internet Mail Extensions (S/MIME){{RFC8551}}, is usually understood as the dynamic referencing of the algorithms to be used. A concrete migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period is usually not described in the respective standards.
 
-An extension of the existing standards would be needed to integrate the required agility into the existing protocols and formats. This is a lot of effort for standardization and implementations if a basic functionality, such as multiple signatures, e.g., in Cryptographic Message Syntax (CMS) {{RFC5652}}, is not already available. But even in the case of S/MIME and CMS, a corresponding profiling is still necessary to describe how the multiple signatures are to be used specifically for the migration.
+An extension of the existing standards would be needed to integrate the required agility into the existing protocols and formats. This requires effort for standardization and implementations if a basic functionality, such as multiple signatures, e.g., in Cryptographic Message Syntax (CMS) {{RFC5652}}, is not already available. But even in the case of S/MIME and CMS, a corresponding profiling is still necessary to describe how the multiple signatures are to be used specifically for the migration.
 
 # Map of Migration Strategies to Reference Use Cases
 
