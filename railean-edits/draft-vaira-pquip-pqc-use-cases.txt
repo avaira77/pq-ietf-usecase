@@ -5,14 +5,14 @@
 Post-Quantum Use In Protocols                                   A. Vaira
 Internet-Draft                                              H. Brockhaus
 Intended status: Informational                                A. Railean
-Expires: 26 August 2024                                          Siemens
+Expires: 2 September 2024                                        Siemens
                                                                  J. Gray
                                                             M. Ounsworth
                                                                  Entrust
-                                                        23 February 2024
+                                                            1 March 2024
 
 
-                  Post-quantum cryptography use cases
+             Post-quantum cryptography migration use cases
                  draft-vaira-pquip-pqc-use-cases-latest
 
 Abstract
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 August 2024.
+   This Internet-Draft will expire on 2 September 2024.
 
 Copyright Notice
 
@@ -84,16 +84,14 @@ Table of Contents
      2.3.  Trust Anchor deployment
      2.4.  CMS (S/MIME)
      2.5.  Timestamping
-     2.6.  OAuth
-     2.7.  SUIT Manifest
-     2.8.  Additional use cases
+     2.6.  Additional use cases
    3.  Post-quantum Migration Strategies for Signing
      3.1.  Multiple Signatures
      3.2.  Composite Signatures
      3.3.  Employing Stateful Hash-based Signature Schemes
      3.4.  Employing Stateless Hash-based Signature Schemes
      3.5.  Employing Module-Lattice-Based Digital Signature Schemes
-     3.6.  Protocol Revision (Cryptographic Agility)
+     3.6.  Cryptographic Agility
    4.  Map of Migration Strategies to Reference Use Cases
    5.  IANA Considerations
    6.  Security Considerations
@@ -374,21 +372,13 @@ Table of Contents
 
    Backward compatibility: Optional.
 
-2.6.  OAuth
+2.6.  Additional use cases
 
-   TODO
+   Future work:
 
-2.7.  SUIT Manifest
-
-   TODO
-
-2.8.  Additional use cases
-
-   TO-DOs: - add additional post-quantum relevant use cases which cover
-   aspects not covered so far, this could also include use cases that
-   are not common in our line of work (e.g., FAA airworthiness
-   certifications, medical records, etc.), call for action for IETF
-   participants...
+   *  add post-quantum relevant use cases which cover additional
+      aspects, such as FAA airworthiness certifications, medical
+      records, etc.
 
 3.  Post-quantum Migration Strategies for Signing
 
@@ -485,25 +475,50 @@ Table of Contents
    DSA and fast signature generation.  For more details, refer to
    [I-D.ietf-pquip-pqc-engineers].
 
-3.6.  Protocol Revision (Cryptographic Agility)
+3.6.  Cryptographic Agility
+
+   Migration to post-quantum cryptographic algorithms can be regarded as
+   an instance of the general pattern of _cryptographic agility_, rather
+   than be viewed as a special, one-off event.  A system that approaches
+   migration this way can undergo multiple transitions without requiring
+   major architectural changes.  Thus, when planning the transition to
+   post-quantum cryptography, consider that when future cryptanalysis
+   will trigger a transition to _post-post-quantum_ cryptography, it is
+   better to be agile than to start from scratch.
+
+   Hohm et al. identified circa 30 interpretations of the term
+   "cryptographic agility" in their literature survey [CAMM], therefore
+   referring to agility without defining it brings the potential of
+   being misunderstood.  In this document, we encourage readers to
+   reason about agility by relying on these guiding questions:
+
+   1.  Can one *select* algorithms based on a specific context?
+
+   2.  Can one *add* new cryptographic primitives or parameters?
+
+   3.  Can obsolete crypto be *retired*?
+
+   System and protocol designers can adjust the definition for their
+   particular context, while ensuring that the adjusted definition is
+   clearly stated, to avoid ambiguities.
 
    Agility in security protocols and message formats, such as IP
    Security (IPsec) and Internet Key Exchange (IKE) [RFC6071], Transport
    Layer Security (TLS)[RFC8446], Secure/Multipurpose Internet Mail
-   Extensions (S/MIME)[RFC8551], is usually understood as the dynamic
-   referencing of the algorithms to be used.  A concrete migration
-   strategy that allows the existing and future cryptographic algorithms
-   to be used simultaneously during a transition period is usually not
-   described in the respective standards.
+   Extensions (S/MIME)[RFC8551], is understood as the dynamic
+   referencing of the algorithms to be used - the "select" part of the
+   definition above.  A migration strategy that allows the existing and
+   future cryptographic algorithms to be used simultaneously during a
+   transition period (the "add" part) is not described in the respective
+   standards.
 
-   An extension of the existing standards would be needed to integrate
-   the required agility into the existing protocols and formats.  This
-   is a lot of effort for standardization and implementations if a basic
-   functionality, such as multiple signatures, e.g., in Cryptographic
-   Message Syntax (CMS) [RFC5652], is not already available.  But even
-   in the case of S/MIME and CMS, a corresponding profiling is still
-   necessary to describe how the multiple signatures are to be used
-   specifically for the migration.
+   Revised versions of standards would be needed to integrate agility
+   into protocols and formats.  This requires effort for standardization
+   and implementation if a basic functionality, such as multiple
+   signatures, e.g., in Cryptographic Message Syntax (CMS) [RFC5652], is
+   not already available.  But even in the case of S/MIME and CMS,
+   profiling is still necessary to describe how the multiple signatures
+   are to be used specifically for the migration.
 
 4.  Map of Migration Strategies to Reference Use Cases
 
@@ -537,8 +552,9 @@ Table of Contents
 
               Table 1: Summary of use cases and main features
 
-   The map is constructed as a decision tree, which is available here:
-   [TODO add URL].
+   The map is constructed as a decision tree, which is available at:
+   https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart
+   (https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart).
 
 5.  IANA Considerations
 
@@ -753,6 +769,9 @@ Table of Contents
               technology – Open Systems Interconnection – The Directory:
               Public-key and attribute certificate frameworks",
               ITU-T Recommendation X.509, 2019.
+
+   [CAMM]     al., H. et., "Towards a maturity model for crypto-agility
+              assessment", 2022, <http://arxiv.org/abs/2202.07645>.
 
 Appendix A.  Post-Quantum Migration Properties
 
