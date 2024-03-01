@@ -770,8 +770,9 @@ Table of Contents
               Public-key and attribute certificate frameworks",
               ITU-T Recommendation X.509, 2019.
 
-   [CAMM]     al., H. et., "Towards a maturity model for crypto-agility
-              assessment", 2022, <http://arxiv.org/abs/2202.07645>.
+   [CAMM]     al., H. J. et., "Towards a maturity model for crypto-
+              agility assessment", 2022,
+              <http://arxiv.org/abs/2202.07645>.
 
 Appendix A.  Post-Quantum Migration Properties
 
