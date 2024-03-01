@@ -185,6 +185,17 @@ informative:
     date: 2019
     seriesinfo:
       ITU-T: Recommendation X.509
+  CAMM:
+    target: http://arxiv.org/abs/2202.07645
+    title: >
+      Towards a maturity model for crypto-agility assessment
+    author:
+      name: Hohm et al.
+    date: 2022
+
+
+
+
 
 --- abstract
 
@@ -349,9 +360,20 @@ Another aspect worth considering is that, without solutions for hardware securit
 
 ## Cryptographic Agility {#protocols}
 
-Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) {{RFC6071}}, Transport Layer Security (TLS){{RFC8446}}, Secure/Multipurpose Internet Mail Extensions (S/MIME){{RFC8551}}, is usually understood as the dynamic referencing of the algorithms to be used. A concrete migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period is usually not described in the respective standards.
+Migration to post-quantum cryptographic algorithms can be regarded as an instance of the general pattern of *cryptographic agility*, rather than be viewed as a special, one-off event. A system that approaches migration this way can undergo multiple transitions without requiring major architectural changes. Thus, when planning the transition to post-quantum cryptography, consider that when future cryptanalysis will trigger a transition to *post-post-quantum* cryptography, it is better to be agile than to start from scratch.
 
-An extension of the existing standards would be needed to integrate the required agility into the existing protocols and formats. This requires effort for standardization and implementations if a basic functionality, such as multiple signatures, e.g., in Cryptographic Message Syntax (CMS) {{RFC5652}}, is not already available. But even in the case of S/MIME and CMS, a corresponding profiling is still necessary to describe how the multiple signatures are to be used specifically for the migration.
+Hohm et al. identified circa 30 interpretations of the term "cryptographic agility" in their literature survey {{CAMM}}, therefore referring to agility without defining it brings the potential of being misunderstood. In this document, we define cryptographic agility as the ability to:
+
+1. **Select** algorithms based on a specific context.
+2. **Add** new cryptographic primitives or parameters.
+3. **Retire** obsolete crypto.
+
+System and protocol designers can adjust the definition for their particular context, but they have to ensure that the adjusted definition is clearly stated, to avoid ambiguities.
+
+
+Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) {{RFC6071}}, Transport Layer Security (TLS){{RFC8446}}, Secure/Multipurpose Internet Mail Extensions (S/MIME){{RFC8551}}, is understood as the dynamic referencing of the algorithms to be used - the "select" part of the definition above. A migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period (the "add" part) is not described in the respective standards.
+
+Revised versions of standards would be needed to integrate agility into protocols and formats. This requires effort for standardization and implementation if a basic functionality, such as multiple signatures, e.g., in Cryptographic Message Syntax (CMS) {{RFC5652}}, is not already available. But even in the case of S/MIME and CMS, profiling is still necessary to describe how the multiple signatures are to be used specifically for the migration.
 
 # Map of Migration Strategies to Reference Use Cases
 
