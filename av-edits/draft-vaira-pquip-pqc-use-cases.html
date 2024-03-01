@@ -11,7 +11,7 @@
 <meta content="John Gray" name="author">
 <meta content="Mike Ounsworth" name="author">
 <meta content="
-       This document is meant to be continuously updated, receiving periodic updates to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (RSA, DSA, ECDSA) to PQC signature algorithms (LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a select set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among the parties involved. 
+       This document is meant to be continuously updated, to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (e.g., RSA, DSA, ECDSA) to PQC signature algorithms (e.g., LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among stakeholders. 
     " name="description">
 <meta content="xml2rfc 3.19.4" name="generator">
 <meta content="post-quantum cryptography" name="keyword">
@@ -1030,11 +1030,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">PQC use cases</td>
-<td class="right">February 2024</td>
+<td class="right">March 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Vaira, et al.</td>
-<td class="center">Expires 26 August 2024</td>
+<td class="center">Expires 2 September 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1047,12 +1047,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-vaira-pquip-pqc-use-cases-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-02-23" class="published">23 February 2024</time>
+<time datetime="2024-03-01" class="published">1 March 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-08-26">26 August 2024</time></dd>
+<dd class="expires"><time datetime="2024-09-02">2 September 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1081,7 +1081,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Post-quantum cryptography use cases</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document is meant to be continuously updated, receiving periodic updates to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (RSA, DSA, ECDSA) to PQC signature algorithms (LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a select set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among the parties involved.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document is meant to be continuously updated, to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (e.g., RSA, DSA, ECDSA) to PQC signature algorithms (e.g., LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among stakeholders.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1118,7 +1118,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 26 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 2 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1259,18 +1259,18 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. Clearly, there is no silver bullet, making it difficult to select the most suitable approach for any given use case.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. Clearly, there is no silver bullet, making it difficult to select the most suitable approach for any given use cases.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">For example:<a href="#section-1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-3.1">
-          <p id="section-1-3.1.1">An Original Equipment Manufacturer (OEM) must issue its products today with a manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI. The choice of algorithms and the type of hybrid cryptography to support become quite critical.<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
+          <p id="section-1-3.1.1">An Original Equipment Manufacturer (OEM) must issue its products today with a manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI (Public Key Infrastructure). The choice of algorithms and the type of hybrid cryptography to support become critical.<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-3.2">
-          <p id="section-1-3.2.1">A public PKI is must start today preparing its CAs for issuing S/MIME certificates, necessitating the inclusion of hybrid capabilities. The question arises: which path should be pursued?<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-1-3.2.1">A public PKI must start preparing its CAs today for issuing S/MIME certificates, necessitating the inclusion of hybrid capabilities. The question arises: which path should be pursued?<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-1-4">In this document, intended to be a dynamic resource, our main objective is to compile a list of digital signature use cases and categorize them based on prominent features. Examples include distinguishing between long-lived and short-lived scenarios, whether they include a negotiated protocol, or if backward compatibility is required.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">We also explore the migration strategies that have appeard so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration stategies make use of hybrid cryptography, i.e., use both tranditional and post-quantum cryptography. There are several concepts for hybrid cryptography.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-5">We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration strategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography. There are several concepts for hybrid cryptography.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">The motivation to take into account hybrid cryptography during the migration phase arises from the requirement of having long-lived assertions, i.e., digital signatures that require long term validation, as well as the uncertainty surrounding the longevity of traditional cryptographic methods and lack of complete trust in emerging PQC algorithms.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">An additional factor to consider is represented by the requirements coming from regulatory bodies, which, in several cases will differ among legislations, in regard to post-quantum algorithms and acceptable migration strategies. For example <span>[<a href="#bsi.quantum-safe.crypto" class="cite xref">bsi.quantum-safe.crypto</a>]</span>, recommends the incorporation of post-quantum cryptographic algorithms within hybrid cryptographic schemes, as a proactive response to the quantum threat. On the contrary, <span>[<a href="#CNSA2-0" class="cite xref">CNSA2-0</a>]</span> recommends specific post-quantum cryptographic algorithms for each use case.<a href="#section-1-7" class="pilcrow">¶</a></p>
 <div id="requirements-language">
@@ -1347,11 +1347,11 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
         <h3 id="name-trust-anchor-deployment">
 <a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-trust-anchor-deployment" class="section-name selfRef">Trust Anchor deployment</a>
         </h3>
-<p id="section-2.3-1">Trust Anchors, such as X.509 Root CA certificates and raw public keys, must be made accessible before they can be used for signature validation. In scenarios like remote software updates, a Trust Anchor X.509 certificate, for instance, must be installed on a target device to enable the validation of certificate chains. While deployment of Trust Anchors may be relatively straightforward for "corporate IT" and "public web" applications, it can still be a time-consuming process to ensure that a new Trust Anchor X.509 certificate is propagated throughout the entire ecosystem. Additionally, when dealing with post-quantum Trust Anchors, an extra layer of complexity arises as the desired underlying cryptography may not yet be supported by the target device or software.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-1">Trust Anchors, such as X.509 Root CA certificates and raw public keys, must be made accessible before they can be used for signature validation. In scenarios like remote software updates, a Trust Anchor X.509 certificate, for instance, must be installed on a target device to enable the validation of certificate chains. While deployment of Trust Anchors may be relatively straightforward for "corporate IT" and "public web" applications, it can still be a time-consuming process to ensure that a new Trust Anchor X.509 certificate is propagated throughout the entire ecosystem. Additionally, when dealing with post-quantum Trust Anchors, an extra layer of complexity arises as the desired underlying cryptography may not yet be supported by the target platform.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
 <p id="section-2.3-2">There are two common variations of this use case.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.3-3.1">
-            <p id="section-2.3-3.1.1">Injection within a factory: in industrial contexts, Trust Anchors are typically injected into target devices during the manufacturing phase. To bootstrap a Trust Anchor, the device is placed in a physically secure environment accessible only to trustworthy personnel. This injection can occur during manufacturing or when a device is being resold. It is important to note that some devices might not support updating the Trust Anchor in the field, requiring the return of the device to the OEM for post-quantum Trust Anchor injection or, in some cases, it may be even not supported at all, because, for example, the Trust Anchor is burnt onto the device at manufacturing time.<a href="#section-2.3-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-2.3-3.1.1">Injection within a factory: in industrial contexts, Trust Anchors are typically injected into target devices during the manufacturing phase. To bootstrap a Trust Anchor, the device is placed in a physically secure environment accessible only to trusted personnel. This injection can occur during manufacturing or when a device is being resold. It is important to note that some devices might not support updating the Trust Anchor in the field, requiring the return of the device to the OEM for post-quantum Trust Anchor injection or, in some cases, it may be even not supported at all, because, for example, the Trust Anchor is burnt onto the device at manufacturing time.<a href="#section-2.3-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.3-3.2">
             <p id="section-2.3-3.2.1">Injection via software and firmware updates: for devices where the Trust Anchor is not burned onto the device, for example in less constrained devices and IT equipment, post-quantum Trust Anchors can be injected through software or firmware update mechanisms. The deployment of these Trust Anchors may leverage existing update mechanisms and traditional cryptography to minimize effort. However, this approach necessitates the distribution of the new Trust Anchors well in advance of any suspicion that traditional cryptography may become vulnerable. Given the lead time required to ensure widespread distribution, the time window where this mechanism is suitable is further reduced.<a href="#section-2.3-3.2.1" class="pilcrow">¶</a></p>
@@ -1369,9 +1369,9 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
         </h3>
 <p id="section-2.4-1">The Cryptographic Message Syntax (CMS) <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span> establishes a standard syntax for creating secure messages, incorporating digital signatures, encryption, and authentication codes.
 In practical terms, CMS finds application in scenarios such as secure email communication, document signing, and PKI-based security services. Organizations use CMS for secure file transfers and end-to-end encryption of documents, ensuring confidentiality and integrity.
-It is a key component in secure messaging protocols, contributing to the confidentiality, integrity, and authenticity of communication over networks. One of CMS's notable features is flexibility, allowing the choice of cryptographic algorithms based on specific security requirements.
+It is a key component in secure messaging protocols, contributing to the confidentiality, integrity, and authenticity of communication over networks. One of the notable features of CMS is flexibility, allowing the choice of cryptographic algorithms based on specific security requirements.
 An important consideration to be made is the non-uniform adoption and potential challenges in implementing CMS, particularly in the context of email clients. Varying levels of maturity and maintenance among email clients will slow down the adoption of post-quantum algorithms, which will not be uniform across different clients.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.4-2">It is worth noting that, similarly to CMS, JOSE and (JSON Object Signing and Encryption) and COSE (CBOR Object Signing and Encryption) are data structures used to support signing and encryption of data, respectively, in JSON and CBOR format. Therefore several considerations that are applicable for CMS will extend to JOSE and COSE as well.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+<p id="section-2.4-2">It is worth noting that, similarly to CMS, JOSE and (JSON Object Signing and Encryption) and COSE (CBOR Object Signing and Encryption) are data structures used to support signing and encryption of data, respectively, in JSON and CBOR format. Therefore, several considerations that are applicable for CMS will extend to JOSE and COSE as well.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
 <p id="section-2.4-3">Lifetime: Short-lived and long-lived.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
 <p id="section-2.4-4">Protocol: Passive Negotiation.<a href="#section-2.4-4" class="pilcrow">¶</a></p>
 <p id="section-2.4-5">Backward compatibility: Mandatory.<a href="#section-2.4-5" class="pilcrow">¶</a></p>
@@ -1744,7 +1744,7 @@ Another aspect worth considering is that, without solutions for hardware securit
         <h3 id="name-protocol">
 <a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-protocol" class="section-name selfRef">Protocol</a>
         </h3>
-<p id="appendix-A.2-1">Cryptographic protocols can be diveded in Active Negotiation (real-time cryptography), Passive Negotiation (asynchronous cryptography), and Non Agile (no graceful migration).<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-1">Cryptographic protocols can be divided in Active Negotiation (real-time cryptography), Passive Negotiation (asynchronous cryptography), and Non Agile (no graceful migration).<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="appendix-A.2-2">
 <li id="appendix-A.2-2.1">
             <p id="appendix-A.2-2.1.1">Active Negotiation: Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.<a href="#appendix-A.2-2.1.1" class="pilcrow">¶</a></p>

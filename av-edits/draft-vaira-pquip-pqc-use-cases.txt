@@ -5,11 +5,11 @@
 Post-Quantum Use In Protocols                                   A. Vaira
 Internet-Draft                                              H. Brockhaus
 Intended status: Informational                                A. Railean
-Expires: 26 August 2024                                          Siemens
+Expires: 2 September 2024                                        Siemens
                                                                  J. Gray
                                                             M. Ounsworth
                                                                  Entrust
-                                                        23 February 2024
+                                                            1 March 2024
 
 
                   Post-quantum cryptography use cases
@@ -17,15 +17,14 @@ Expires: 26 August 2024                                          Siemens
 
 Abstract
 
-   This document is meant to be continuously updated, receiving periodic
-   updates to incorporate emerging Post-Quantum Cryptography (PQC)
-   migration use cases, with a focus on the migration from traditional
-   signature algorithms (RSA, DSA, ECDSA) to PQC signature algorithms
-   (LMS, XMSS, ML-DSA, SLH-DSA).  This document aims at categorizing
-   real-world scenarios based on a select set of distinctive features.
-   The primary goal is to facilitate discussions on migration strategies
-   by offering a systematic taxonomy and a shared understanding among
-   the parties involved.
+   This document is meant to be continuously updated, to incorporate
+   emerging Post-Quantum Cryptography (PQC) migration use cases, with a
+   focus on the migration from traditional signature algorithms (e.g.,
+   RSA, DSA, ECDSA) to PQC signature algorithms (e.g., LMS, XMSS, ML-
+   DSA, SLH-DSA).  This document aims at categorizing real-world
+   scenarios based on a set of distinctive features.  The primary goal
+   is to facilitate discussions on migration strategies by offering a
+   systematic taxonomy and a shared understanding among stakeholders.
 
 About This Document
 
@@ -59,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 August 2024.
+   This Internet-Draft will expire on 2 September 2024.
 
 Copyright Notice
 
@@ -117,20 +116,20 @@ Table of Contents
    groups at the IETF, a variety of strategies are under discussion,
    gradually finding their way into RFCs.  Clearly, there is no silver
    bullet, making it difficult to select the most suitable approach for
-   any given use case.
+   any given use cases.
 
    For example:
 
    *  An Original Equipment Manufacturer (OEM) must issue its products
       today with a manufacturer X.509 certificates that might be used at
       any time during their lifespan.  These certificates will
-      eventually be utilized to enroll in a domain PKI.  The choice of
-      algorithms and the type of hybrid cryptography to support become
-      quite critical.
+      eventually be utilized to enroll in a domain PKI (Public Key
+      Infrastructure).  The choice of algorithms and the type of hybrid
+      cryptography to support become critical.
 
-   *  A public PKI is must start today preparing its CAs for issuing S/
-      MIME certificates, necessitating the inclusion of hybrid
-      capabilities.  The question arises: which path should be pursued?
+   *  A public PKI must start preparing its CAs today for issuing S/MIME
+      certificates, necessitating the inclusion of hybrid capabilities.
+      The question arises: which path should be pursued?
 
    In this document, intended to be a dynamic resource, our main
    objective is to compile a list of digital signature use cases and
@@ -139,10 +138,10 @@ Table of Contents
    they include a negotiated protocol, or if backward compatibility is
    required.
 
-   We also explore the migration strategies that have appeard so far,
+   We also explore the migration strategies that have appeared so far,
    proposing the most suitable fit for each of the properties identified
-   in each use case.  Some of these migration stategies make use of
-   hybrid cryptography, i.e., use both tranditional and post-quantum
+   in each use case.  Some of these migration strategies make use of
+   hybrid cryptography, i.e., use both traditional and post-quantum
    cryptography.  There are several concepts for hybrid cryptography.
 
    The motivation to take into account hybrid cryptography during the
@@ -278,7 +277,7 @@ Table of Contents
    is propagated throughout the entire ecosystem.  Additionally, when
    dealing with post-quantum Trust Anchors, an extra layer of complexity
    arises as the desired underlying cryptography may not yet be
-   supported by the target device or software.
+   supported by the target platform.
 
    There are two common variations of this use case.
 
@@ -286,13 +285,13 @@ Table of Contents
       are typically injected into target devices during the
       manufacturing phase.  To bootstrap a Trust Anchor, the device is
       placed in a physically secure environment accessible only to
-      trustworthy personnel.  This injection can occur during
-      manufacturing or when a device is being resold.  It is important
-      to note that some devices might not support updating the Trust
-      Anchor in the field, requiring the return of the device to the OEM
-      for post-quantum Trust Anchor injection or, in some cases, it may
-      be even not supported at all, because, for example, the Trust
-      Anchor is burnt onto the device at manufacturing time.
+      trusted personnel.  This injection can occur during manufacturing
+      or when a device is being resold.  It is important to note that
+      some devices might not support updating the Trust Anchor in the
+      field, requiring the return of the device to the OEM for post-
+      quantum Trust Anchor injection or, in some cases, it may be even
+      not supported at all, because, for example, the Trust Anchor is
+      burnt onto the device at manufacturing time.
 
    *  Injection via software and firmware updates: for devices where the
       Trust Anchor is not burned onto the device, for example in less
@@ -323,10 +322,10 @@ Table of Contents
    encryption of documents, ensuring confidentiality and integrity.  It
    is a key component in secure messaging protocols, contributing to the
    confidentiality, integrity, and authenticity of communication over
-   networks.  One of CMS's notable features is flexibility, allowing the
-   choice of cryptographic algorithms based on specific security
-   requirements.  An important consideration to be made is the non-
-   uniform adoption and potential challenges in implementing CMS,
+   networks.  One of the notable features of CMS is flexibility,
+   allowing the choice of cryptographic algorithms based on specific
+   security requirements.  An important consideration to be made is the
+   non-uniform adoption and potential challenges in implementing CMS,
    particularly in the context of email clients.  Varying levels of
    maturity and maintenance among email clients will slow down the
    adoption of post-quantum algorithms, which will not be uniform across
@@ -335,7 +334,7 @@ Table of Contents
    It is worth noting that, similarly to CMS, JOSE and (JSON Object
    Signing and Encryption) and COSE (CBOR Object Signing and Encryption)
    are data structures used to support signing and encryption of data,
-   respectively, in JSON and CBOR format.  Therefore several
+   respectively, in JSON and CBOR format.  Therefore, several
    considerations that are applicable for CMS will extend to JOSE and
    COSE as well.
 
@@ -787,7 +786,7 @@ A.1.  Lifetime
 
 A.2.  Protocol
 
-   Cryptographic protocols can be diveded in Active Negotiation (real-
+   Cryptographic protocols can be divided in Active Negotiation (real-
    time cryptography), Passive Negotiation (asynchronous cryptography),
    and Non Agile (no graceful migration).
 
