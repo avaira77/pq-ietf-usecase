@@ -155,8 +155,15 @@ informative:
     title: >
       Hybrid Post-quantum Signatures in Hardware Security Keys
     author:
-	  name: Diana Ghinea
-	  ins: D. Ghinea et al.
+      - name: Diana Ghinea
+      - name: Fabian Kaczmarczyck
+      - name: Jennifer Pullman
+      - name: Julien Cretin
+      - name: Stefan Koebl
+      - name: Rafael Misoczki
+      - name: Jean-Michel Picod
+      - name: Luca Invernizzi
+      - name: Elie Bursztein
     date: 2023
   NIST.FIPS.204:
     target: https://csrc.nist.gov/pubs/fips/204/ipd
@@ -198,8 +205,9 @@ informative:
     title: >
       Towards a maturity model for crypto-agility assessment
     author:
-      name: Julian Hohm
-	  ins: J. Hohm et al.
+      - name: Julian Hohm
+      - name: Andreas Heinemann
+      - name: Alexander Wiesmaier
     date: 2022
 
 --- abstract
