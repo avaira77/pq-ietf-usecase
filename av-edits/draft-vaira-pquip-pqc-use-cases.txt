@@ -5,11 +5,11 @@
 Post-Quantum Use In Protocols                                   A. Vaira
 Internet-Draft                                              H. Brockhaus
 Intended status: Informational                                A. Railean
-Expires: 2 September 2024                                        Siemens
+Expires: 5 September 2024                                        Siemens
                                                                  J. Gray
                                                             M. Ounsworth
                                                                  Entrust
-                                                            1 March 2024
+                                                            4 March 2024
 
 
              Post-quantum cryptography migration use cases
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 September 2024.
+   This Internet-Draft will expire on 5 September 2024.
 
 Copyright Notice
 
@@ -726,6 +726,13 @@ Table of Contents
               Publications/Brochure/quantum-safe-
               cryptography.pdf?__blob=publicationFile&v=4>.
 
+   [entrust.composite-pki]
+              Entrust, "Entrust introduces first commerically available
+              post quantum ready pki platform", 2024,
+              <https://www.entrust.com/newsroom/press-releases/2024/
+              entrust-introduces-first-commercially-available-post-
+              quantum-ready-pki-platform>.
+
    [CNSA2-0]  National Security Agency (NSA), "Announcing the Commercial
               National Security Algorithm Suite 2.0", 2022,
               <https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/
@@ -848,13 +855,24 @@ A.3.  Backward compatibility
 Appendix B.  Composite Signature individual and organization position
              statements
 
-   1.  BSI - Stavros Kousidis: "from a strategic point of view we don’t
-       want to replace our current RSA algorithm with standalone
-       Dilithium since: If Dilithium does not withstand cryptanalysis in
-       the future then all our efforts are for nothing.  With a
-       composite signature Dilithium+ECDSA in AND-mode we can buy
+   1.  BSI - The document [bsi.quantum-safe.crypto] recommends requiring
+       that PQC lattice schemes only be used within a PQ/T hybrid.  More
+       specifically this document includes the following recommendation:
+
+       "Therefore, quantum computer-resistant methods should not be used
+       alone - at least in a transitional period - but only in hybrid
+       mode, i.e. in combination with a classical method.  For this
+       purpose, protocols must be modified or supplemented accordingly.
+       In addition, public key infrastructures, for example, must also
+       be adapted"
+
+       Also Stavros Kousidis from BSI says: "from a strategic point of
+       view we don’t want to replace our current RSA algorithm with
+       standalone Dilithium since: If Dilithium does not withstand
+       cryptanalysis in the future then all our efforts are for nothing.
+       With a composite signature Dilithium+ECDSA in AND-mode we can buy
        ourselves some time in case the Dilithium security guarantees do
-       not withstand future cryptanalysis."  TODO: add reference
+       not withstand future cryptanalysis."
 
    2.  Google: according to [Google.Sec.Blog]: "Relying on a hybrid
        signature is critical as the security of Dilithium and other
@@ -877,8 +895,13 @@ Appendix B.  Composite Signature individual and organization position
        and which algorithms to migrate to, is not so clear.  Even after
        the migration period, it may be advantageous for an entity's
        cryptographic identity to be composed of multiple public-key
-       algorithms.  Entrust will support composite signatures in PKI
-       infrastructure.  TODO: add reference
+       algorithms.  In 2024 Entrust added support for composite
+       signatures in PKI infrastructure ([entrust.composite-pki]):
+
+       "With this launch, the company’s cloud-based PKI as a Service
+       offering now can provide both composite and pure quantum-safe
+       certificate authority hierarchies, enabling customers to test or
+       implement quantum-safe scenarios and infrastructure."
 
    4.  Robert Hulshof: "The rationale behind combined keys is that I can
        see an important use-case for very sensitive data (government,
@@ -892,7 +915,7 @@ Appendix B.  Composite Signature individual and organization position
        somewhere in the range of 0.1% – 1%. If I were the government/
        bank etc.  I would not like to have a 1% risk that all my secrets
        get exposed.  Adding one or two more PQ algorithms would reduce
-       that probability to 1 in a million or 1 in a Billion would be
+       that probability to 1 in 5 million or 1 in a Billion would be
        much more acceptable."  TODO:add reference
 
    5.  MTG - Falko Strenzke: "Without hybrid signatures, a decision to
