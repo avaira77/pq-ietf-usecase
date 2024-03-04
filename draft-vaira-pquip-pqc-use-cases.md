@@ -218,17 +218,17 @@ This document is meant to be continuously updated, to incorporate emerging Post-
 
 # Introduction
 
-How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. Clearly, there is no silver bullet, making it difficult to select the most suitable approach for any given use cases.
+How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. The existence of multiple choices makes it more difficult to select the most suitable approach for any given use case.
 
 For example:
 
-- An Original Equipment Manufacturer (OEM) must issue its products today with a manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI (Public Key Infrastructure). The choice of algorithms and the type of hybrid cryptography to support become critical.
+- An Original Equipment Manufacturer (OEM) must issue its products today with manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI (Public Key Infrastructure). The choice of algorithms and the type of hybrid cryptography to support become critical.
 
-- A public PKI must start preparing its CAs today for issuing S/MIME certificates, necessitating the inclusion of hybrid capabilities. The question arises: which path should be pursued?
+- A PKI must start preparing its CAs today for issuing S/MIME certificates, necessitating the inclusion of hybrid capabilities. The question arises: which path should be pursued?
 
 In this document, intended to be a dynamic resource, our main objective is to compile a list of digital signature use cases and categorize them based on prominent features. Examples include distinguishing between long-lived and short-lived scenarios, whether they include a negotiated protocol, or if backward compatibility is required.
 
-We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration strategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography. There are several concepts for hybrid cryptography.
+We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration strategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography. <!-- There are several concepts for hybrid cryptography. -->
 
 The motivation to take into account hybrid cryptography during the migration phase arises from the requirement of having long-lived assertions, i.e., digital signatures that require long term validation, as well as the uncertainty surrounding the longevity of traditional cryptographic methods and lack of complete trust in emerging PQC algorithms.
 
@@ -260,15 +260,15 @@ Backward compatibility: Limited.
 
 ## Software and Firmware update
 
-Secure firmware updates are crucial for ensuring long-term security of the device, especially in industrial, and critical infrastructure fields, where devices can stay active for decades. Such updates encompass tasks like introducing new trust anchors and upgrading cryptographic algorithm capabilities. However, upgrading every device's security capabilities isn't always feasible due to resource, accessibility, and cost constraints. Some "simple" devices may not support secure firmware updates at all.
+Secure firmware updates are crucial for ensuring long-term security of the device, especially in industrial, and critical infrastructure fields, where devices can stay active for decades. Such updates encompass tasks like introducing new trust anchors and upgrading cryptographic algorithm capabilities. However, upgrading every device's security capabilities isn't always feasible due to resource, accessibility, and cost constraints. Some devices may not support secure firmware updates at all.
 
 Firmware updates are typically authenticated by the Original Equipment Manufacturer (OEM) by means of a digital signing process. An update is distributed to target devices, which will validate its signature against a Trust Anchor (TA). The TA can be an X.509 certificate, a public key, or a hash of a combination of both, depending on the OEM's security measures.
 
 These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifespan in mind, often spanning several decades. Notable examples of such devices encompass:
 
-- Vehicles - scale of deployment or vehicle recall difficulties
-- Satellites - no 'on-site' service reasonably possible
-- Servers and network devices - air-gapped, locked-down DCs, geographically distributed
+- Vehicles - scale of deployment or vehicle recall difficulties.
+- Satellites - no 'on-site' service reasonably possible.
+- Servers and network devices - air-gapped, locked-down DCs, geographically distributed.
 - Government infrastructure - power grids, nuclear power station equipment, etc.
 - Smart meters - device owned by the utility company, deployed in private homes.
 - Smart cards – used for authenticating to workstations and buildings, or electronic document signing.
@@ -334,9 +334,7 @@ TODO
 
 ## Additional use cases
 
-Future work:
-
-- add post-quantum relevant use cases which cover additional aspects, such as FAA airworthiness certifications, medical records, etc.
+Future updates of this document may include use cases which cover additional aspects, such as FAA airworthiness certifications, medical records, etc.
 
 # Post-quantum Migration Strategies for Signing
 
