@@ -916,7 +916,7 @@ Appendix B.  Composite Signature individual and organization position
        bank etc.  I would not like to have a 1% risk that all my secrets
        get exposed.  Adding one or two more PQ algorithms would reduce
        that probability to 1 in 5 million or 1 in a Billion would be
-       much more acceptable."  TODO:add reference
+       much more acceptable."
 
    5.  MTG - Falko Strenzke: "Without hybrid signatures, a decision to
        move away from traditional signatures to Dilithium (or other non-
@@ -940,11 +940,10 @@ Appendix B.  Composite Signature individual and organization position
 
        6.  and elsewhere stick to traditional schemes as long as
            possible, thus effectively delaying the migration to PQC."
-           TODO: add reference
 
    6.  Transmute - Orie Steele: "There are use cases for long lived
        verifiable credentials, and attribute cert like stuff we work on
-       in supply chain, with DHS / CBP."  TODO: add reference
+       in supply chain, with DHS / CBP."
 
    7.  CRYSTALS-Dilithium design team states in [Dilithium.des.team]
        that: “For users who are interested in using Dilithium, we
