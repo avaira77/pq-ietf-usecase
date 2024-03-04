@@ -5,11 +5,11 @@
 Post-Quantum Use In Protocols                                   A. Vaira
 Internet-Draft                                              H. Brockhaus
 Intended status: Informational                                A. Railean
-Expires: 2 September 2024                                        Siemens
+Expires: 5 September 2024                                        Siemens
                                                                  J. Gray
                                                             M. Ounsworth
                                                                  Entrust
-                                                            1 March 2024
+                                                            4 March 2024
 
 
              Post-quantum cryptography migration use cases
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 September 2024.
+   This Internet-Draft will expire on 5 September 2024.
 
 Copyright Notice
 
@@ -112,20 +112,20 @@ Table of Contents
    How to transition to post-quantum cryptography is a question likely
    to stay with us for a considerable period.  Within several working
    groups at the IETF, a variety of strategies are under discussion,
-   gradually finding their way into RFCs.  Clearly, there is no silver
-   bullet, making it difficult to select the most suitable approach for
-   any given use cases.
+   gradually finding their way into RFCs.  The existence of multiple
+   choices makes it more difficult to select the most suitable approach
+   for any given use case.
 
    For example:
 
    *  An Original Equipment Manufacturer (OEM) must issue its products
-      today with a manufacturer X.509 certificates that might be used at
+      today with manufacturer X.509 certificates that might be used at
       any time during their lifespan.  These certificates will
       eventually be utilized to enroll in a domain PKI (Public Key
       Infrastructure).  The choice of algorithms and the type of hybrid
       cryptography to support become critical.
 
-   *  A public PKI must start preparing its CAs today for issuing S/MIME
+   *  A PKI must start preparing its CAs today for issuing S/MIME
       certificates, necessitating the inclusion of hybrid capabilities.
       The question arises: which path should be pursued?
 
@@ -140,7 +140,7 @@ Table of Contents
    proposing the most suitable fit for each of the properties identified
    in each use case.  Some of these migration strategies make use of
    hybrid cryptography, i.e., use both traditional and post-quantum
-   cryptography.  There are several concepts for hybrid cryptography.
+   cryptography.
 
    The motivation to take into account hybrid cryptography during the
    migration phase arises from the requirement of having long-lived
@@ -218,8 +218,8 @@ Table of Contents
    encompass tasks like introducing new trust anchors and upgrading
    cryptographic algorithm capabilities.  However, upgrading every
    device's security capabilities isn't always feasible due to resource,
-   accessibility, and cost constraints.  Some "simple" devices may not
-   support secure firmware updates at all.
+   accessibility, and cost constraints.  Some devices may not support
+   secure firmware updates at all.
 
    Firmware updates are typically authenticated by the Original
    Equipment Manufacturer (OEM) by means of a digital signing process.
@@ -237,12 +237,12 @@ Table of Contents
    are designed with a long operational lifespan in mind, often spanning
    several decades.  Notable examples of such devices encompass:
 
-   *  Vehicles - scale of deployment or vehicle recall difficulties
+   *  Vehicles - scale of deployment or vehicle recall difficulties.
 
-   *  Satellites - no 'on-site' service reasonably possible
+   *  Satellites - no 'on-site' service reasonably possible.
 
    *  Servers and network devices - air-gapped, locked-down DCs,
-      geographically distributed
+      geographically distributed.
 
    *  Government infrastructure - power grids, nuclear power station
       equipment, etc.
@@ -374,11 +374,9 @@ Table of Contents
 
 2.6.  Additional use cases
 
-   Future work:
-
-   *  add post-quantum relevant use cases which cover additional
-      aspects, such as FAA airworthiness certifications, medical
-      records, etc.
+   Future updates of this document may include use cases which cover
+   additional aspects, such as FAA airworthiness certifications, medical
+   records, etc.
 
 3.  Post-quantum Migration Strategies for Signing
 
@@ -726,6 +724,13 @@ Table of Contents
               Publications/Brochure/quantum-safe-
               cryptography.pdf?__blob=publicationFile&v=4>.
 
+   [entrust.composite-pki]
+              Entrust, "Entrust introduces first commerically available
+              post quantum ready pki platform", 2024,
+              <https://www.entrust.com/newsroom/press-releases/2024/
+              entrust-introduces-first-commercially-available-post-
+              quantum-ready-pki-platform>.
+
    [CNSA2-0]  National Security Agency (NSA), "Announcing the Commercial
               National Security Algorithm Suite 2.0", 2022,
               <https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/
@@ -742,8 +747,10 @@ Table of Contents
               resilient-security-keys.html?m=1>.
 
    [Hybrid.pqc.sig.hsk]
-              al., G. D. et., "Hybrid Post-quantum Signatures in
-              Hardware Security Keys", 2023,
+              Ghinea, D., Kaczmarczyck, F., Pullman, J., Cretin, J.,
+              Koebl, S., Misoczki, R., Picod, J.-M., Invernizzi, L., and
+              E. Bursztein, "Hybrid Post-quantum Signatures in Hardware
+              Security Keys", 2023,
               <https://doi.org/10.1007/978-3-031-41181-6_26>.
 
    [NIST.FIPS.204]
@@ -770,8 +777,8 @@ Table of Contents
               Public-key and attribute certificate frameworks",
               ITU-T Recommendation X.509, 2019.
 
-   [CAMM]     al., H. J. et., "Towards a maturity model for crypto-
-              agility assessment", 2022,
+   [CAMM]     Hohm, J., Heinemann, A., and A. Wiesmaier, "Towards a
+              maturity model for crypto-agility assessment", 2022,
               <http://arxiv.org/abs/2202.07645>.
 
 Appendix A.  Post-Quantum Migration Properties
@@ -848,13 +855,24 @@ A.3.  Backward compatibility
 Appendix B.  Composite Signature individual and organization position
              statements
 
-   1.  BSI - Stavros Kousidis: "from a strategic point of view we don’t
-       want to replace our current RSA algorithm with standalone
-       Dilithium since: If Dilithium does not withstand cryptanalysis in
-       the future then all our efforts are for nothing.  With a
-       composite signature Dilithium+ECDSA in AND-mode we can buy
+   1.  BSI - The document [bsi.quantum-safe.crypto] recommends requiring
+       that PQC lattice schemes only be used within a PQ/T hybrid.  More
+       specifically this document includes the following recommendation:
+
+       "Therefore, quantum computer-resistant methods should not be used
+       alone - at least in a transitional period - but only in hybrid
+       mode, i.e. in combination with a classical method.  For this
+       purpose, protocols must be modified or supplemented accordingly.
+       In addition, public key infrastructures, for example, must also
+       be adapted"
+
+       Also Stavros Kousidis from BSI says: "from a strategic point of
+       view we don’t want to replace our current RSA algorithm with
+       standalone Dilithium since: If Dilithium does not withstand
+       cryptanalysis in the future then all our efforts are for nothing.
+       With a composite signature Dilithium+ECDSA in AND-mode we can buy
        ourselves some time in case the Dilithium security guarantees do
-       not withstand future cryptanalysis."  TODO: add reference
+       not withstand future cryptanalysis."
 
    2.  Google: according to [Google.Sec.Blog]: "Relying on a hybrid
        signature is critical as the security of Dilithium and other
@@ -877,8 +895,13 @@ Appendix B.  Composite Signature individual and organization position
        and which algorithms to migrate to, is not so clear.  Even after
        the migration period, it may be advantageous for an entity's
        cryptographic identity to be composed of multiple public-key
-       algorithms.  Entrust will support composite signatures in PKI
-       infrastructure.  TODO: add reference
+       algorithms.  In 2024 Entrust added support for composite
+       signatures in PKI infrastructure ([entrust.composite-pki]):
+
+       "With this launch, the company’s cloud-based PKI as a Service
+       offering now can provide both composite and pure quantum-safe
+       certificate authority hierarchies, enabling customers to test or
+       implement quantum-safe scenarios and infrastructure."
 
    4.  Robert Hulshof: "The rationale behind combined keys is that I can
        see an important use-case for very sensitive data (government,
@@ -892,8 +915,8 @@ Appendix B.  Composite Signature individual and organization position
        somewhere in the range of 0.1% – 1%. If I were the government/
        bank etc.  I would not like to have a 1% risk that all my secrets
        get exposed.  Adding one or two more PQ algorithms would reduce
-       that probability to 1 in a million or 1 in a Billion would be
-       much more acceptable."  TODO:add reference
+       that probability to 1 in 5 million or 1 in a Billion would be
+       much more acceptable."
 
    5.  MTG - Falko Strenzke: "Without hybrid signatures, a decision to
        move away from traditional signatures to Dilithium (or other non-
@@ -917,11 +940,10 @@ Appendix B.  Composite Signature individual and organization position
 
        6.  and elsewhere stick to traditional schemes as long as
            possible, thus effectively delaying the migration to PQC."
-           TODO: add reference
 
    6.  Transmute - Orie Steele: "There are use cases for long lived
        verifiable credentials, and attribute cert like stuff we work on
-       in supply chain, with DHS / CBP."  TODO: add reference
+       in supply chain, with DHS / CBP."
 
    7.  CRYSTALS-Dilithium design team states in [Dilithium.des.team]
        that: “For users who are interested in using Dilithium, we
@@ -968,7 +990,7 @@ Acknowledgements
    This draft would not be possible without the support of a great
    number of contributors.  We thank Stavros Kousidis, Robert Hulshof,
    Falko Strenzke and Orie Steele for allowing us to use their
-   statements regarding composite signatures.  TODO
+   statements regarding composite signatures.
 
 Authors' Addresses
 

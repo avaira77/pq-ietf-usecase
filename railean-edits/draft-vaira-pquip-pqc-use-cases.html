@@ -13,13 +13,13 @@
 <meta content="
        This document is meant to be continuously updated, to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (e.g., RSA, DSA, ECDSA) to PQC signature algorithms (e.g., LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among stakeholders. 
     " name="description">
-<meta content="xml2rfc 3.19.4" name="generator">
+<meta content="xml2rfc 3.20.0" name="generator">
 <meta content="post-quantum cryptography" name="keyword">
 <meta content="PQC use cases" name="keyword">
 <meta content="draft-vaira-pquip-pqc-use-cases-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.19.4
-    Python 3.11.6
+  xml2rfc 3.20.0
+    Python 3.11.8
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
@@ -1034,7 +1034,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Vaira, et al.</td>
-<td class="center">Expires 2 September 2024</td>
+<td class="center">Expires 5 September 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1047,12 +1047,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-vaira-pquip-pqc-use-cases-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-03-01" class="published">1 March 2024</time>
+<time datetime="2024-03-04" class="published">4 March 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-09-02">2 September 2024</time></dd>
+<dd class="expires"><time datetime="2024-09-05">5 September 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1118,7 +1118,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 2 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 5 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1253,18 +1253,18 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. Clearly, there is no silver bullet, making it difficult to select the most suitable approach for any given use cases.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. The existence of multiple choices makes it more difficult to select the most suitable approach for any given use case.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">For example:<a href="#section-1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-3.1">
-          <p id="section-1-3.1.1">An Original Equipment Manufacturer (OEM) must issue its products today with a manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI (Public Key Infrastructure). The choice of algorithms and the type of hybrid cryptography to support become critical.<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
+          <p id="section-1-3.1.1">An Original Equipment Manufacturer (OEM) must issue its products today with manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI (Public Key Infrastructure). The choice of algorithms and the type of hybrid cryptography to support become critical.<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-3.2">
-          <p id="section-1-3.2.1">A public PKI must start preparing its CAs today for issuing S/MIME certificates, necessitating the inclusion of hybrid capabilities. The question arises: which path should be pursued?<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-1-3.2.1">A PKI must start preparing its CAs today for issuing S/MIME certificates, necessitating the inclusion of hybrid capabilities. The question arises: which path should be pursued?<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-1-4">In this document, intended to be a dynamic resource, our main objective is to compile a list of digital signature use cases and categorize them based on prominent features. Examples include distinguishing between long-lived and short-lived scenarios, whether they include a negotiated protocol, or if backward compatibility is required.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration strategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography. There are several concepts for hybrid cryptography.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-5">We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration strategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">The motivation to take into account hybrid cryptography during the migration phase arises from the requirement of having long-lived assertions, i.e., digital signatures that require long term validation, as well as the uncertainty surrounding the longevity of traditional cryptographic methods and lack of complete trust in emerging PQC algorithms.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">An additional factor to consider is represented by the requirements coming from regulatory bodies, which, in several cases will differ among legislations, in regard to post-quantum algorithms and acceptable migration strategies. For example <span>[<a href="#bsi.quantum-safe.crypto" class="cite xref">bsi.quantum-safe.crypto</a>]</span>, recommends the incorporation of post-quantum cryptographic algorithms within hybrid cryptographic schemes, as a proactive response to the quantum threat. On the contrary, <span>[<a href="#CNSA2-0" class="cite xref">CNSA2-0</a>]</span> recommends specific post-quantum cryptographic algorithms for each use case.<a href="#section-1-7" class="pilcrow">¶</a></p>
 <div id="requirements-language">
@@ -1305,18 +1305,18 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
         <h3 id="name-software-and-firmware-updat">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-software-and-firmware-updat" class="section-name selfRef">Software and Firmware update</a>
         </h3>
-<p id="section-2.2-1">Secure firmware updates are crucial for ensuring long-term security of the device, especially in industrial, and critical infrastructure fields, where devices can stay active for decades. Such updates encompass tasks like introducing new trust anchors and upgrading cryptographic algorithm capabilities. However, upgrading every device's security capabilities isn't always feasible due to resource, accessibility, and cost constraints. Some "simple" devices may not support secure firmware updates at all.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-1">Secure firmware updates are crucial for ensuring long-term security of the device, especially in industrial, and critical infrastructure fields, where devices can stay active for decades. Such updates encompass tasks like introducing new trust anchors and upgrading cryptographic algorithm capabilities. However, upgrading every device's security capabilities isn't always feasible due to resource, accessibility, and cost constraints. Some devices may not support secure firmware updates at all.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">Firmware updates are typically authenticated by the Original Equipment Manufacturer (OEM) by means of a digital signing process. An update is distributed to target devices, which will validate its signature against a Trust Anchor (TA). The TA can be an X.509 certificate, a public key, or a hash of a combination of both, depending on the OEM's security measures.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifespan in mind, often spanning several decades. Notable examples of such devices encompass:<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.2-4.1">
-            <p id="section-2.2-4.1.1">Vehicles - scale of deployment or vehicle recall difficulties<a href="#section-2.2-4.1.1" class="pilcrow">¶</a></p>
+            <p id="section-2.2-4.1.1">Vehicles - scale of deployment or vehicle recall difficulties.<a href="#section-2.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.2-4.2">
-            <p id="section-2.2-4.2.1">Satellites - no 'on-site' service reasonably possible<a href="#section-2.2-4.2.1" class="pilcrow">¶</a></p>
+            <p id="section-2.2-4.2.1">Satellites - no 'on-site' service reasonably possible.<a href="#section-2.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.2-4.3">
-            <p id="section-2.2-4.3.1">Servers and network devices - air-gapped, locked-down DCs, geographically distributed<a href="#section-2.2-4.3.1" class="pilcrow">¶</a></p>
+            <p id="section-2.2-4.3.1">Servers and network devices - air-gapped, locked-down DCs, geographically distributed.<a href="#section-2.2-4.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.2-4.4">
             <p id="section-2.2-4.4.1">Government infrastructure - power grids, nuclear power station equipment, etc.<a href="#section-2.2-4.4.1" class="pilcrow">¶</a></p>
@@ -1396,12 +1396,7 @@ Timestamps, are particularly important in the following scenarios.<a href="#sect
         <h3 id="name-additional-use-cases">
 <a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-additional-use-cases" class="section-name selfRef">Additional use cases</a>
         </h3>
-<p id="section-2.6-1">Future work:<a href="#section-2.6-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-2.6-2.1">
-            <p id="section-2.6-2.1.1">add post-quantum relevant use cases which cover additional aspects, such as FAA airworthiness certifications, medical records, etc.<a href="#section-2.6-2.1.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
+<p id="section-2.6-1">Future updates of this document may include use cases which cover additional aspects, such as FAA airworthiness certifications, medical records, etc.<a href="#section-2.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1677,6 +1672,10 @@ Another aspect worth considering is that, without solutions for hardware securit
         <dd>
 <span class="refAuthor">Bundesamt fuer Sicherheit in der Informationstechnik</span>, <span class="refTitle">"Quantum-safe cryptography – fundamentals, current developments and recommendations"</span>, <span class="seriesInfo">BSI Recommendations for action by the BSI</span>, <time datetime="2021" class="refDate">2021</time>, <span>&lt;<a href="https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/Brochure/quantum-safe-cryptography.pdf?__blob=publicationFile&amp;v=4">https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/Brochure/quantum-safe-cryptography.pdf?__blob=publicationFile&amp;v=4</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="entrust.composite-pki">[entrust.composite-pki]</dt>
+        <dd>
+<span class="refAuthor">Entrust</span>, <span class="refTitle">"Entrust introduces first commerically available post quantum ready pki platform"</span>, <time datetime="2024" class="refDate">2024</time>, <span>&lt;<a href="https://www.entrust.com/newsroom/press-releases/2024/entrust-introduces-first-commercially-available-post-quantum-ready-pki-platform">https://www.entrust.com/newsroom/press-releases/2024/entrust-introduces-first-commercially-available-post-quantum-ready-pki-platform</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="CNSA2-0">[CNSA2-0]</dt>
         <dd>
 <span class="refAuthor">National Security Agency (NSA)</span>, <span class="refTitle">"Announcing the Commercial National Security Algorithm Suite 2.0"</span>, <time datetime="2022" class="refDate">2022</time>, <span>&lt;<a href="https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF">https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF</a>&gt;</span>. </dd>
@@ -1691,7 +1690,7 @@ Another aspect worth considering is that, without solutions for hardware securit
 <dd class="break"></dd>
 <dt id="Hybrid.pqc.sig.hsk">[Hybrid.pqc.sig.hsk]</dt>
         <dd>
-<span class="refAuthor">al., G. D. et.</span>, <span class="refTitle">"Hybrid Post-quantum Signatures in Hardware Security Keys"</span>, <time datetime="2023" class="refDate">2023</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-031-41181-6_26">https://doi.org/10.1007/978-3-031-41181-6_26</a>&gt;</span>. </dd>
+<span class="refAuthor">Ghinea, D.</span>, <span class="refAuthor">Kaczmarczyck, F.</span>, <span class="refAuthor">Pullman, J.</span>, <span class="refAuthor">Cretin, J.</span>, <span class="refAuthor">Koebl, S.</span>, <span class="refAuthor">Misoczki, R.</span>, <span class="refAuthor">Picod, J.-M.</span>, <span class="refAuthor">Invernizzi, L.</span>, and <span class="refAuthor">E. Bursztein</span>, <span class="refTitle">"Hybrid Post-quantum Signatures in Hardware Security Keys"</span>, <time datetime="2023" class="refDate">2023</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-031-41181-6_26">https://doi.org/10.1007/978-3-031-41181-6_26</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="NIST.FIPS.204">[NIST.FIPS.204]</dt>
         <dd>
@@ -1711,7 +1710,7 @@ Another aspect worth considering is that, without solutions for hardware securit
 <dd class="break"></dd>
 <dt id="CAMM">[CAMM]</dt>
       <dd>
-<span class="refAuthor">al., H. J. et.</span>, <span class="refTitle">"Towards a maturity model for crypto-agility assessment"</span>, <time datetime="2022" class="refDate">2022</time>, <span>&lt;<a href="http://arxiv.org/abs/2202.07645">http://arxiv.org/abs/2202.07645</a>&gt;</span>. </dd>
+<span class="refAuthor">Hohm, J.</span>, <span class="refAuthor">Heinemann, A.</span>, and <span class="refAuthor">A. Wiesmaier</span>, <span class="refTitle">"Towards a maturity model for crypto-agility assessment"</span>, <time datetime="2022" class="refDate">2022</time>, <span>&lt;<a href="http://arxiv.org/abs/2202.07645">http://arxiv.org/abs/2202.07645</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1786,22 +1785,25 @@ Another aspect worth considering is that, without solutions for hardware securit
       </h2>
 <ol start="1" type="1" class="normal type-1" id="appendix-B-1">
 <li id="appendix-B-1.1">
-          <p id="appendix-B-1.1.1">BSI - Stavros Kousidis: "from a strategic point of view we don’t want to replace our current RSA algorithm with standalone Dilithium since: If Dilithium does not withstand cryptanalysis in the future then all our efforts are for nothing. With a composite signature Dilithium+ECDSA in AND-mode we can buy ourselves some time in case the Dilithium security guarantees do not withstand future cryptanalysis."
-TODO: add reference<a href="#appendix-B-1.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-1.1.1">BSI - The document <span>[<a href="#bsi.quantum-safe.crypto" class="cite xref">bsi.quantum-safe.crypto</a>]</span> recommends requiring that PQC lattice schemes only be used within a PQ/T hybrid.  More specifically this document includes the following recommendation:<a href="#appendix-B-1.1.1" class="pilcrow">¶</a></p>
+<p id="appendix-B-1.1.2">
+"Therefore, quantum computer-resistant methods should not be used alone - at least in a transitional period - but only in hybrid mode, i.e. in combination with a classical method. For this purpose, protocols must be modified or supplemented accordingly. In addition, public key infrastructures, for example, must also be adapted"<a href="#appendix-B-1.1.2" class="pilcrow">¶</a></p>
+<p id="appendix-B-1.1.3">
+Also Stavros Kousidis from BSI says: "from a strategic point of view we don’t want to replace our current RSA algorithm with standalone Dilithium since: If Dilithium does not withstand cryptanalysis in the future then all our efforts are for nothing. With a composite signature Dilithium+ECDSA in AND-mode we can buy ourselves some time in case the Dilithium security guarantees do not withstand future cryptanalysis."<a href="#appendix-B-1.1.3" class="pilcrow">¶</a></p>
 </li>
         <li id="appendix-B-1.2">
           <p id="appendix-B-1.2.1">Google: according to <span>[<a href="#Google.Sec.Blog" class="cite xref">Google.Sec.Blog</a>]</span>: "Relying on a hybrid signature is critical as the security of Dilithium and other recently standardized quantum resistant algorithms haven’t yet stood the test of time and recent attacks on Rainbow (another quantum resilient algorithm) demonstrate the need for caution. This cautiousness is particularly warranted for security keys as most can’t be upgraded – although we are working toward it for OpenSK. The hybrid approach is also used in other post-quantum efforts like Chrome’s support for TLS".<a href="#appendix-B-1.2.1" class="pilcrow">¶</a></p>
 </li>
         <li id="appendix-B-1.3">
           <p id="appendix-B-1.3.1">Entrust: During the transition to post-quantum cryptography, there will be uncertainty as to the strength of cryptographic algorithms; we will no longer fully trust traditional cryptography such as RSA, Diffie-Hellman, DSA and their elliptic curve variants, but we will also not fully trust their post-quantum replacements until they have had sufficient scrutiny and time to discover and fix implementation bugs. Unlike previous cryptographic algorithm migrations, the choice of when to migrate and which algorithms to migrate to, is not so clear.  Even after the migration period, it may be advantageous for an entity's cryptographic identity to be composed of multiple public-key algorithms.
-Entrust will support composite signatures in PKI infrastructure.
-TODO: add reference<a href="#appendix-B-1.3.1" class="pilcrow">¶</a></p>
+In 2024 Entrust added support for composite signatures in PKI infrastructure (<span>[<a href="#entrust.composite-pki" class="cite xref">entrust.composite-pki</a>]</span>):<a href="#appendix-B-1.3.1" class="pilcrow">¶</a></p>
+<p id="appendix-B-1.3.2">
+"With this launch, the company’s cloud-based PKI as a Service offering now can provide both composite and pure quantum-safe certificate authority hierarchies, enabling customers to test or implement quantum-safe scenarios and infrastructure."<a href="#appendix-B-1.3.2" class="pilcrow">¶</a></p>
 </li>
         <li id="appendix-B-1.4">
           <p id="appendix-B-1.4.1">Robert Hulshof: "The rationale behind combined keys is that I can see an important use-case for very sensitive data (government, financial or other high value data) to combine multiple (PQ) key algorithms, and that this migration to PQ is a good time to start supporting that by default in the crypto libraries.
 Trying to estimate the probability that a NIST standardized Crypto algorithm gets broken in the next 5-10 years is very difficult. However I assume that everybody agrees that this probability is definitely not zero. Personally I would put that probability somewhere in the range of 0.1% – 1%.
-If I were the government/bank etc. I would not like to have a 1% risk that all my secrets get exposed. Adding one or two more PQ algorithms would reduce that probability to 1 in a million or 1 in a Billion would be much more acceptable."
-TODO:add reference<a href="#appendix-B-1.4.1" class="pilcrow">¶</a></p>
+If I were the government/bank etc. I would not like to have a 1% risk that all my secrets get exposed. Adding one or two more PQ algorithms would reduce that probability to 1 in 5 million or 1 in a Billion would be much more acceptable."<a href="#appendix-B-1.4.1" class="pilcrow">¶</a></p>
 </li>
         <li id="appendix-B-1.5">
           <p id="appendix-B-1.5.1">MTG - Falko Strenzke: "Without hybrid signatures, a decision to move away from traditional signatures to Dilithium (or other non-hash-based signatures) has a certain risk to make things worse and I think many decision makers will not be ready to take the responsibility for it until the quantum computer threat becomes imminent. If composite signature is not standardised, non-composite hybrids would be left. This implies protocol changes which will:<a href="#appendix-B-1.5.1" class="pilcrow">¶</a></p>
@@ -1822,14 +1824,12 @@ TODO:add reference<a href="#appendix-B-1.4.1" class="pilcrow">¶</a></p>
               <p id="appendix-B-1.5.2.5.1">use hash-based schemes where possible / affordable<a href="#appendix-B-1.5.2.5.1" class="pilcrow">¶</a></p>
 </li>
             <li id="appendix-B-1.5.2.6">
-              <p id="appendix-B-1.5.2.6.1">and elsewhere stick to traditional schemes as long as possible, thus effectively delaying the migration to PQC."
-TODO: add reference<a href="#appendix-B-1.5.2.6.1" class="pilcrow">¶</a></p>
+              <p id="appendix-B-1.5.2.6.1">and elsewhere stick to traditional schemes as long as possible, thus effectively delaying the migration to PQC."<a href="#appendix-B-1.5.2.6.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
 </li>
         <li id="appendix-B-1.6">
-          <p id="appendix-B-1.6.1">Transmute - Orie Steele: "There are use cases for long lived verifiable credentials, and attribute cert like stuff we work on in supply chain, with DHS / CBP."
-TODO: add reference<a href="#appendix-B-1.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-1.6.1">Transmute - Orie Steele: "There are use cases for long lived verifiable credentials, and attribute cert like stuff we work on in supply chain, with DHS / CBP."<a href="#appendix-B-1.6.1" class="pilcrow">¶</a></p>
 </li>
         <li id="appendix-B-1.7">
           <p id="appendix-B-1.7.1">CRYSTALS-Dilithium design team states in <span>[<a href="#Dilithium.des.team" class="cite xref">Dilithium.des.team</a>]</span> that: “For users who are interested in using Dilithium, we recommend the following: Use Dilithium in a so-called hybrid mode in combination with an established "pre-quantum" signature scheme.”<a href="#appendix-B-1.7.1" class="pilcrow">¶</a></p>
@@ -1865,8 +1865,7 @@ We can now discuss the informal requirements a hybrid scheme H should satisfy:<a
       <h2 id="name-acknowledgements">
 <a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
       </h2>
-<p id="appendix-C-1">This draft would not be possible without the support of a great number of contributors.   We thank Stavros Kousidis, Robert Hulshof, Falko Strenzke and Orie Steele for allowing us to use their statements regarding composite signatures.
-TODO<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+<p id="appendix-C-1">This draft would not be possible without the support of a great number of contributors.   We thank Stavros Kousidis, Robert Hulshof, Falko Strenzke and Orie Steele for allowing us to use their statements regarding composite signatures.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
