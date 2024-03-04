@@ -749,7 +749,7 @@ Table of Contents
               resilient-security-keys.html?m=1>.
 
    [Hybrid.pqc.sig.hsk]
-              al., G. D. et., "Hybrid Post-quantum Signatures in
+              al., D. G. et., "Hybrid Post-quantum Signatures in
               Hardware Security Keys", 2023,
               <https://doi.org/10.1007/978-3-031-41181-6_26>.
 
@@ -777,7 +777,7 @@ Table of Contents
               Public-key and attribute certificate frameworks",
               ITU-T Recommendation X.509, 2019.
 
-   [CAMM]     al., H. J. et., "Towards a maturity model for crypto-
+   [CAMM]     al., J. H. et., "Towards a maturity model for crypto-
               agility assessment", 2022,
               <http://arxiv.org/abs/2202.07645>.
 
