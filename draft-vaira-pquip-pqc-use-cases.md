@@ -155,7 +155,7 @@ informative:
     title: >
       Hybrid Post-quantum Signatures in Hardware Security Keys
     author:
-      name: Ghinea, D. et al.
+      name: Diana Ghinea et al.
     date: 2023
   NIST.FIPS.204:
     target: https://csrc.nist.gov/pubs/fips/204/ipd
@@ -197,7 +197,7 @@ informative:
     title: >
       Towards a maturity model for crypto-agility assessment
     author:
-      name: Hohm, Julian et al.
+      name: Julian Hohm et al.
     date: 2022
 
 
