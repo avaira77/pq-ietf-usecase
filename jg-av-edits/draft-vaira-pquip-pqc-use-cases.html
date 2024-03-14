@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>Post-quantum cryptography migration use cases</title>
+<meta content="Antonio Vaira" name="author">
+<meta content="Hendrik Brockhaus" name="author">
+<meta content="Alexander Railean" name="author">
+<meta content="John Gray" name="author">
+<meta content="Mike Ounsworth" name="author">
+<meta content="
+       This document is meant to be continuously updated, to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (e.g., RSA, DSA, ECDSA) to PQC signature algorithms (e.g., LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among stakeholders. 
+    " name="description">
+<meta content="xml2rfc 3.19.4" name="generator">
+<meta content="post-quantum cryptography" name="keyword">
+<meta content="PQC use cases" name="keyword">
+<meta content="draft-vaira-pquip-pqc-use-cases-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.19.4
+    Python 3.11.6
+    ConfigArgParse 1.7
+    google-i18n-address 3.1.0
+    intervaltree 3.1.0
+    Jinja2 3.1.2
+    lxml 4.9.3
+    platformdirs 4.2.0
+    pycountry 22.3.5
+    PyYAML 6.0.1
+    requests 2.31.0
+    setuptools 68.2.2
+    six 1.16.0
+    wcwidth 0.2.13
+-->
+<link href="draft-vaira-pquip-pqc-use-cases.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+}
+:is(ol, ul) :is(ol, ul) {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  line-height: 1;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+}
+dl.olPercent {
+  --indent: 5ch;
+}
+dl > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+dl.olPercent > dt {
+  min-width: calc(var(--indent) - 2ch);
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:first-child, .break:first-child + *) {
+  margin-top: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:last-child) {
+  margin-bottom: 0;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    overflow-x: auto;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+}
+a.pilcrow[href] { color: var(--pilcrow-weak); }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media not print {
+  :hover > a.pilcrow {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  min-width: var(--identifier-width);
+  clear: left;
+  float: left;
+  text-align: right;
+  margin-right: 1ch;
+}
+#identifiers dd {
+  margin: 0;
+  margin-left: calc(1em + var(--identifier-width)) !important;
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 2px 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+#toc a.xref {
+  white-space: normal;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 10ch;
+  margin-right: 1.5ch;
+}
+.references dt:target::before {
+  content: "⇒";
+  width: 15px;
+  margin: 0 10px 0 -25px;
+}
+.references dd {
+  margin-left: 12ch !important;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul :is(p, li) {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+  .toplink {
+    display: none;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Provide styling for table cell text alignment */
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">PQC use cases</td>
+<td class="right">March 2024</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Vaira, et al.</td>
+<td class="center">Expires 2 September 2024</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Post-Quantum Use In Protocols</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-vaira-pquip-pqc-use-cases-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2024-03-01" class="published">1 March 2024</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2024-09-02">2 September 2024</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">A. Vaira</div>
+<div class="org">Siemens</div>
+</div>
+<div class="author">
+      <div class="author-name">H. Brockhaus</div>
+<div class="org">Siemens</div>
+</div>
+<div class="author">
+      <div class="author-name">A. Railean</div>
+<div class="org">Siemens</div>
+</div>
+<div class="author">
+      <div class="author-name">J. Gray</div>
+<div class="org">Entrust</div>
+</div>
+<div class="author">
+      <div class="author-name">M. Ounsworth</div>
+<div class="org">Entrust</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">Post-quantum cryptography migration use cases</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">This document is meant to be continuously updated, to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (e.g., RSA, DSA, ECDSA) to PQC signature algorithms (e.g., LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among stakeholders.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-about-this-document">
+<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">
+        The latest revision of this draft can be found at <span><a href="https://avaira77.github.io/pq-ietf-usecase/draft-vaira-pquip-pq-use-cases.html">https://avaira77.github.io/pq-ietf-usecase/draft-vaira-pquip-pq-use-cases.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-vaira-pquip-pqc-use-cases/">https://datatracker.ietf.org/doc/draft-vaira-pquip-pqc-use-cases/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">
+        Discussion of this document takes place on the
+        Post-Quantum Use In Protocols Working Group mailing list (<span><a href="mailto:pqc@ietf.org">mailto:pqc@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/pqc/">https://mailarchive.ietf.org/arch/browse/pqc/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/pqc/">https://www.ietf.org/mailman/listinfo/pqc/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/avaira77/pq-ietf-usecase">https://github.com/avaira77/pq-ietf-usecase</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 2 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2024 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-requirements-language" class="internal xref">Requirements Language</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-reference-use-cases" class="internal xref">Reference Use Cases</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-industrial-communication-pr" class="internal xref">Industrial communication protocols</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-software-and-firmware-updat" class="internal xref">Software and Firmware update</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-trust-anchor-deployment" class="internal xref">Trust Anchor deployment</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
+                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="auto internal xref">2.4</a>.  <a href="#name-cms-s-mime" class="internal xref">CMS (S/MIME)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5">
+                <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="auto internal xref">2.5</a>.  <a href="#name-timestamping" class="internal xref">Timestamping</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.6">
+                <p id="section-toc.1-1.2.2.6.1"><a href="#section-2.6" class="auto internal xref">2.6</a>.  <a href="#name-additional-use-cases" class="internal xref">Additional use cases</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-post-quantum-migration-stra" class="internal xref">Post-quantum Migration Strategies for Signing</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-multiple-signatures" class="internal xref">Multiple Signatures</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-composite-signatures" class="internal xref">Composite Signatures</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-employing-stateful-hash-bas" class="internal xref">Employing Stateful Hash-based Signature Schemes</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-employing-stateless-hash-ba" class="internal xref">Employing Stateless Hash-based Signature Schemes</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-employing-module-lattice-ba" class="internal xref">Employing Module-Lattice-Based Digital Signature Schemes</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.6">
+                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="auto internal xref">3.6</a>.  <a href="#name-cryptographic-agility" class="internal xref">Cryptographic Agility</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-map-of-migration-strategies" class="internal xref">Map of Migration Strategies to Reference Use Cases</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-post-quantum-migration-prop" class="internal xref">Post-Quantum Migration Properties</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-lifetime" class="internal xref">Lifetime</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-protocol" class="internal xref">Protocol</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
+                <p id="section-toc.1-1.8.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-backward-compatibility" class="internal xref">Backward compatibility</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-composite-signature-individ" class="internal xref">Composite Signature individual and organization position statements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. Clearly, there is no silver bullet, making it difficult to select the most suitable approach for any given use cases.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">For example:<a href="#section-1-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-3.1">
+          <p id="section-1-3.1.1">An Original Equipment Manufacturer (OEM) must issue its products today with a manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI (Public Key Infrastructure). The choice of algorithms and the type of hybrid cryptography to support become critical.<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-3.2">
+          <p id="section-1-3.2.1">A public PKI must start preparing its CAs today for issuing S/MIME certificates, necessitating the inclusion of hybrid capabilities. The question arises: which path should be pursued?<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-1-4">In this document, intended to be a dynamic resource, our main objective is to compile a list of digital signature use cases and categorize them based on prominent features. Examples include distinguishing between long-lived and short-lived scenarios, whether they include a negotiated protocol, or if backward compatibility is required.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration strategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography. There are several concepts for hybrid cryptography.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">The motivation to take into account hybrid cryptography during the migration phase arises from the requirement of having long-lived assertions, i.e., digital signatures that require long term validation, as well as the uncertainty surrounding the longevity of traditional cryptographic methods and lack of complete trust in emerging PQC algorithms.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">An additional factor to consider is represented by the requirements coming from regulatory bodies, which, in several cases will differ among legislations, in regard to post-quantum algorithms and acceptable migration strategies. For example <span>[<a href="#bsi.quantum-safe.crypto" class="cite xref">bsi.quantum-safe.crypto</a>]</span>, recommends the incorporation of post-quantum cryptographic algorithms within hybrid cryptographic schemes, as a proactive response to the quantum threat. On the contrary, <span>[<a href="#CNSA2-0" class="cite xref">CNSA2-0</a>]</span> recommends specific post-quantum cryptographic algorithms for each use case.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<div id="requirements-language">
+<section id="section-1.1">
+        <h3 id="name-requirements-language">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-requirements-language" class="section-name selfRef">Requirements Language</a>
+        </h3>
+<p id="section-1.1-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
+described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-usecases">
+<section id="section-2">
+      <h2 id="name-reference-use-cases">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-reference-use-cases" class="section-name selfRef">Reference Use Cases</a>
+      </h2>
+<p id="section-2-1">This section is the core of this document. For each use case, we present a concise overview and highlight the features that can help to categorize it. This list is not exhaustive, and if you think we have missed some important use case please consider contributing to it.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<div id="industrial-communication-protocols">
+<section id="section-2.1">
+        <h3 id="name-industrial-communication-pr">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-industrial-communication-pr" class="section-name selfRef">Industrial communication protocols</a>
+        </h3>
+<p id="section-2.1-1">Several industrial communication protocols, traditionally do not use IP network infrastructure, are progressively being updated to make use of standard IP network infrastructure hence rely on standard security mechanisms, like for example TLS 1.3 <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">The protocol 'Building Automation and Control Networks / Secure Connect' (BACnet/SC) <span>[<a href="#ANSI_ASHRAE.Standard.135-2016" class="cite xref">ANSI_ASHRAE.Standard.135-2016</a>]</span> is a good example. BACnet was defined before 1995, when the TCP/IP protocol suite was expensive and not available for smaller devices common in building automation. BACnet/SC proposes a new datalink layer option that makes full use of TLS secured WebSocket connections. This new BACnet/SC datalink layer option uses a virtual hub-and-spoke topology where the spokes are WebSocket connections from the nodes to the hub.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">BACnet/SC's implementation adheres to established industry standards defined in IETF RFCs. Specifically the <span>[<a href="#Addendum.bj.to.ANSI_ASHRAE.Standard.135-2016" class="cite xref">Addendum.bj.to.ANSI_ASHRAE.Standard.135-2016</a>]</span> references to text encoding of PKIX, PKCS, and CMS structures in <span>[<a href="#RFC7468" class="cite xref">RFC7468</a>]</span>, when defining the format in which operational certificates and signing CA should be installed onto the target device at configuration time.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">The security of the BACnet/SC protocol, as well as of similar industrial protocols, relies on TLS 1.3 <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>, therefore implications of post-quantum cryptography have to be considered in both the TLS handshake and in the X.509 certificates used for the authentication.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1-5">Lifetime: Long-lived.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
+<p id="section-2.1-6">Protocol: Active Negotiation.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
+<p id="section-2.1-7">Backward compatibility: Limited.<a href="#section-2.1-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="software-and-firmware-update">
+<section id="section-2.2">
+        <h3 id="name-software-and-firmware-updat">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-software-and-firmware-updat" class="section-name selfRef">Software and Firmware update</a>
+        </h3>
+<p id="section-2.2-1">Secure firmware updates are crucial for ensuring long-term security of the device, especially in industrial, and critical infrastructure fields, where devices can stay active for decades. Such updates encompass tasks like introducing new trust anchors and upgrading cryptographic algorithm capabilities. However, upgrading every device's security capabilities isn't always feasible due to resource, accessibility, and cost constraints. Some "simple" devices may not support secure firmware updates at all.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">Firmware updates are typically authenticated by the Original Equipment Manufacturer (OEM) by means of a digital signing process. An update is distributed to target devices, which will validate its signature against a Trust Anchor (TA). The TA can be an X.509 certificate, a public key, or a hash of a combination of both, depending on the OEM's security measures.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifespan in mind, often spanning several decades. Notable examples of such devices encompass:<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2-4.1">
+            <p id="section-2.2-4.1.1">Vehicles - scale of deployment or vehicle recall difficulties<a href="#section-2.2-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.2-4.2">
+            <p id="section-2.2-4.2.1">Satellites - no 'on-site' service reasonably possible<a href="#section-2.2-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.2-4.3">
+            <p id="section-2.2-4.3.1">Servers and network devices - air-gapped, locked-down DCs, geographically distributed<a href="#section-2.2-4.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.2-4.4">
+            <p id="section-2.2-4.4.1">Government infrastructure - power grids, nuclear power station equipment, etc.<a href="#section-2.2-4.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.2-4.5">
+            <p id="section-2.2-4.5.1">Smart meters - device owned by the utility company, deployed in private homes.<a href="#section-2.2-4.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.2-4.6">
+            <p id="section-2.2-4.6.1">Smart cards – used for authenticating to workstations and buildings, or electronic document signing.<a href="#section-2.2-4.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.2-4.7">
+            <p id="section-2.2-4.7.1">Security Tokens – such as FIDO2, cheap devices that users will typically not patch.<a href="#section-2.2-4.7.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-2.2-5">Lifetime: Long-lived.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
+<p id="section-2.2-6">Protocol: Passive Negotiation.<a href="#section-2.2-6" class="pilcrow">¶</a></p>
+<p id="section-2.2-7">Backward compatibility: Limited.<a href="#section-2.2-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="trust-anchor-deployment">
+<section id="section-2.3">
+        <h3 id="name-trust-anchor-deployment">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-trust-anchor-deployment" class="section-name selfRef">Trust Anchor deployment</a>
+        </h3>
+<p id="section-2.3-1">Trust Anchors, such as X.509 Root CA certificates and raw public keys, must be made accessible before they can be used for signature validation. In scenarios like remote software updates, a Trust Anchor X.509 certificate, for instance, must be installed on a target device to enable the validation of certificate chains. While deployment of Trust Anchors may be relatively straightforward for "corporate IT" and "public web" applications, it can still be a time-consuming process to ensure that a new Trust Anchor X.509 certificate is propagated throughout the entire ecosystem. Additionally, when dealing with post-quantum Trust Anchors, an extra layer of complexity arises as the desired underlying cryptography may not yet be supported by the target platform.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">There are two common variations of this use case.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.3-3.1">
+            <p id="section-2.3-3.1.1">Injection within a factory: in industrial contexts, Trust Anchors are typically injected into target devices during the manufacturing phase. To bootstrap a Trust Anchor, the device is placed in a physically secure environment accessible only to trusted personnel. This injection can occur during manufacturing or when a device is being resold. It is important to note that some devices might not support updating the Trust Anchor in the field, requiring the return of the device to the OEM for post-quantum Trust Anchor injection or, in some cases, it may be even not supported at all, because, for example, the Trust Anchor is burnt onto the device at manufacturing time.<a href="#section-2.3-3.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.3-3.2">
+            <p id="section-2.3-3.2.1">Injection via software and firmware updates: for devices where the Trust Anchor is not burned onto the device, for example in less constrained devices and IT equipment, post-quantum Trust Anchors can be injected through software or firmware update mechanisms. The deployment of these Trust Anchors may leverage existing update mechanisms and traditional cryptography to minimize effort. However, this approach necessitates the distribution of the new Trust Anchors well in advance of any suspicion that traditional cryptography may become vulnerable. Given the lead time required to ensure widespread distribution, the time window where this mechanism is suitable is further reduced.<a href="#section-2.3-3.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-2.3-4">Lifetime: Long-lived.<a href="#section-2.3-4" class="pilcrow">¶</a></p>
+<p id="section-2.3-5">Protocol: Passive Negotiation.<a href="#section-2.3-5" class="pilcrow">¶</a></p>
+<p id="section-2.3-6">Backward compatibility: Limited.<a href="#section-2.3-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="cms">
+<section id="section-2.4">
+        <h3 id="name-cms-s-mime">
+<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-cms-s-mime" class="section-name selfRef">CMS (S/MIME)</a>
+        </h3>
+<p id="section-2.4-1">The Cryptographic Message Syntax (CMS) <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span> establishes a standard syntax for creating secure messages, incorporating digital signatures, encryption, and authentication codes.
+In practical terms, CMS finds application in scenarios such as secure email communication, document signing, and PKI-based security services. Organizations use CMS for secure file transfers and end-to-end encryption of documents, ensuring confidentiality and integrity.
+It is a key component in secure messaging protocols, contributing to the confidentiality, integrity, and authenticity of communication over networks. One of the notable features of CMS is flexibility, allowing the choice of cryptographic algorithms based on specific security requirements.
+An important consideration to be made is the non-uniform adoption and potential challenges in implementing CMS, particularly in the context of email clients. Varying levels of maturity and maintenance among email clients will slow down the adoption of post-quantum algorithms, which will not be uniform across different clients.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.4-2">It is worth noting that, similarly to CMS, JOSE and (JSON Object Signing and Encryption) and COSE (CBOR Object Signing and Encryption) are data structures used to support signing and encryption of data, respectively, in JSON and CBOR format. Therefore, several considerations that are applicable for CMS will extend to JOSE and COSE as well.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+<p id="section-2.4-3">Lifetime: Short-lived and long-lived.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
+<p id="section-2.4-4">Protocol: Passive Negotiation.<a href="#section-2.4-4" class="pilcrow">¶</a></p>
+<p id="section-2.4-5">Backward compatibility: Mandatory.<a href="#section-2.4-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="timestamping">
+<section id="section-2.5">
+        <h3 id="name-timestamping">
+<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-timestamping" class="section-name selfRef">Timestamping</a>
+        </h3>
+<p id="section-2.5-1">A time-stamping service supports assertions of proof that a datum existed before a particular time, as defined in <span>[<a href="#RFC3161" class="cite xref">RFC3161</a>]</span>.
+Timestamps, are particularly important in the following scenarios.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.5-2.1">
+            <p id="section-2.5-2.1.1">Code and Document Signing: In code and document signing use cases, timestamps play a critical role in ensuring the ongoing validity of digital signatures. It is not sufficient to validate the signature at the time of creation; it must be verifiable even after the signature certificate has expired. This is particularly important for long-term archival and verification purposes, where the historical integrity of the signed code or document needs to be maintained over time. The timestamp is stored in a CMS data structure, cf. <a href="#cms" class="auto internal xref">Section 2.4</a>.<a href="#section-2.5-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.5-2.2">
+            <p id="section-2.5-2.2.1">Non-repudiation: timestamps enhance non-repudiation by preventing parties from later denying the authenticity or validity of their digital signatures. Non-repudiation plays a major role in Legal and regulatory compliance, Intellectual property protection and Electronic commerce, where the reliability of timestamps is key for establishing clear timelines with legal and financial implications.<a href="#section-2.5-2.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-2.5-3">Lifetime: Long-lived.<a href="#section-2.5-3" class="pilcrow">¶</a></p>
+<p id="section-2.5-4">Protocol: Passive Negotiation.<a href="#section-2.5-4" class="pilcrow">¶</a></p>
+<p id="section-2.5-5">Backward compatibility: Optional.<a href="#section-2.5-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="additional-use-cases">
+<section id="section-2.6">
+        <h3 id="name-additional-use-cases">
+<a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-additional-use-cases" class="section-name selfRef">Additional use cases</a>
+        </h3>
+<p id="section-2.6-1">Future work:<a href="#section-2.6-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.6-2.1">
+            <p id="section-2.6-2.1.1">add post-quantum relevant use cases which cover additional aspects, such as FAA airworthiness certifications, medical records, etc.<a href="#section-2.6-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="post-quantum-migration-strategies-for-signing">
+<section id="section-3">
+      <h2 id="name-post-quantum-migration-stra">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-post-quantum-migration-stra" class="section-name selfRef">Post-quantum Migration Strategies for Signing</a>
+      </h2>
+<p id="section-3-1">People are considering which technological concepts are suitable to solve the problem of a secure migration from classical cryptography to quantum computer safe cryptographic algorithms. A variety of approaches are being discussed. In the following, we would like to briefly introduce the approaches under discussion and refer to the respective relevant documents for further details.
+For a general introduction, we also refer to <span>[<a href="#I-D.ietf-pquip-pqc-engineers" class="cite xref">I-D.ietf-pquip-pqc-engineers</a>]</span>.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<div id="multiple-signatures">
+<section id="section-3.1">
+        <h3 id="name-multiple-signatures">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-multiple-signatures" class="section-name selfRef">Multiple Signatures</a>
+        </h3>
+<p id="section-3.1-1">Several signatures have the approach of defining a second alternative signature in addition to the primary signature in the protocol or format, which can be transported in the protocol or format. In addition to the definition of the alternative signature, the associated signing algorithm and, if applicable, the associated public key or a reference to it must also be transferred. For X.509 public key certificates, this is defined in <span>[<a href="#X.509" class="cite xref">X.509</a>]</span>. Work is also underway for other protocols and formats. This approach overlaps with the protocol and format extension approach described in <a href="#protocols" class="auto internal xref">Section 3.6</a>.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">An alternative approach is to encode a second signature in a second certificate and bind it to the first one by a reference. For example, an implementation can decide based on its policy whether only the first certificate or the second or both certificates should be used for authentication. Further descriptions of this approach can be found in A Mechanism for Encoding Differences in Paired Certificates <span>[<a href="#I-D.bonnell-lamps-chameleon-certs" class="cite xref">I-D.bonnell-lamps-chameleon-certs</a>]</span> and Related Certificates for Use in Multiple Authentications within a Protocol <span>[<a href="#I-D.ietf-lamps-cert-binding-for-multi-auth" class="cite xref">I-D.ietf-lamps-cert-binding-for-multi-auth</a>]</span>.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="composite-signatures">
+<section id="section-3.2">
+        <h3 id="name-composite-signatures">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-composite-signatures" class="section-name selfRef">Composite Signatures</a>
+        </h3>
+<p id="section-3.2-1">The goal of composite signatures is to define a signature object to be used with any protocol or format. It contains two signatures in a single atomic container that have been generated using two different cryptographic algorithms. The goal of this approach is to define a signature format which requires both contained signatures to be verified.  In this way, the security properties of the classical signature and another signature that is secure when attacked by a quantum computer are used in the protocol or format without having to adapt them.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">In order for this approach to be applicable in arbitrary protocols and formats, a composite key must be defined in addition to the composite signature. According to the definition of composite signatures, a composite public is a single atomic container composed of two public keys. The associated composite private key is a single atomic private key that is composed of the two private keys which correspond to the two public keys contained in the composite public key.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">This concept is described in Composite Signatures For Use In Internet PKI <span>[<a href="#I-D.ounsworth-pq-composite-sigs" class="cite xref">I-D.ounsworth-pq-composite-sigs</a>]</span> in more detail.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="employing-stateful-hash-based-signature-schemes">
+<section id="section-3.3">
+        <h3 id="name-employing-stateful-hash-bas">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-employing-stateful-hash-bas" class="section-name selfRef">Employing Stateful Hash-based Signature Schemes</a>
+        </h3>
+<p id="section-3.3-1">Stateful hash-based signature (HBS) schemes, such as XMSS <span>[<a href="#RFC8391" class="cite xref">RFC8391</a>]</span> and LMS <span>[<a href="#RFC8554" class="cite xref">RFC8554</a>]</span>, including their multi-tree variants, have been the first post-quantum algorithms to be standardized by NIST in <span>[<a href="#NIST.SP.800-208" class="cite xref">NIST.SP.800-208</a>]</span>.
+Stateful HBS algorithms offer better key and signature sizes than stateless HBS algorithms, and the underlying cryptographic building blocks are generally considered well-understood. However, a critical consideration is the management of state, which is a fundamental aspect of security. The absence of standardized operating procedures for state management poses challenges to the adoption of stateful HBS. This is especially critical when signing data over extended periods using the same key pair; i.e., the resulting signatures will be validated with the same public key over a long period of time.
+Another aspect worth considering is that, without solutions for hardware security module replacements and disaster recovery scenarios, using stateful HBS might lead to a solution with limited resilience.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="employing-stateless-hash-based-signature-schemes">
+<section id="section-3.4">
+        <h3 id="name-employing-stateless-hash-ba">
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-employing-stateless-hash-ba" class="section-name selfRef">Employing Stateless Hash-based Signature Schemes</a>
+        </h3>
+<p id="section-3.4-1"><span>[<a href="#NIST.FIPS.205" class="cite xref">NIST.FIPS.205</a>]</span> specifies the SLH-DSA (SPHINCS+) algorithm.  It is a stateless hash-based signature algorithm and is considered safe against attacks by quantum computers.  The advantage of this algorithm is that the state problem is resolved as part of the algorithm.  However, the tradeoff is that signature sizes are often an order of magnitude larger than XMSS or LMS.  This may make deploying these algorithms on constrained devices infeasible.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="employing-module-lattice-based-digital-signature-schemes">
+<section id="section-3.5">
+        <h3 id="name-employing-module-lattice-ba">
+<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-employing-module-lattice-ba" class="section-name selfRef">Employing Module-Lattice-Based Digital Signature Schemes</a>
+        </h3>
+<p id="section-3.5-1"><span>[<a href="#NIST.FIPS.204" class="cite xref">NIST.FIPS.204</a>]</span> specifies the ML-DSA (Dilithium) algorithm, a digital signature algorithm based on the hardness of lattice problems over module lattices. It serves as a general purpose post-quantum signature algorithm, offering smaller key sizes in comparison to SLH-DSA and fast signature generation. For more details, refer to <span>[<a href="#I-D.ietf-pquip-pqc-engineers" class="cite xref">I-D.ietf-pquip-pqc-engineers</a>]</span>.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="protocols">
+<section id="section-3.6">
+        <h3 id="name-cryptographic-agility">
+<a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-cryptographic-agility" class="section-name selfRef">Cryptographic Agility</a>
+        </h3>
+<p id="section-3.6-1">Migration to post-quantum cryptographic algorithms can be regarded as an instance of the general pattern of <em>cryptographic agility</em>, rather than be viewed as a special, one-off event. A system that approaches migration this way can undergo multiple transitions without requiring major architectural changes. Thus, when planning the transition to post-quantum cryptography, consider that when future cryptanalysis will trigger a transition to <em>post-post-quantum</em> cryptography, it is better to be agile than to start from scratch.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
+<p id="section-3.6-2">Hohm et al. identified circa 30 interpretations of the term "cryptographic agility" in their literature survey <span>[<a href="#CAMM" class="cite xref">CAMM</a>]</span>, therefore referring to agility without defining it brings the potential of being misunderstood. In this document, we encourage readers to reason about agility by relying on these guiding questions:<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3.6-3">
+<li id="section-3.6-3.1">
+            <p id="section-3.6-3.1.1">Can one <strong>select</strong> algorithms based on a specific context?<a href="#section-3.6-3.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-3.6-3.2">
+            <p id="section-3.6-3.2.1">Can one <strong>add</strong> new cryptographic primitives or parameters?<a href="#section-3.6-3.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-3.6-3.3">
+            <p id="section-3.6-3.3.1">Can obsolete crypto be <strong>retired</strong>?<a href="#section-3.6-3.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+<p id="section-3.6-4">System and protocol designers can adjust the definition for their particular context, while ensuring that the adjusted definition is clearly stated, to avoid ambiguities.<a href="#section-3.6-4" class="pilcrow">¶</a></p>
+<p id="section-3.6-5">Agility in security protocols and message formats, such as IP Security (IPsec) and Internet Key Exchange (IKE) <span>[<a href="#RFC6071" class="cite xref">RFC6071</a>]</span>, Transport Layer Security (TLS)<span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>, Secure/Multipurpose Internet Mail Extensions (S/MIME)<span>[<a href="#RFC8551" class="cite xref">RFC8551</a>]</span>, is understood as the dynamic referencing of the algorithms to be used - the "select" component above. A migration strategy that allows the existing and future cryptographic algorithms to be used simultaneously during a transition period (the "add" part) is not described in the respective standards.<a href="#section-3.6-5" class="pilcrow">¶</a></p>
+<p id="section-3.6-6">Revised versions of standards would be needed to integrate agility into protocols and formats. This requires effort for standardization and implementation if a basic functionality, such as multiple signatures, e.g., in Cryptographic Message Syntax (CMS) <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>, is not already available. But even in the case of S/MIME and CMS, profiling is still necessary to describe how the multiple signatures are to be used specifically for the migration.<a href="#section-3.6-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="map-of-migration-strategies-to-reference-use-cases">
+<section id="section-4">
+      <h2 id="name-map-of-migration-strategies">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-map-of-migration-strategies" class="section-name selfRef">Map of Migration Strategies to Reference Use Cases</a>
+      </h2>
+<p id="section-4-1">In this section, we establish a mapping between the reference use cases and their primary features, as summarized in the table below, and the digital signature migration strategies identified in the preceding section.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<span id="name-summary-of-use-cases-and-ma"></span><table class="center" id="table-1">
+        <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-summary-of-use-cases-and-ma" class="selfRef">Summary of use cases and main features</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-left" rowspan="1" colspan="1">Use Case</th>
+            <th class="text-left" rowspan="1" colspan="1">Lifetime</th>
+            <th class="text-left" rowspan="1" colspan="1">Protocol</th>
+            <th class="text-left" rowspan="1" colspan="1">Backward Compatibility</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Industrial communication protocols</td>
+            <td class="text-left" rowspan="1" colspan="1">Long-lived</td>
+            <td class="text-left" rowspan="1" colspan="1">Active Negotiation</td>
+            <td class="text-left" rowspan="1" colspan="1">Limited</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Software and Firmware update</td>
+            <td class="text-left" rowspan="1" colspan="1">Long-lived</td>
+            <td class="text-left" rowspan="1" colspan="1">Passive Negotiation</td>
+            <td class="text-left" rowspan="1" colspan="1">Limited</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Trust Anchor deployment</td>
+            <td class="text-left" rowspan="1" colspan="1">Long-lived</td>
+            <td class="text-left" rowspan="1" colspan="1">Passive Negotiation</td>
+            <td class="text-left" rowspan="1" colspan="1">Limited</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">CMS (S/MIME)</td>
+            <td class="text-left" rowspan="1" colspan="1">Short-lived and Long-lived</td>
+            <td class="text-left" rowspan="1" colspan="1">Passive Negotiation</td>
+            <td class="text-left" rowspan="1" colspan="1">Mandatory</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Timestamping</td>
+            <td class="text-left" rowspan="1" colspan="1">Long-lived</td>
+            <td class="text-left" rowspan="1" colspan="1">Passive Negotiation</td>
+            <td class="text-left" rowspan="1" colspan="1">Optional</td>
+          </tr>
+        </tbody>
+      </table>
+<p id="section-4-3">The map is constructed as a decision tree, which is available at: <a href="https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart">https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart</a>.<a href="#section-4-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="IANA">
+<section id="section-5">
+      <h2 id="name-iana-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-5-1">This memo includes no request to IANA.<a href="#section-5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="Security">
+<section id="section-6">
+      <h2 id="name-security-considerations">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-6-1">This document should not affect the security of the Internet.<a href="#section-6-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<section id="section-7">
+      <h2 id="name-references">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<div id="sec-normative-references">
+<section id="section-7.1">
+        <h3 id="name-normative-references">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+      <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-7.2">
+        <h3 id="name-informative-references">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="IEEE.802.1AR-2018">[IEEE.802.1AR-2018]</dt>
+        <dd>
+<span class="refTitle">"IEEE Standard for Local and Metropolitan Area Networks - Secure Device Identity"</span>, <span class="refContent">IEEE</span>, <span class="seriesInfo">DOI 10.1109/ieeestd.2018.8423794</span>, <span class="seriesInfo">ISBN ["9781504450195"]</span>, <time datetime="2018-07" class="refDate">July 2018</time>, <span>&lt;<a href="https://doi.org/10.1109/ieeestd.2018.8423794">https://doi.org/10.1109/ieeestd.2018.8423794</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3161">[RFC3161]</dt>
+        <dd>
+<span class="refAuthor">Adams, C.</span>, <span class="refAuthor">Cain, P.</span>, <span class="refAuthor">Pinkas, D.</span>, and <span class="refAuthor">R. Zuccherato</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Time-Stamp Protocol (TSP)"</span>, <span class="seriesInfo">RFC 3161</span>, <span class="seriesInfo">DOI 10.17487/RFC3161</span>, <time datetime="2001-08" class="refDate">August 2001</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3161">https://www.rfc-editor.org/rfc/rfc3161</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4949">[RFC4949]</dt>
+        <dd>
+<span class="refAuthor">Shirey, R.</span>, <span class="refTitle">"Internet Security Glossary, Version 2"</span>, <span class="seriesInfo">FYI 36</span>, <span class="seriesInfo">RFC 4949</span>, <span class="seriesInfo">DOI 10.17487/RFC4949</span>, <time datetime="2007-08" class="refDate">August 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4949">https://www.rfc-editor.org/rfc/rfc4949</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4998">[RFC4998]</dt>
+        <dd>
+<span class="refAuthor">Gondrom, T.</span>, <span class="refAuthor">Brandner, R.</span>, and <span class="refAuthor">U. Pordesch</span>, <span class="refTitle">"Evidence Record Syntax (ERS)"</span>, <span class="seriesInfo">RFC 4998</span>, <span class="seriesInfo">DOI 10.17487/RFC4998</span>, <time datetime="2007-08" class="refDate">August 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4998">https://www.rfc-editor.org/rfc/rfc4998</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5280">[RFC5280]</dt>
+        <dd>
+<span class="refAuthor">Cooper, D.</span>, <span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Farrell, S.</span>, <span class="refAuthor">Boeyen, S.</span>, <span class="refAuthor">Housley, R.</span>, and <span class="refAuthor">W. Polk</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"</span>, <span class="seriesInfo">RFC 5280</span>, <span class="seriesInfo">DOI 10.17487/RFC5280</span>, <time datetime="2008-05" class="refDate">May 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5280">https://www.rfc-editor.org/rfc/rfc5280</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5652">[RFC5652]</dt>
+        <dd>
+<span class="refAuthor">Housley, R.</span>, <span class="refTitle">"Cryptographic Message Syntax (CMS)"</span>, <span class="seriesInfo">STD 70</span>, <span class="seriesInfo">RFC 5652</span>, <span class="seriesInfo">DOI 10.17487/RFC5652</span>, <time datetime="2009-09" class="refDate">September 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5652">https://www.rfc-editor.org/rfc/rfc5652</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6421">[RFC6421]</dt>
+        <dd>
+<span class="refAuthor">Nelson, D., Ed.</span>, <span class="refTitle">"Crypto-Agility Requirements for Remote Authentication Dial-In User Service (RADIUS)"</span>, <span class="seriesInfo">RFC 6421</span>, <span class="seriesInfo">DOI 10.17487/RFC6421</span>, <time datetime="2011-11" class="refDate">November 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6421">https://www.rfc-editor.org/rfc/rfc6421</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7468">[RFC7468]</dt>
+        <dd>
+<span class="refAuthor">Josefsson, S.</span> and <span class="refAuthor">S. Leonard</span>, <span class="refTitle">"Textual Encodings of PKIX, PKCS, and CMS Structures"</span>, <span class="seriesInfo">RFC 7468</span>, <span class="seriesInfo">DOI 10.17487/RFC7468</span>, <time datetime="2015-04" class="refDate">April 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7468">https://www.rfc-editor.org/rfc/rfc7468</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8446">[RFC8446]</dt>
+        <dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9019">[RFC9019]</dt>
+        <dd>
+<span class="refAuthor">Moran, B.</span>, <span class="refAuthor">Tschofenig, H.</span>, <span class="refAuthor">Brown, D.</span>, and <span class="refAuthor">M. Meriac</span>, <span class="refTitle">"A Firmware Update Architecture for Internet of Things"</span>, <span class="seriesInfo">RFC 9019</span>, <span class="seriesInfo">DOI 10.17487/RFC9019</span>, <time datetime="2021-04" class="refDate">April 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9019">https://www.rfc-editor.org/rfc/rfc9019</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-pquip-pqc-engineers">[I-D.ietf-pquip-pqc-engineers]</dt>
+        <dd>
+<span class="refAuthor">Banerjee, A.</span>, <span class="refAuthor">Reddy.K, T.</span>, <span class="refAuthor">Schoinianakis, D.</span>, and <span class="refAuthor">T. Hollebeek</span>, <span class="refTitle">"Post-Quantum Cryptography for Engineers"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-pquip-pqc-engineers-03</span>, <time datetime="2024-02-22" class="refDate">22 February 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqc-engineers-03">https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqc-engineers-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-pquip-pqt-hybrid-terminology">[I-D.ietf-pquip-pqt-hybrid-terminology]</dt>
+        <dd>
+<span class="refAuthor">D, F.</span>, <span class="refTitle">"Terminology for Post-Quantum Traditional Hybrid Schemes"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-pquip-pqt-hybrid-terminology-02</span>, <time datetime="2024-02-02" class="refDate">2 February 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqt-hybrid-terminology-02">https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqt-hybrid-terminology-02</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="NIST.SP.800-208">[NIST.SP.800-208]</dt>
+        <dd>
+<span class="refAuthor">Cooper, D. A.</span>, <span class="refAuthor">Apon, D. C.</span>, <span class="refAuthor">Dang, Q. H.</span>, <span class="refAuthor">Davidson, M. S.</span>, <span class="refAuthor">Dworkin, M. J.</span>, <span class="refAuthor">Miller, C. A.</span>, and <span class="refAuthor">NIST</span>, <span class="refTitle">"Recommendation for Stateful Hash-Based Signature Schemes"</span>, <span class="seriesInfo">NIST Special Publications (General) 800-208</span>, <span class="seriesInfo">DOI 10.6028/NIST.SP.800-208</span>, <time datetime="2020-10-29" class="refDate">29 October 2020</time>, <span>&lt;<a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-208.pdf">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-208.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="NIST.FIPS.186-5">[NIST.FIPS.186-5]</dt>
+        <dd>
+<span class="refAuthor">Moody, D.</span> and <span class="refAuthor">National Institute of Standards and Technology</span>, <span class="refTitle">"Digital Signature Standard (DSS)"</span>, <span class="seriesInfo">NIST Federal Information Processing Standards Publications 186-5</span>, <span class="seriesInfo">DOI 10.6028/NIST.FIPS.186-5</span>, <time datetime="2023" class="refDate">2023</time>, <span>&lt;<a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf">https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8391">[RFC8391]</dt>
+        <dd>
+<span class="refAuthor">Huelsing, A.</span>, <span class="refAuthor">Butin, D.</span>, <span class="refAuthor">Gazdag, S.</span>, <span class="refAuthor">Rijneveld, J.</span>, and <span class="refAuthor">A. Mohaisen</span>, <span class="refTitle">"XMSS: eXtended Merkle Signature Scheme"</span>, <span class="seriesInfo">RFC 8391</span>, <span class="seriesInfo">DOI 10.17487/RFC8391</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8391">https://www.rfc-editor.org/rfc/rfc8391</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8554">[RFC8554]</dt>
+        <dd>
+<span class="refAuthor">McGrew, D.</span>, <span class="refAuthor">Curcio, M.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Leighton-Micali Hash-Based Signatures"</span>, <span class="seriesInfo">RFC 8554</span>, <span class="seriesInfo">DOI 10.17487/RFC8554</span>, <time datetime="2019-04" class="refDate">April 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8554">https://www.rfc-editor.org/rfc/rfc8554</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6071">[RFC6071]</dt>
+        <dd>
+<span class="refAuthor">Frankel, S.</span> and <span class="refAuthor">S. Krishnan</span>, <span class="refTitle">"IP Security (IPsec) and Internet Key Exchange (IKE) Document Roadmap"</span>, <span class="seriesInfo">RFC 6071</span>, <span class="seriesInfo">DOI 10.17487/RFC6071</span>, <time datetime="2011-02" class="refDate">February 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6071">https://www.rfc-editor.org/rfc/rfc6071</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8551">[RFC8551]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refAuthor">Ramsdell, B.</span>, and <span class="refAuthor">S. Turner</span>, <span class="refTitle">"Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 4.0 Message Specification"</span>, <span class="seriesInfo">RFC 8551</span>, <span class="seriesInfo">DOI 10.17487/RFC8551</span>, <time datetime="2019-04" class="refDate">April 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8551">https://www.rfc-editor.org/rfc/rfc8551</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ounsworth-pq-composite-sigs">[I-D.ounsworth-pq-composite-sigs]</dt>
+        <dd>
+<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, and <span class="refAuthor">J. Klaußner</span>, <span class="refTitle">"Composite Signatures For Use In Internet PKI"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ounsworth-pq-composite-sigs-12</span>, <time datetime="2024-02-11" class="refDate">11 February 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ounsworth-pq-composite-sigs-12">https://datatracker.ietf.org/doc/html/draft-ounsworth-pq-composite-sigs-12</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.bonnell-lamps-chameleon-certs">[I-D.bonnell-lamps-chameleon-certs]</dt>
+        <dd>
+<span class="refAuthor">Bonnell, C.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Hook, D.</span>, <span class="refAuthor">Okubo, T.</span>, and <span class="refAuthor">M. Ounsworth</span>, <span class="refTitle">"A Mechanism for Encoding Differences in Paired Certificates"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bonnell-lamps-chameleon-certs-03</span>, <time datetime="2024-01-04" class="refDate">4 January 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bonnell-lamps-chameleon-certs-03">https://datatracker.ietf.org/doc/html/draft-bonnell-lamps-chameleon-certs-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-lamps-cert-binding-for-multi-auth">[I-D.ietf-lamps-cert-binding-for-multi-auth]</dt>
+        <dd>
+<span class="refAuthor">Becker, A.</span>, <span class="refAuthor">Guthrie, R.</span>, and <span class="refAuthor">M. J. Jenkins</span>, <span class="refTitle">"Related Certificates for Use in Multiple Authentications within a Protocol"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-cert-binding-for-multi-auth-03</span>, <time datetime="2023-11-29" class="refDate">29 November 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-cert-binding-for-multi-auth-03">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-cert-binding-for-multi-auth-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="ANSI_ASHRAE.Standard.135-2016">[ANSI_ASHRAE.Standard.135-2016]</dt>
+        <dd>
+<span class="refAuthor">American National Standards Institute (ANSI)</span>, <span class="refTitle">"BACnetTM A Data Communication Protocol For Building Automation And Control Network"</span>, <span class="seriesInfo">ANSI Standard 135-2016</span>, <time datetime="2016" class="refDate">2016</time>, <span>&lt;<a href="https://webstore.ansi.org/standards/ashrae/ansiashraestandard1352016">https://webstore.ansi.org/standards/ashrae/ansiashraestandard1352016</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Addendum.bj.to.ANSI_ASHRAE.Standard.135-2016">[Addendum.bj.to.ANSI_ASHRAE.Standard.135-2016]</dt>
+        <dd>
+<span class="refAuthor">American National Standards Institute (ANSI)</span>, <span class="refTitle">"Addendum bj to BACnetTM A Data Communication Protocol For Building Automation And Control Network"</span>, <span class="seriesInfo">ANSI Addendum bj to Standard 135-2016</span>, <time datetime="2016" class="refDate">2016</time>, <span>&lt;<a href="https://www.ashrae.org/File%20Library/Technical%20Resources/Standards%20and%20Guidelines/Standards%20Addenda/135_2016_bj_20191118.pdf">https://www.ashrae.org/File%20Library/Technical%20Resources/Standards%20and%20Guidelines/Standards%20Addenda/135_2016_bj_20191118.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="bsi.quantum-safe.crypto">[bsi.quantum-safe.crypto]</dt>
+        <dd>
+<span class="refAuthor">Bundesamt fuer Sicherheit in der Informationstechnik</span>, <span class="refTitle">"Quantum-safe cryptography – fundamentals, current developments and recommendations"</span>, <span class="seriesInfo">BSI Recommendations for action by the BSI</span>, <time datetime="2021" class="refDate">2021</time>, <span>&lt;<a href="https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/Brochure/quantum-safe-cryptography.pdf?__blob=publicationFile&amp;v=4">https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/Brochure/quantum-safe-cryptography.pdf?__blob=publicationFile&amp;v=4</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="entrust.composite-pki">[entrust.composite-pki]</dt>
+        <dd>
+<span class="refAuthor">Entrust</span>, <span class="refTitle">"Entrust introduces first commerically available post quantum ready pki platform"</span>, <time datetime="2024" class="refDate">2024</time>, <span>&lt;<a href="https://www.entrust.com/newsroom/press-releases/2024/entrust-introduces-first-commercially-available-post-quantum-ready-pki-platform">https://www.entrust.com/newsroom/press-releases/2024/entrust-introduces-first-commercially-available-post-quantum-ready-pki-platform</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="CNSA2-0">[CNSA2-0]</dt>
+        <dd>
+<span class="refAuthor">National Security Agency (NSA)</span>, <span class="refTitle">"Announcing the Commercial National Security Algorithm Suite 2.0"</span>, <time datetime="2022" class="refDate">2022</time>, <span>&lt;<a href="https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF">https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Dilithium.des.team">[Dilithium.des.team]</dt>
+        <dd>
+<span class="refAuthor">CRYSTALS-Dilithium design team</span>, <span class="refTitle">"CRYSTALS-Dilithium design team web page"</span>, <time datetime="2023" class="refDate">2023</time>, <span>&lt;<a href="https://pq-crystals.org/dilithium/">https://pq-crystals.org/dilithium/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Google.Sec.Blog">[Google.Sec.Blog]</dt>
+        <dd>
+<span class="refAuthor">Google</span>, <span class="refTitle">"Toward Quantum Resilient Security Keys"</span>, <time datetime="2023" class="refDate">2023</time>, <span>&lt;<a href="https://security.googleblog.com/2023/08/toward-quantum-resilient-security-keys.html?m=1">https://security.googleblog.com/2023/08/toward-quantum-resilient-security-keys.html?m=1</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Hybrid.pqc.sig.hsk">[Hybrid.pqc.sig.hsk]</dt>
+        <dd>
+<span class="refAuthor">al., G. D. et.</span>, <span class="refTitle">"Hybrid Post-quantum Signatures in Hardware Security Keys"</span>, <time datetime="2023" class="refDate">2023</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-031-41181-6_26">https://doi.org/10.1007/978-3-031-41181-6_26</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="NIST.FIPS.204">[NIST.FIPS.204]</dt>
+        <dd>
+<span class="refAuthor">National Institute of Standards and Technology (NIST)</span>, <span class="refTitle">"Module-Lattice-Based Digital Signature Standard"</span>, <span class="seriesInfo">NIST FIPS 204 (Initial Public Draft)</span>, <time datetime="2023" class="refDate">2023</time>, <span>&lt;<a href="https://csrc.nist.gov/pubs/fips/204/ipd">https://csrc.nist.gov/pubs/fips/204/ipd</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="NIST.FIPS.205">[NIST.FIPS.205]</dt>
+        <dd>
+<span class="refAuthor">National Institute of Standards and Technology (NIST)</span>, <span class="refTitle">"Stateless Hash-Based Digital Signature Standard"</span>, <span class="seriesInfo">NIST FIPS 205 (Initial Public Draft)</span>, <time datetime="2023" class="refDate">2023</time>, <span>&lt;<a href="https://csrc.nist.gov/pubs/fips/205/ipd">https://csrc.nist.gov/pubs/fips/205/ipd</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="NIST.SP.800-57.P1R5">[NIST.SP.800-57.P1R5]</dt>
+        <dd>
+<span class="refAuthor">National Institute of Standards and Technology (NIST)</span>, <span class="refTitle">"Recommendation for Key Management: Part 1 – General"</span>, <span class="seriesInfo">NIST Special Publication 800-57</span>, <time datetime="2020" class="refDate">2020</time>, <span>&lt;<a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="X.509">[X.509]</dt>
+        <dd>
+<span class="refAuthor">International Telecommunications Union</span>, <span class="refTitle">"Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks"</span>, <span class="seriesInfo">ITU-T Recommendation X.509</span>, <time datetime="2019" class="refDate">2019</time>. </dd>
+<dd class="break"></dd>
+<dt id="CAMM">[CAMM]</dt>
+      <dd>
+<span class="refAuthor">al., H. J. et.</span>, <span class="refTitle">"Towards a maturity model for crypto-agility assessment"</span>, <time datetime="2022" class="refDate">2022</time>, <span>&lt;<a href="http://arxiv.org/abs/2202.07645">http://arxiv.org/abs/2202.07645</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+<div id="post-quantum-migration-properties">
+<section id="appendix-A">
+      <h2 id="name-post-quantum-migration-prop">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-post-quantum-migration-prop" class="section-name selfRef">Post-Quantum Migration Properties</a>
+      </h2>
+<p id="appendix-A-1">This section aims to establish a collection of characteristics for categorizing the use cases outlined in <a href="#sec-usecases" class="auto internal xref">Section 2</a>. The objective is to enhance the document's utility by providing a framework for classifying use cases not explicitly addressed here. For instance, implementors can categorize their own use case and subsequently identify a similar one in this document based on shared properties/classification.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<div id="lifetime">
+<section id="appendix-A.1">
+        <h3 id="name-lifetime">
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-lifetime" class="section-name selfRef">Lifetime</a>
+        </h3>
+<p id="appendix-A.1-1">This classification distinguishes between short-lived and long-lived use cases. However, in practical terms, this distinction is challenging due to the nature of each use case's lifespan, which can be on a spectrum.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="appendix-A.1-2">
+<li id="appendix-A.1-2.1">
+            <p id="appendix-A.1-2.1.1">Short-lived: In this context, a short-lived use case is characterized by a duration of less than 5 years. This timeframe aligns with common organizational practices, where hardware, for example servers in a data center, is typically replaced within a 5-year cycle.<a href="#appendix-A.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="appendix-A.1-2.2">
+            <p id="appendix-A.1-2.2.1">Long-lived: In the context of this document, a long-lived use case spans more than 10 years. While there isn't a specific rationale for this timeframe, it is noteworthy that cryptographic recommendations, for example <span>[<a href="#NIST.SP.800-57.P1R5" class="cite xref">NIST.SP.800-57.P1R5</a>]</span>, often provide guidance for a duration of up to ten years from the time of their publication.<a href="#appendix-A.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+</section>
+</div>
+<div id="protocol">
+<section id="appendix-A.2">
+        <h3 id="name-protocol">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-protocol" class="section-name selfRef">Protocol</a>
+        </h3>
+<p id="appendix-A.2-1">Cryptographic protocols can be divided in Active Negotiation (real-time cryptography), Passive Negotiation (asynchronous cryptography), and Non Agile (no graceful migration).<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="appendix-A.2-2">
+<li id="appendix-A.2-2.1">
+            <p id="appendix-A.2-2.1.1">Active Negotiation: Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.<a href="#appendix-A.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="appendix-A.2-2.2">
+            <p id="appendix-A.2-2.2.1">Passive Negotiation: Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.<a href="#appendix-A.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="appendix-A.2-2.3">
+            <p id="appendix-A.2-2.3.1">Non-agile: Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.<a href="#appendix-A.2-2.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+</section>
+</div>
+<div id="backward-compatibility">
+<section id="appendix-A.3">
+        <h3 id="name-backward-compatibility">
+<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-backward-compatibility" class="section-name selfRef">Backward compatibility</a>
+        </h3>
+<p id="appendix-A.3-1">The following scenarios may arise:<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="appendix-A.3-2">
+<li id="appendix-A.3-2.1">
+            <p id="appendix-A.3-2.1.1">Optional: Backward compatibility isn't needed, either because post-quantum migration is unnecessary or already addressed within a specific protocol.<a href="#appendix-A.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="appendix-A.3-2.2">
+            <p id="appendix-A.3-2.2.1">Limited: Backward compatibility is necessary for a defined period, such as during a migration time window.<a href="#appendix-A.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="appendix-A.3-2.3">
+            <p id="appendix-A.3-2.3.1">Mandatory: Backward compatibility is essential throughout the use case's entire lifespan due to the absence of identifiable migration strategies.<a href="#appendix-A.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+</section>
+</div>
+</section>
+</div>
+<div id="composite-signature-individual-and-organization-position-statements">
+<section id="appendix-B">
+      <h2 id="name-composite-signature-individ">
+<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-composite-signature-individ" class="section-name selfRef">Composite Signature individual and organization position statements</a>
+      </h2>
+<ol start="1" type="1" class="normal type-1" id="appendix-B-1">
+<li id="appendix-B-1.1">
+          <p id="appendix-B-1.1.1">BSI - The document <span>[<a href="#bsi.quantum-safe.crypto" class="cite xref">bsi.quantum-safe.crypto</a>]</span> recommends requiring that PQC lattice schemes only be used within a PQ/T hybrid.  More specifically this document includes the following recommendation:<a href="#appendix-B-1.1.1" class="pilcrow">¶</a></p>
+<p id="appendix-B-1.1.2">
+"Therefore, quantum computer-resistant methods should not be used alone - at least in a transitional period - but only in hybrid mode, i.e. in combination with a classical method. For this purpose, protocols must be modified or supplemented accordingly. In addition, public key infrastructures, for example, must also be adapted"<a href="#appendix-B-1.1.2" class="pilcrow">¶</a></p>
+<p id="appendix-B-1.1.3">
+Also Stavros Kousidis from BSI says: "from a strategic point of view we don’t want to replace our current RSA algorithm with standalone Dilithium since: If Dilithium does not withstand cryptanalysis in the future then all our efforts are for nothing. With a composite signature Dilithium+ECDSA in AND-mode we can buy ourselves some time in case the Dilithium security guarantees do not withstand future cryptanalysis."<a href="#appendix-B-1.1.3" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.2">
+          <p id="appendix-B-1.2.1">Google: according to <span>[<a href="#Google.Sec.Blog" class="cite xref">Google.Sec.Blog</a>]</span>: "Relying on a hybrid signature is critical as the security of Dilithium and other recently standardized quantum resistant algorithms haven’t yet stood the test of time and recent attacks on Rainbow (another quantum resilient algorithm) demonstrate the need for caution. This cautiousness is particularly warranted for security keys as most can’t be upgraded – although we are working toward it for OpenSK. The hybrid approach is also used in other post-quantum efforts like Chrome’s support for TLS".<a href="#appendix-B-1.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.3">
+          <p id="appendix-B-1.3.1">Entrust: During the transition to post-quantum cryptography, there will be uncertainty as to the strength of cryptographic algorithms; we will no longer fully trust traditional cryptography such as RSA, Diffie-Hellman, DSA and their elliptic curve variants, but we will also not fully trust their post-quantum replacements until they have had sufficient scrutiny and time to discover and fix implementation bugs. Unlike previous cryptographic algorithm migrations, the choice of when to migrate and which algorithms to migrate to, is not so clear.  Even after the migration period, it may be advantageous for an entity's cryptographic identity to be composed of multiple public-key algorithms.
+In 2024 Entrust added support for composite signatures in PKI infrastructure (<span>[<a href="#entrust.composite-pki" class="cite xref">entrust.composite-pki</a>]</span>):<a href="#appendix-B-1.3.1" class="pilcrow">¶</a></p>
+<p id="appendix-B-1.3.2">
+"With this launch, the company’s cloud-based PKI as a Service offering now can provide both composite and pure quantum-safe certificate authority hierarchies, enabling customers to test or implement quantum-safe scenarios and infrastructure."<a href="#appendix-B-1.3.2" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.4">
+          <p id="appendix-B-1.4.1">Robert Hulshof: "The rationale behind combined keys is that I can see an important use-case for very sensitive data (government, financial or other high value data) to combine multiple (PQ) key algorithms, and that this migration to PQ is a good time to start supporting that by default in the crypto libraries.
+Trying to estimate the probability that a NIST standardized Crypto algorithm gets broken in the next 5-10 years is very difficult. However I assume that everybody agrees that this probability is definitely not zero. Personally I would put that probability somewhere in the range of 0.1% – 1%.
+If I were the government/bank etc. I would not like to have a 1% risk that all my secrets get exposed. Adding one or two more PQ algorithms would reduce that probability to 1 in 5 million or 1 in a Billion would be much more acceptable."
+TODO:add reference<a href="#appendix-B-1.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.5">
+          <p id="appendix-B-1.5.1">MTG - Falko Strenzke: "Without hybrid signatures, a decision to move away from traditional signatures to Dilithium (or other non-hash-based signatures) has a certain risk to make things worse and I think many decision makers will not be ready to take the responsibility for it until the quantum computer threat becomes imminent. If composite signature is not standardised, non-composite hybrids would be left. This implies protocol changes which will:<a href="#appendix-B-1.5.1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="appendix-B-1.5.2">
+<li id="appendix-B-1.5.2.1">
+              <p id="appendix-B-1.5.2.1.1">need more discussion,<a href="#appendix-B-1.5.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="appendix-B-1.5.2.2">
+              <p id="appendix-B-1.5.2.2.1">need more changes to existing applications,<a href="#appendix-B-1.5.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="appendix-B-1.5.2.3">
+              <p id="appendix-B-1.5.2.3.1">and thus be more bug prone.<a href="#appendix-B-1.5.2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="appendix-B-1.5.2.4">
+              <p id="appendix-B-1.5.2.4.1">Not having hybrid signatures at all will likely cause many decision makers to<a href="#appendix-B-1.5.2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="appendix-B-1.5.2.5">
+              <p id="appendix-B-1.5.2.5.1">use hash-based schemes where possible / affordable<a href="#appendix-B-1.5.2.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="appendix-B-1.5.2.6">
+              <p id="appendix-B-1.5.2.6.1">and elsewhere stick to traditional schemes as long as possible, thus effectively delaying the migration to PQC."
+TODO: add reference<a href="#appendix-B-1.5.2.6.1" class="pilcrow">¶</a></p>
+</li>
+          </ol>
+</li>
+        <li id="appendix-B-1.6">
+          <p id="appendix-B-1.6.1">Transmute - Orie Steele: "There are use cases for long lived verifiable credentials, and attribute cert like stuff we work on in supply chain, with DHS / CBP."
+TODO: add reference<a href="#appendix-B-1.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.7">
+          <p id="appendix-B-1.7.1">CRYSTALS-Dilithium design team states in <span>[<a href="#Dilithium.des.team" class="cite xref">Dilithium.des.team</a>]</span> that: “For users who are interested in using Dilithium, we recommend the following: Use Dilithium in a so-called hybrid mode in combination with an established "pre-quantum" signature scheme.”<a href="#appendix-B-1.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-1.8">
+          <p id="appendix-B-1.8.1">Hybrid Post-Quantum Signatures in Hardware Security Keys: the paper <span>[<a href="#Hybrid.pqc.sig.hsk" class="cite xref">Hybrid.pqc.sig.hsk</a>]</span> describes a hybrid signature scheme. Below an excerpt from it:
+“A hybrid signature scheme combines a classical signature algorithm with a post-quantum secure signature algorithm. Before discussing the design of our hybrid scheme, we explain why such an approach is relevant instead of simply replacing classically secure schemes with post-quantum secure schemes. We present the assumptions below:<a href="#appendix-B-1.8.1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="appendix-B-1.8.2">
+<li id="appendix-B-1.8.2.1">
+              <p id="appendix-B-1.8.2.1.1">Cryptographically-Relevant Quantum Computers (i.e. with enough qubits to break ECDSA) are not available yet.<a href="#appendix-B-1.8.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="appendix-B-1.8.2.2">
+              <p id="appendix-B-1.8.2.2.1">Classical signature algorithms withstands attacks from classical computers.<a href="#appendix-B-1.8.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="appendix-B-1.8.2.3">
+              <p id="appendix-B-1.8.2.3.1">The post-quantum secure signature algorithm might be breakable by classical computers due to design or implementation bugs.
+If any of these assumptions fails, using a hybrid approach instead of replacing classical schemes with post-quantum schemes indeed does not add any security. We believe that all of these assumptions are currently correct. The third assumption is motivated by a newly discovered attack against Rainbow, one of the NIST standardization finalists.
+We can now discuss the informal requirements a hybrid scheme H should satisfy:<a href="#appendix-B-1.8.2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="appendix-B-1.8.2.4">
+              <p id="appendix-B-1.8.2.4.1">If a quantum computer becomes available, and hence H’s underlying classical scheme is broken, H should maintain the security of its underlying post-quantum scheme.<a href="#appendix-B-1.8.2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="appendix-B-1.8.2.5">
+              <p id="appendix-B-1.8.2.5.1">If a classical attack for H’s underlying post-quantum secure scheme is discovered, H should maintain the security of its underlying classical scheme."<a href="#appendix-B-1.8.2.5.1" class="pilcrow">¶</a></p>
+</li>
+          </ol>
+</li>
+      </ol>
+</section>
+</div>
+<div id="Acknowledgements">
+<section id="appendix-C">
+      <h2 id="name-acknowledgements">
+<a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+      </h2>
+<p id="appendix-C-1">This draft would not be possible without the support of a great number of contributors.   We thank Stavros Kousidis, Robert Hulshof, Falko Strenzke and Orie Steele for allowing us to use their statements regarding composite signatures.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-D">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Antonio Vaira</span></div>
+<div dir="auto" class="left"><span class="org">Siemens</span></div>
+<div dir="auto" class="left"><span class="street-address">Werner-von-Siemens-Strasse 1</span></div>
+<div dir="auto" class="left">
+<span class="postal-code">80333</span> <span class="locality">Munich</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Germany</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:antonio.vaira@siemens.com" class="email">antonio.vaira@siemens.com</a>
+</div>
+<div class="url">
+<span>URI:</span>
+<a href="https://www.siemens.com" class="url">https://www.siemens.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Hendrik Brockhaus</span></div>
+<div dir="auto" class="left"><span class="org">Siemens</span></div>
+<div dir="auto" class="left"><span class="street-address">Werner-von-Siemens-Strasse 1</span></div>
+<div dir="auto" class="left">
+<span class="postal-code">80333</span> <span class="locality">Munich</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Germany</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:hendrik.brockhaus@siemens.com" class="email">hendrik.brockhaus@siemens.com</a>
+</div>
+<div class="url">
+<span>URI:</span>
+<a href="https://www.siemens.com" class="url">https://www.siemens.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Alexander Railean</span></div>
+<div dir="auto" class="left"><span class="org">Siemens</span></div>
+<div dir="auto" class="left"><span class="street-address">Werner-von-Siemens-Strasse 1</span></div>
+<div dir="auto" class="left">
+<span class="postal-code">80333</span> <span class="locality">Munich</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Germany</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:alexander.railean@siemens.com" class="email">alexander.railean@siemens.com</a>
+</div>
+<div class="url">
+<span>URI:</span>
+<a href="https://www.siemens.com" class="url">https://www.siemens.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">John Gray</span></div>
+<div dir="auto" class="left"><span class="org">Entrust</span></div>
+<div dir="auto" class="left"><span class="street-address">1187 Park Place</span></div>
+<div dir="auto" class="left">
+<span class="locality">Minneapolis</span>, <span class="region">MN</span> <span class="postal-code">55379</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">United States of America</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:john.gray@entrust.com" class="email">john.gray@entrust.com</a>
+</div>
+<div class="url">
+<span>URI:</span>
+<a href="https://www.entrust.com" class="url">https://www.entrust.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Mike Ounsworth</span></div>
+<div dir="auto" class="left"><span class="org">Entrust</span></div>
+<div dir="auto" class="left"><span class="street-address">1187 Park Place</span></div>
+<div dir="auto" class="left">
+<span class="locality">Minneapolis</span>, <span class="region">MN</span> <span class="postal-code">55379</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">United States of America</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:mike.ounsworth@entrust.com" class="email">mike.ounsworth@entrust.com</a>
+</div>
+<div class="url">
+<span>URI:</span>
+<a href="https://www.entrust.com" class="url">https://www.entrust.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
