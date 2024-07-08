@@ -13,24 +13,23 @@
 <meta content="
        This document is meant to be continuously updated, to incorporate emerging Post-Quantum Cryptography (PQC) migration use cases, with a focus on the migration from traditional signature algorithms (e.g., RSA, DSA, ECDSA) to PQC signature algorithms (e.g., LMS, XMSS, ML-DSA, SLH-DSA). This document aims at categorizing real-world scenarios based on a set of distinctive features. The primary goal is to facilitate discussions on migration strategies by offering a systematic taxonomy and a shared understanding among stakeholders. 
     " name="description">
-<meta content="xml2rfc 3.20.0" name="generator">
+<meta content="xml2rfc 3.22.0" name="generator">
 <meta content="post-quantum cryptography" name="keyword">
 <meta content="PQC use cases" name="keyword">
 <meta content="draft-vaira-pquip-pqc-use-cases-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.20.0
-    Python 3.11.8
+  xml2rfc 3.22.0
+    Python 3.12.3
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
-    Jinja2 3.1.2
-    lxml 4.9.3
-    platformdirs 4.2.0
+    Jinja2 3.1.4
+    lxml 4.9.4
+    platformdirs 4.2.2
     pycountry 22.3.5
     PyYAML 6.0.1
-    requests 2.31.0
-    setuptools 68.2.2
-    six 1.16.0
+    requests 2.32.3
+    setuptools 69.5.1
     wcwidth 0.2.13
 -->
 <link href="draft-vaira-pquip-pqc-use-cases.xml" rel="alternate" type="application/rfc+xml">
@@ -1030,11 +1029,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">PQC use cases</td>
-<td class="right">March 2024</td>
+<td class="right">July 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Vaira, et al.</td>
-<td class="center">Expires 15 September 2024</td>
+<td class="center">Expires 9 January 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1047,12 +1046,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-vaira-pquip-pqc-use-cases-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-03-14" class="published">14 March 2024</time>
+<time datetime="2024-07-08" class="published">8 July 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-09-15">15 September 2024</time></dd>
+<dd class="expires"><time datetime="2025-01-09">9 January 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1118,7 +1117,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 15 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 9 January 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1254,19 +1253,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
 <p id="section-1-1">How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. The existence of multiple choices makes it more difficult to select the most suitable approach for any given use case.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">For example:<a href="#section-1-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-1-3.1">
-          <p id="section-1-3.1.1">An Original Equipment Manufacturer (OEM) must issue its products today with manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI (Public Key Infrastructure). The choice of algorithms and the type of hybrid cryptography to support become critical.<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="section-1-3.2">
-          <p id="section-1-3.2.1">A PKI must start preparing its CAs today for issuing S/MIME certificates, necessitating the inclusion of hybrid capabilities. The question arises: which path should be pursued?<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
-</li>
-      </ul>
-<p id="section-1-4">In this document, intended to be a dynamic resource, our main objective is to compile a list of digital signature use cases and categorize them based on prominent features. Examples include distinguishing between long-lived and short-lived scenarios, whether they include a negotiated protocol, or if backward compatibility is required.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration strategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">The motivation to take into account hybrid cryptography during the migration phase arises from the requirement of having long-lived assertions, i.e., digital signatures that require long term validation, as well as the uncertainty surrounding the longevity of traditional cryptographic methods and lack of complete trust in emerging PQC algorithms.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">An additional factor to consider is represented by the requirements coming from regulatory bodies, which, in several cases will differ among legislations, in regard to post-quantum algorithms and acceptable migration strategies. For example <span>[<a href="#bsi.quantum-safe.crypto" class="cite xref">bsi.quantum-safe.crypto</a>]</span>, recommends the incorporation of post-quantum cryptographic algorithms within hybrid cryptographic schemes, as a proactive response to the quantum threat. On the contrary, <span>[<a href="#CNSA2-0" class="cite xref">CNSA2-0</a>]</span> recommends specific post-quantum cryptographic algorithms for each use case.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-2">For example, an Original Equipment Manufacturer (OEM) must issue its products today with manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI (Public Key Infrastructure), therefore the choice of algorithms is critical.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">In this document, intended to be a dynamic resource, our main objective is to compile a list of digital signature use cases and categorize them based on prominent features. Examples include distinguishing between long-lived and short-lived scenarios, whether they include a negotiated protocol, or if backward compatibility is required.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration strategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">The consideration of hybrid cryptography is motivated by: (1) the need of having long-lived assertions, i.e., digital signatures that require long term validation, (2) the uncertainty surrounding the longevity of traditional cryptographic methods, (3) the lack of complete trust in emerging PQC algorithms, and (4) the time pressure to launch a product soon.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">An additional factor to consider is rooted in the requirements from regulatory bodies, which, in several cases will differ in regard to post-quantum algorithms and acceptable migration strategies. For example <span>[<a href="#bsi.quantum-safe.crypto" class="cite xref">bsi.quantum-safe.crypto</a>]</span>, recommends the incorporation of post-quantum cryptographic algorithms within hybrid cryptographic schemes, as a proactive response to the quantum threat. On the contrary, <span>[<a href="#CNSA2-0" class="cite xref">CNSA2-0</a>]</span> recommends specific post-quantum cryptographic algorithms for each use case.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">The use of hybrids potentially comes at the cost of increased complexity, or that of an implied second migration that must occur when a component algorithm becomes obsolete. These arguments need to be taken into account when considering hybrids. A key advantage of hybrids is that they accommodate a bias for action, enabling an organization to act now (e.g., to avoid piling up of inventory, to meet contractual commitments, gain first-mover advantage, etc.), and apply course corrections later. Note that hybrids defer the problem to a future date, without eliminating the need to address it altogether.<a href="#section-1-7" class="pilcrow">¶</a></p>
 <div id="requirements-language">
 <section id="section-1.1">
         <h3 id="name-requirements-language">
@@ -1307,7 +1299,7 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
         </h3>
 <p id="section-2.2-1">Secure firmware updates are crucial for ensuring long-term security of the device, especially in industrial, and critical infrastructure fields, where devices can stay active for decades. Such updates encompass tasks like introducing new trust anchors and upgrading cryptographic algorithm capabilities. However, upgrading every device's security capabilities isn't always feasible due to resource, accessibility, and cost constraints. Some devices may not support secure firmware updates at all.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">Firmware updates are typically authenticated by the Original Equipment Manufacturer (OEM) by means of a digital signing process. An update is distributed to target devices, which will validate its signature against a Trust Anchor (TA). The TA can be an X.509 certificate, a public key, or a hash of a combination of both, depending on the OEM's security measures.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
-<p id="section-2.2-3">These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifespan in mind, often spanning several decades. Notable examples of such devices encompass:<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifetime in mind, often spanning several decades. Notable examples of such devices encompass:<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.2-4.1">
             <p id="section-2.2-4.1.1">Vehicles - scale of deployment or vehicle recall difficulties.<a href="#section-2.2-4.1.1" class="pilcrow">¶</a></p>
@@ -1424,7 +1416,7 @@ For a general introduction, we also refer to <span>[<a href="#I-D.ietf-pquip-pqc
         </h3>
 <p id="section-3.2-1">The goal of composite signatures is to define a signature object to be used with any protocol or format. It contains two signatures in a single atomic container that have been generated using two different cryptographic algorithms. The goal of this approach is to define a signature format which requires both contained signatures to be verified.  In this way, the security properties of the classical signature and another signature that is secure when attacked by a quantum computer are used in the protocol or format without having to adapt them.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2-2">In order for this approach to be applicable in arbitrary protocols and formats, a composite key must be defined in addition to the composite signature. According to the definition of composite signatures, a composite public is a single atomic container composed of two public keys. The associated composite private key is a single atomic private key that is composed of the two private keys which correspond to the two public keys contained in the composite public key.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2-3">This concept is described in Composite Signatures For Use In Internet PKI <span>[<a href="#I-D.ounsworth-pq-composite-sigs" class="cite xref">I-D.ounsworth-pq-composite-sigs</a>]</span> in more detail.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">This concept is described in Composite Signatures For Use In Internet PKI <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> in more detail.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="employing-stateful-hash-based-signature-schemes">
@@ -1530,7 +1522,7 @@ Another aspect worth considering is that, without solutions for hardware securit
           </tr>
         </tbody>
       </table>
-<p id="section-4-3">The map is constructed as a decision tree, which is available at: <a href="https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart">https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart</a>.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-3">The map is constructed as a decision tree, which is available at: <a href="https://github.com/avaira77/pq-ietf-usecase/tree/main/decision-tree">https://github.com/avaira77/pq-ietf-usecase/tree/main/decision-tree</a>.<a href="#section-4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="IANA">
@@ -1618,11 +1610,11 @@ Another aspect worth considering is that, without solutions for hardware securit
 <dd class="break"></dd>
 <dt id="I-D.ietf-pquip-pqc-engineers">[I-D.ietf-pquip-pqc-engineers]</dt>
         <dd>
-<span class="refAuthor">Banerjee, A.</span>, <span class="refAuthor">Reddy.K, T.</span>, <span class="refAuthor">Schoinianakis, D.</span>, and <span class="refAuthor">T. Hollebeek</span>, <span class="refTitle">"Post-Quantum Cryptography for Engineers"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-pquip-pqc-engineers-03</span>, <time datetime="2024-02-22" class="refDate">22 February 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqc-engineers-03">https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqc-engineers-03</a>&gt;</span>. </dd>
+<span class="refAuthor">Banerjee, A.</span>, <span class="refAuthor">Reddy.K, T.</span>, <span class="refAuthor">Schoinianakis, D.</span>, and <span class="refAuthor">T. Hollebeek</span>, <span class="refTitle">"Post-Quantum Cryptography for Engineers"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-pquip-pqc-engineers-04</span>, <time datetime="2024-05-21" class="refDate">21 May 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqc-engineers-04">https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqc-engineers-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-pquip-pqt-hybrid-terminology">[I-D.ietf-pquip-pqt-hybrid-terminology]</dt>
         <dd>
-<span class="refAuthor">D, F.</span>, <span class="refTitle">"Terminology for Post-Quantum Traditional Hybrid Schemes"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-pquip-pqt-hybrid-terminology-02</span>, <time datetime="2024-02-02" class="refDate">2 February 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqt-hybrid-terminology-02">https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqt-hybrid-terminology-02</a>&gt;</span>. </dd>
+<span class="refAuthor">D, F.</span> and <span class="refAuthor">M. P</span>, <span class="refTitle">"Terminology for Post-Quantum Traditional Hybrid Schemes"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-pquip-pqt-hybrid-terminology-03</span>, <time datetime="2024-05-09" class="refDate">9 May 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqt-hybrid-terminology-03">https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqt-hybrid-terminology-03</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="NIST.SP.800-208">[NIST.SP.800-208]</dt>
         <dd>
@@ -1648,17 +1640,17 @@ Another aspect worth considering is that, without solutions for hardware securit
         <dd>
 <span class="refAuthor">Schaad, J.</span>, <span class="refAuthor">Ramsdell, B.</span>, and <span class="refAuthor">S. Turner</span>, <span class="refTitle">"Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 4.0 Message Specification"</span>, <span class="seriesInfo">RFC 8551</span>, <span class="seriesInfo">DOI 10.17487/RFC8551</span>, <time datetime="2019-04" class="refDate">April 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8551">https://www.rfc-editor.org/rfc/rfc8551</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="I-D.ounsworth-pq-composite-sigs">[I-D.ounsworth-pq-composite-sigs]</dt>
+<dt id="I-D.draft-ietf-lamps-pq-composite-sigs">[I-D.draft-ietf-lamps-pq-composite-sigs]</dt>
         <dd>
-<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, and <span class="refAuthor">J. Klaußner</span>, <span class="refTitle">"Composite ML-DSA for use in Internet PKI"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ounsworth-pq-composite-sigs-13</span>, <time datetime="2024-03-04" class="refDate">4 March 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ounsworth-pq-composite-sigs-13">https://datatracker.ietf.org/doc/html/draft-ounsworth-pq-composite-sigs-13</a>&gt;</span>. </dd>
+<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, <span class="refAuthor">Klaußner, J.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Composite ML-DSA for use in Internet PKI"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-pq-composite-sigs-01</span>, <time datetime="2024-06-06" class="refDate">6 June 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-01">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.bonnell-lamps-chameleon-certs">[I-D.bonnell-lamps-chameleon-certs]</dt>
         <dd>
-<span class="refAuthor">Bonnell, C.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Hook, D.</span>, <span class="refAuthor">Okubo, T.</span>, and <span class="refAuthor">M. Ounsworth</span>, <span class="refTitle">"A Mechanism for Encoding Differences in Paired Certificates"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bonnell-lamps-chameleon-certs-03</span>, <time datetime="2024-01-04" class="refDate">4 January 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bonnell-lamps-chameleon-certs-03">https://datatracker.ietf.org/doc/html/draft-bonnell-lamps-chameleon-certs-03</a>&gt;</span>. </dd>
+<span class="refAuthor">Bonnell, C.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Hook, D.</span>, <span class="refAuthor">Okubo, T.</span>, and <span class="refAuthor">M. Ounsworth</span>, <span class="refTitle">"A Mechanism for Encoding Differences in Paired Certificates"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bonnell-lamps-chameleon-certs-04</span>, <time datetime="2024-07-02" class="refDate">2 July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bonnell-lamps-chameleon-certs-04">https://datatracker.ietf.org/doc/html/draft-bonnell-lamps-chameleon-certs-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-lamps-cert-binding-for-multi-auth">[I-D.ietf-lamps-cert-binding-for-multi-auth]</dt>
         <dd>
-<span class="refAuthor">Becker, A.</span>, <span class="refAuthor">Guthrie, R.</span>, and <span class="refAuthor">M. J. Jenkins</span>, <span class="refTitle">"Related Certificates for Use in Multiple Authentications within a Protocol"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-cert-binding-for-multi-auth-03</span>, <time datetime="2023-11-29" class="refDate">29 November 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-cert-binding-for-multi-auth-03">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-cert-binding-for-multi-auth-03</a>&gt;</span>. </dd>
+<span class="refAuthor">Becker, A.</span>, <span class="refAuthor">Guthrie, R.</span>, and <span class="refAuthor">M. J. Jenkins</span>, <span class="refTitle">"Related Certificates for Use in Multiple Authentications within a Protocol"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-cert-binding-for-multi-auth-05</span>, <time datetime="2024-04-29" class="refDate">29 April 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-cert-binding-for-multi-auth-05">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-cert-binding-for-multi-auth-05</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="ANSI_ASHRAE.Standard.135-2016">[ANSI_ASHRAE.Standard.135-2016]</dt>
         <dd>
@@ -1752,7 +1744,7 @@ Another aspect worth considering is that, without solutions for hardware securit
             <p id="appendix-A.2-2.2.1">Passive Negotiation: Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.<a href="#appendix-A.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li id="appendix-A.2-2.3">
-            <p id="appendix-A.2-2.3.1">Non-agile: Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.<a href="#appendix-A.2-2.3.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.2-2.3.1">Non-agile: no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.<a href="#appendix-A.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 </section>

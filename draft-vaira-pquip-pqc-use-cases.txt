@@ -5,11 +5,11 @@
 Post-Quantum Use In Protocols                                   A. Vaira
 Internet-Draft                                              H. Brockhaus
 Intended status: Informational                                A. Railean
-Expires: 15 September 2024                                       Siemens
+Expires: 9 January 2025                                          Siemens
                                                                  J. Gray
                                                             M. Ounsworth
                                                                  Entrust
-                                                           14 March 2024
+                                                             8 July 2024
 
 
              Post-quantum cryptography migration use cases
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 September 2024.
+   This Internet-Draft will expire on 9 January 2025.
 
 Copyright Notice
 
@@ -116,18 +116,11 @@ Table of Contents
    choices makes it more difficult to select the most suitable approach
    for any given use case.
 
-   For example:
-
-   *  An Original Equipment Manufacturer (OEM) must issue its products
-      today with manufacturer X.509 certificates that might be used at
-      any time during their lifespan.  These certificates will
-      eventually be utilized to enroll in a domain PKI (Public Key
-      Infrastructure).  The choice of algorithms and the type of hybrid
-      cryptography to support become critical.
-
-   *  A PKI must start preparing its CAs today for issuing S/MIME
-      certificates, necessitating the inclusion of hybrid capabilities.
-      The question arises: which path should be pursued?
+   For example, an Original Equipment Manufacturer (OEM) must issue its
+   products today with manufacturer X.509 certificates that might be
+   used at any time during their lifespan.  These certificates will
+   eventually be utilized to enroll in a domain PKI (Public Key
+   Infrastructure), therefore the choice of algorithms is critical.
 
    In this document, intended to be a dynamic resource, our main
    objective is to compile a list of digital signature use cases and
@@ -142,22 +135,32 @@ Table of Contents
    hybrid cryptography, i.e., use both traditional and post-quantum
    cryptography.
 
-   The motivation to take into account hybrid cryptography during the
-   migration phase arises from the requirement of having long-lived
-   assertions, i.e., digital signatures that require long term
-   validation, as well as the uncertainty surrounding the longevity of
-   traditional cryptographic methods and lack of complete trust in
-   emerging PQC algorithms.
+   The consideration of hybrid cryptography is motivated by: (1) the
+   need of having long-lived assertions, i.e., digital signatures that
+   require long term validation, (2) the uncertainty surrounding the
+   longevity of traditional cryptographic methods, (3) the lack of
+   complete trust in emerging PQC algorithms, and (4) the time pressure
+   to launch a product soon.
 
-   An additional factor to consider is represented by the requirements
-   coming from regulatory bodies, which, in several cases will differ
-   among legislations, in regard to post-quantum algorithms and
-   acceptable migration strategies.  For example
-   [bsi.quantum-safe.crypto], recommends the incorporation of post-
-   quantum cryptographic algorithms within hybrid cryptographic schemes,
-   as a proactive response to the quantum threat.  On the contrary,
-   [CNSA2-0] recommends specific post-quantum cryptographic algorithms
-   for each use case.
+   An additional factor to consider is rooted in the requirements from
+   regulatory bodies, which, in several cases will differ in regard to
+   post-quantum algorithms and acceptable migration strategies.  For
+   example [bsi.quantum-safe.crypto], recommends the incorporation of
+   post-quantum cryptographic algorithms within hybrid cryptographic
+   schemes, as a proactive response to the quantum threat.  On the
+   contrary, [CNSA2-0] recommends specific post-quantum cryptographic
+   algorithms for each use case.
+
+   The use of hybrids potentially comes at the cost of increased
+   complexity, or that of an implied second migration that must occur
+   when a component algorithm becomes obsolete.  These arguments need to
+   be taken into account when considering hybrids.  A key advantage of
+   hybrids is that they accommodate a bias for action, enabling an
+   organization to act now (e.g., to avoid piling up of inventory, to
+   meet contractual commitments, gain first-mover advantage, etc.), and
+   apply course corrections later.  Note that hybrids defer the problem
+   to a future date, without eliminating the need to address it
+   altogether.
 
 1.1.  Requirements Language
 
@@ -234,7 +237,7 @@ Table of Contents
    upgrading is prohibitively high.  The immutability of these devices
    can also be viewed as a security feature, as it restricts potential
    attack vectors associated with over-the-air updates.  These devices
-   are designed with a long operational lifespan in mind, often spanning
+   are designed with a long operational lifetime in mind, often spanning
    several decades.  Notable examples of such devices encompass:
 
    *  Vehicles - scale of deployment or vehicle recall difficulties.
@@ -433,7 +436,7 @@ Table of Contents
    key.
 
    This concept is described in Composite Signatures For Use In Internet
-   PKI [I-D.ounsworth-pq-composite-sigs] in more detail.
+   PKI [I-D.draft-ietf-lamps-pq-composite-sigs] in more detail.
 
 3.3.  Employing Stateful Hash-based Signature Schemes
 
@@ -551,8 +554,9 @@ Table of Contents
               Table 1: Summary of use cases and main features
 
    The map is constructed as a decision tree, which is available at:
-   https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart
-   (https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart).
+   https://github.com/avaira77/pq-ietf-usecase/tree/main/decision-tree
+   (https://github.com/avaira77/pq-ietf-usecase/tree/main/decision-
+   tree).
 
 5.  IANA Considerations
 
@@ -628,16 +632,16 @@ Table of Contents
               Banerjee, A., Reddy.K, T., Schoinianakis, D., and T.
               Hollebeek, "Post-Quantum Cryptography for Engineers", Work
               in Progress, Internet-Draft, draft-ietf-pquip-pqc-
-              engineers-03, 22 February 2024,
+              engineers-04, 21 May 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-pquip-
-              pqc-engineers-03>.
+              pqc-engineers-04>.
 
    [I-D.ietf-pquip-pqt-hybrid-terminology]
-              D, F., "Terminology for Post-Quantum Traditional Hybrid
-              Schemes", Work in Progress, Internet-Draft, draft-ietf-
-              pquip-pqt-hybrid-terminology-02, 2 February 2024,
+              D, F. and M. P, "Terminology for Post-Quantum Traditional
+              Hybrid Schemes", Work in Progress, Internet-Draft, draft-
+              ietf-pquip-pqt-hybrid-terminology-03, 9 May 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-pquip-
-              pqt-hybrid-terminology-02>.
+              pqt-hybrid-terminology-03>.
 
    [NIST.SP.800-208]
               Cooper, D. A., Apon, D. C., Dang, Q. H., Davidson, M. S.,
@@ -675,29 +679,29 @@ Table of Contents
               Message Specification", RFC 8551, DOI 10.17487/RFC8551,
               April 2019, <https://www.rfc-editor.org/rfc/rfc8551>.
 
-   [I-D.ounsworth-pq-composite-sigs]
-              Ounsworth, M., Gray, J., Pala, M., and J. Klaußner,
-              "Composite ML-DSA for use in Internet PKI", Work in
-              Progress, Internet-Draft, draft-ounsworth-pq-composite-
-              sigs-13, 4 March 2024,
-              <https://datatracker.ietf.org/doc/html/draft-ounsworth-pq-
-              composite-sigs-13>.
+   [I-D.draft-ietf-lamps-pq-composite-sigs]
+              Ounsworth, M., Gray, J., Pala, M., Klaußner, J., and S.
+              Fluhrer, "Composite ML-DSA for use in Internet PKI", Work
+              in Progress, Internet-Draft, draft-ietf-lamps-pq-
+              composite-sigs-01, 6 June 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-lamps-
+              pq-composite-sigs-01>.
 
    [I-D.bonnell-lamps-chameleon-certs]
               Bonnell, C., Gray, J., Hook, D., Okubo, T., and M.
               Ounsworth, "A Mechanism for Encoding Differences in Paired
               Certificates", Work in Progress, Internet-Draft, draft-
-              bonnell-lamps-chameleon-certs-03, 4 January 2024,
+              bonnell-lamps-chameleon-certs-04, 2 July 2024,
               <https://datatracker.ietf.org/doc/html/draft-bonnell-
-              lamps-chameleon-certs-03>.
+              lamps-chameleon-certs-04>.
 
    [I-D.ietf-lamps-cert-binding-for-multi-auth]
               Becker, A., Guthrie, R., and M. J. Jenkins, "Related
               Certificates for Use in Multiple Authentications within a
               Protocol", Work in Progress, Internet-Draft, draft-ietf-
-              lamps-cert-binding-for-multi-auth-03, 29 November 2023,
+              lamps-cert-binding-for-multi-auth-05, 29 April 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-lamps-
-              cert-binding-for-multi-auth-03>.
+              cert-binding-for-multi-auth-05>.
 
    [ANSI_ASHRAE.Standard.135-2016]
               American National Standards Institute (ANSI), "BACnetTM A
@@ -832,10 +836,9 @@ A.2.  Protocol
        algorithm, or code signing object carrying multiple signatures on
        different algorithms.
 
-   3.  Non-agile: Non-agile or flag day implies no graceful migration is
-       possible; the community decides that as of a certain date legacy
-       clients will no longer be able to interoperate with upgraded
-       clients.
+   3.  Non-agile: no graceful migration is possible; the community
+       decides that as of a certain date legacy clients will no longer
+       be able to interoperate with upgraded clients.
 
 A.3.  Backward compatibility
 
