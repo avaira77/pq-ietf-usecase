@@ -92,7 +92,7 @@ informative:
   RFC6071:
   RFC8551:
   RFC5652:
-  I-D.ounsworth-pq-composite-sigs:
+  I-D.draft-ietf-lamps-pq-composite-sigs:
   I-D.bonnell-lamps-chameleon-certs:
   I-D.ietf-lamps-cert-binding-for-multi-auth:
   ANSI/ASHRAE.Standard.135-2016:
@@ -220,19 +220,17 @@ This document is meant to be continuously updated, to incorporate emerging Post-
 
 How to transition to post-quantum cryptography is a question likely to stay with us for a considerable period. Within several working groups at the IETF, a variety of strategies are under discussion, gradually finding their way into RFCs. The existence of multiple choices makes it more difficult to select the most suitable approach for any given use case.
 
-For example:
-
-- An Original Equipment Manufacturer (OEM) must issue its products today with manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI (Public Key Infrastructure). The choice of algorithms and the type of hybrid cryptography to support become critical.
-
-- A PKI must start preparing its CAs today for issuing S/MIME certificates, necessitating the inclusion of hybrid capabilities. The question arises: which path should be pursued?
+For example, an Original Equipment Manufacturer (OEM) must issue its products today with manufacturer X.509 certificates that might be used at any time during their lifespan. These certificates will eventually be utilized to enroll in a domain PKI (Public Key Infrastructure), therefore the choice of algorithms is critical.
 
 In this document, intended to be a dynamic resource, our main objective is to compile a list of digital signature use cases and categorize them based on prominent features. Examples include distinguishing between long-lived and short-lived scenarios, whether they include a negotiated protocol, or if backward compatibility is required.
 
 We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration strategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography. <!-- There are several concepts for hybrid cryptography. -->
 
-The motivation to take into account hybrid cryptography during the migration phase arises from the requirement of having long-lived assertions, i.e., digital signatures that require long term validation, as well as the uncertainty surrounding the longevity of traditional cryptographic methods and lack of complete trust in emerging PQC algorithms.
+The consideration of hybrid cryptography is motivated by: (1) the need of having long-lived assertions, i.e., digital signatures that require long term validation, (2) the uncertainty surrounding the longevity of traditional cryptographic methods, (3) the lack of complete trust in emerging PQC algorithms, and (4) the time pressure to launch a product soon.
 
-An additional factor to consider is represented by the requirements coming from regulatory bodies, which, in several cases will differ among legislations, in regard to post-quantum algorithms and acceptable migration strategies. For example {{bsi.quantum-safe.crypto}}, recommends the incorporation of post-quantum cryptographic algorithms within hybrid cryptographic schemes, as a proactive response to the quantum threat. On the contrary, {{CNSA2-0}} recommends specific post-quantum cryptographic algorithms for each use case.
+An additional factor to consider is rooted in the requirements from regulatory bodies, which, in several cases will differ in regard to post-quantum algorithms and acceptable migration strategies. For example {{bsi.quantum-safe.crypto}}, recommends the incorporation of post-quantum cryptographic algorithms within hybrid cryptographic schemes, as a proactive response to the quantum threat. On the contrary, {{CNSA2-0}} recommends specific post-quantum cryptographic algorithms for each use case.
+
+The use of hybrids potentially comes at the cost of increased complexity, or that of an implied second migration that must occur when a component algorithm becomes obsolete. These arguments need to be taken into account when considering hybrids. A key advantage of hybrids is that they accommodate a bias for action, enabling an organization to act now (e.g., to avoid piling up of inventory, to meet contractual commitments, gain first-mover advantage, etc.), and apply course corrections later. Note that hybrids defer the problem to a future date, without eliminating the need to address it altogether.
 
 ## Requirements Language
 
@@ -264,7 +262,7 @@ Secure firmware updates are crucial for ensuring long-term security of the devic
 
 Firmware updates are typically authenticated by the Original Equipment Manufacturer (OEM) by means of a digital signing process. An update is distributed to target devices, which will validate its signature against a Trust Anchor (TA). The TA can be an X.509 certificate, a public key, or a hash of a combination of both, depending on the OEM's security measures.
 
-These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifespan in mind, often spanning several decades. Notable examples of such devices encompass:
+These devices are typically deployed in highly regulated environments, in remote or physically constrained locations where performing upgrades is challenging, or in cases where the cost of upgrading is prohibitively high. The immutability of these devices can also be viewed as a security feature, as it restricts potential attack vectors associated with over-the-air updates. These devices are designed with a long operational lifetime in mind, often spanning several decades. Notable examples of such devices encompass:
 
 - Vehicles - scale of deployment or vehicle recall difficulties.
 - Satellites - no 'on-site' service reasonably possible.
@@ -353,7 +351,7 @@ The goal of composite signatures is to define a signature object to be used with
 
 In order for this approach to be applicable in arbitrary protocols and formats, a composite key must be defined in addition to the composite signature. According to the definition of composite signatures, a composite public is a single atomic container composed of two public keys. The associated composite private key is a single atomic private key that is composed of the two private keys which correspond to the two public keys contained in the composite public key.
 
-This concept is described in Composite Signatures For Use In Internet PKI {{I-D.ounsworth-pq-composite-sigs}} in more detail.
+This concept is described in Composite Signatures For Use In Internet PKI {{I-D.draft-ietf-lamps-pq-composite-sigs}} in more detail.
 
 ## Employing Stateful Hash-based Signature Schemes
 
@@ -399,7 +397,8 @@ In this section, we establish a mapping between the reference use cases and thei
 | Timestamping                       | Long-lived                 | Passive Negotiation | Optional               |
 {: title="Summary of use cases and main features"}
 
-The map is constructed as a decision tree, which is available at: <https://github.com/avaira77/pq-ietf-usecase/tree/main/flowchart>.
+The map is constructed as a decision tree, which is available at: <https://github.com/avaira77/pq-ietf-usecase/tree/main/decision-tree>.
+
 
 # IANA Considerations {#IANA}
 
@@ -426,7 +425,7 @@ Cryptographic protocols can be divided in Active Negotiation (real-time cryptogr
 
 1. Active Negotiation: Protocols with existing mechanisms for real-time cryptographic negotiation such as TLS and IKE already contain mechanisms for upgraded clients to downgrade the cryptography in a given session in order to communicate with a legacy peer. These protocols provide the easiest migration path as these mechanisms should be used to bridge across traditional and post-quantum cryptography.
 2. Passive Negotiation: Protocols with existing mechanisms for non-real-time or asynchronous cryptographic negotiation. For example a PKI end entity who publishes multiple encryption certificates for themselves, each containing a public key for a different algorithm, or code signing object carrying multiple signatures on different algorithms.
-3. Non-agile: Non-agile or flag day implies no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
+3. Non-agile: no graceful migration is possible; the community decides that as of a certain date legacy clients will no longer be able to interoperate with upgraded clients.
 
 ##Backward compatibility
 The following scenarios may arise:
