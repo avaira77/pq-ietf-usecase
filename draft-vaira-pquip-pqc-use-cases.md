@@ -226,11 +226,11 @@ In this document, intended to be a dynamic resource, our main objective is to co
 
 We also explore the migration strategies that have appeared so far, proposing the most suitable fit for each of the properties identified in each use case. Some of these migration strategies make use of hybrid cryptography, i.e., use both traditional and post-quantum cryptography. <!-- There are several concepts for hybrid cryptography. -->
 
-The consideration of hybrid cryptography is motivated by: (1) the need of having long-lived assertions, i.e., digital signatures that require long term validation, (2) the uncertainty surrounding the longevity of traditional cryptographic methods, (3) the lack of complete trust in emerging PQC algorithms, and (4) the time pressure to launch a product soon. 
+The consideration of hybrid cryptography is motivated by: (1) the need of having long-lived assertions, i.e., digital signatures that require long term validation, (2) the uncertainty surrounding the longevity of traditional cryptographic methods, (3) the lack of complete trust in emerging PQC algorithms, and (4) the time pressure to launch a product soon.
 
 An additional factor to consider is rooted in the requirements from regulatory bodies, which, in several cases will differ in regard to post-quantum algorithms and acceptable migration strategies. For example {{bsi.quantum-safe.crypto}}, recommends the incorporation of post-quantum cryptographic algorithms within hybrid cryptographic schemes, as a proactive response to the quantum threat. On the contrary, {{CNSA2-0}} recommends specific post-quantum cryptographic algorithms for each use case.
 
-The use of hybrids potentially comes at the cost of increased complexity, or that of an implied second migration that must occur when a component algorithm becomes obsolete. These arguments need to be taken into account when considering hybrids. A key advantage of hybrids is that they accommodate a bias for action, enabling an organization to act now (e.g., to avoid piling up of inventory, to meet contractual commitments, gain first-mover advantage, etc.), and apply course corrections later. Note that hybrids defer the problem to a future date, without eliminating the need to address it altogether. 
+The use of hybrids potentially comes at the cost of increased complexity, or that of an implied second migration that must occur when a component algorithm becomes obsolete. These arguments need to be taken into account when considering hybrids. A key advantage of hybrids is that they accommodate a bias for action, enabling an organization to act now (e.g., to avoid piling up of inventory, to meet contractual commitments, gain first-mover advantage, etc.), and apply course corrections later. Note that hybrids defer the problem to a future date, without eliminating the need to address it altogether.
 
 ## Requirements Language
 
@@ -398,14 +398,6 @@ In this section, we establish a mapping between the reference use cases and thei
 {: title="Summary of use cases and main features"}
 
 The map is constructed as a decision tree, which is available at: <https://github.com/avaira77/pq-ietf-usecase/tree/main/decision-tree>.
-
-# Pessimistic Migration
-This approach in the transition to PQC operates under the pessimistic assumption that attacks driven by quantum computers will begin sooner than standardization or migration to new standards is complete. In these circumstances, one can consider measures that can be applied today, in order to avoid being an easy target tomorrow, such that an attacker's cost-benefit analysis would steer them towards other systems. The concept is illustrated with the following examples:
-
-- *Rely on symmetric ciphers with pre-shared keys* with tools like shadowsocks, which send encrypted traffic as soon as the communication starts, without handshakes.
-- *Wrap communications* into quantum-safe solutions. For example, OpenSSH added support for a key exchange method (Streamlined NTRU Prime + x25519), which is believed to be quantum safe. Communications can be carried out through SSH tunnels, thus retrofitting legacy applications with post-quantum encryption. An advantage of this solution is that it also works for applications that cannot be updated anymore (e.g., source code is not available or is unmaintainable).
-
-While these approaches do not have all the benefits of a fully-executed transition to PQC, their advantage is that they can be implemented today, potentially allowing one for more time to find a long-term solution. In addition, such approaches do not satisfy all use cases, e.g., when communications occur between entities that have not had the chance to share keys in advance, therefore their application is very limited in scope.
 
 
 # IANA Considerations {#IANA}
