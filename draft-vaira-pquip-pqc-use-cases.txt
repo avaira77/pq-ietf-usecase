@@ -5,11 +5,11 @@
 Post-Quantum Use In Protocols                                   A. Vaira
 Internet-Draft                                              H. Brockhaus
 Intended status: Informational                                A. Railean
-Expires: 9 January 2025                                          Siemens
+Expires: 24 January 2025                                         Siemens
                                                                  J. Gray
                                                             M. Ounsworth
                                                                  Entrust
-                                                             8 July 2024
+                                                            23 July 2024
 
 
              Post-quantum cryptography migration use cases
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 January 2025.
+   This Internet-Draft will expire on 24 January 2025.
 
 Copyright Notice
 
@@ -683,9 +683,9 @@ Table of Contents
               Ounsworth, M., Gray, J., Pala, M., Klaußner, J., and S.
               Fluhrer, "Composite ML-DSA for use in Internet PKI", Work
               in Progress, Internet-Draft, draft-ietf-lamps-pq-
-              composite-sigs-01, 6 June 2024,
+              composite-sigs-02, 8 July 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-lamps-
-              pq-composite-sigs-01>.
+              pq-composite-sigs-02>.
 
    [I-D.bonnell-lamps-chameleon-certs]
               Bonnell, C., Gray, J., Hook, D., Okubo, T., and M.
